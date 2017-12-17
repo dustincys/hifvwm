@@ -1,0 +1,126 @@
+#####
+# Basic Bindings
+###########
+Key F1 A M Menu MenuFvwmRoot
+Key L A CM exec lock -f Monaco &
+Key R A 4 exec rofi -show run &
+Key F A 4 exec rofi -show window &
+Key P A 4 exec rofi -show ssh &
+
+Key Tab A M WindowList Root c c CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
+Key Tab A MC WindowList (CurrentDesk) CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
+Key Tab W 4C Piperead "sh $[fvwm_script]/tabThisWinLstCurDesk.sh"
+Key Tab W 4 Piperead "sh $[fvwm_script]/tabThisWinLstAll.sh"
+
+Key Escape A 4 GotoDeskAndPage prev
+Key Return W M FullScreen
+Key space W 4 FullScreen
+Key Print A A FvwmDesktopScreenshot
+Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
+Key grave A 4 RaiseLower
+
+Key N A 4 Next (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key 6 A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+
+Key slash A 4 Stick
+Key comma A 4 StickAcrossPages
+Key period A 4 StickAcrossDesks
+
+Key q A 4 GotoPage 0 0
+Key a A 4 GotoPage 0 1
+Key z A 4 GotoPage 0 2
+Key w A 4 GotoPage 1 0
+Key s A 4 GotoPage 1 1
+Key x A 4 GotoPage 1 2
+Key e A 4 GotoPage 2 0
+Key d A 4 GotoPage 2 1
+Key c A 4 GotoPage 2 2
+
+Key q W S4 PointerWindow MoveToPageAndGotoPage 0 0
+Key a W S4 PointerWindow MoveToPageAndGotoPage 0 1
+Key z W S4 PointerWindow MoveToPageAndGotoPage 0 2
+Key w W S4 PointerWindow MoveToPageAndGotoPage 1 0
+Key s W S4 PointerWindow MoveToPageAndGotoPage 1 1
+Key x W S4 PointerWindow MoveToPageAndGotoPage 1 2
+Key e W S4 PointerWindow MoveToPageAndGotoPage 2 0
+Key d W S4 PointerWindow MoveToPageAndGotoPage 2 1
+Key c W S4 PointerWindow MoveToPageAndGotoPage 2 2
+
+Key q A CMS4 All (CurrentPage) MoveToPageAndGotoPage 0 0
+Key a A CMS4 All (CurrentPage) MoveToPageAndGotoPage 0 1
+Key z A CMS4 All (CurrentPage) MoveToPageAndGotoPage 0 2
+Key w A CMS4 All (CurrentPage) MoveToPageAndGotoPage 1 0
+Key s A CMS4 All (CurrentPage) MoveToPageAndGotoPage 1 1
+Key x A CMS4 All (CurrentPage) MoveToPageAndGotoPage 1 2
+Key e A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 0
+Key d A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 1
+Key c A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 2
+
+
+Key k A S4 PointerWindow MoveToPageAndGotoPage 0p -1p
+Key j A S4 PointerWindow MoveToPageAndGotoPage 0p +1p
+Key h A S4 PointerWindow MoveToPageAndGotoPage -1p 0p
+Key l A S4 PointerWindow MoveToPageAndGotoPage +1p 0p
+
+Key k A CMS4 MoveToPageAndGotoPageA 0p -1p
+Key j A CMS4 MoveToPageAndGotoPageA 0p +1p
+Key h A CMS4 MoveToPageAndGotoPageA -1p 0p
+Key l A CMS4 MoveToPageAndGotoPageA +1p 0p
+
+Key k A 4 GotoPage 0p -1p
+Key j A 4 GotoPage 0p +1p
+Key h A 4 GotoPage -1p 0p
+Key l A 4 GotoPage +1p 0p
+
+Key k A 4C GotoDesk -1 0 3
+Key j A 4C GotoDesk +1 0 3
+
+Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0 3
+Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 3
+
+Key H A 4M Direction West  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
+Key J A 4M Direction South (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
+Key K A 4M Direction North (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
+Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
+
+Key N A 4 Next (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
+Key 6 A 4 Prev (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
+Key M W 4 ResizeMaxInEBSS
+Key U A 4 Next (CurrentPage,Iconifiable,Iconic,AcceptsFocus) FuncFlipFocusWindow
+Key I W 4 ToggleThumbnail
+Key I I 4 ToggleThumbnail
+
+Key Up W 4 ResizeMaxInEBSS
+Key Left W 4 ResizeHalfMoveLIn
+Key Right W 4 ResizeHalfMoveRIn
+Key Left W 4S  ResizeHalfMoveUIn
+Key Right W 4S ResizeHalfMoveDIn
+
+Key Up W 4M FullScreen
+Key Left W 4M  ResizeHalfMoveL
+Key Right W 4M ResizeHalfMoveR
+
+Key Up W 4C MaxInEBS
+Key Left W 4C ResizeHalfMoveLInAll
+Key Right W 4C ResizeHalfMoveRInAll
+Key Down A 4 TXorC
+Key Down A 4S TYorC
+
+Key Down A 4M FvwmRearrange -tile -mn 3 -m -u -s -t -h -ewmhiwa 0 0 100 100
+Key Down A 4C FvwmRearrange -tile -mn 3 -m -u -s -t -ewmhiwa 0 0 100 100
+
+Key Page_Up A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t -h  0 0 \
+	$(($[vp.width] - $[fvwm_left_margin] -$[fvwm_right_margin]))p \
+	$[vp.height]p'
+Key Page_Down A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t  0 0 \
+	$(($[vp.width] - $[fvwm_left_margin] -$[fvwm_right_margin]))p \
+	$[vp.height]p'
+Key m A 4M Silent Maximize growonlayers $[w.layer] -1 grow grow
+Key backslash W 4M Silent Maximize growonlayers $[w.layer] -1 0 grow
+Key minus W 4M Silent Maximize growonlayers $[w.layer] -1 grow 0
+
+Key F4 A M Silent Delete
+Key F4 A C Silent Destroy
+
+Key T A CM FvwmXTerm
+Key Return A 4 FvwmGTerm

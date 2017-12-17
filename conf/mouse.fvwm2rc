@@ -1,0 +1,74 @@
+Mouse 1 R A Menu FvwmRootMenu
+Mouse 3 R A Menu FvwmWindowOpsMenu
+Mouse 1 W M FvwmMoveOrIconify
+Mouse 3 W M FvwmMoveOrFullScreen
+Mouse 1 I A FvwmMoveOrIconify
+
+Mouse 3 - N MouseTopSideAction
+Mouse 3 [ N MouseLeftSideAction
+Mouse 3 ] N MouseRightSideAction
+Mouse 3 _ N MouseBottomSideAction
+
+# Mouse 4 W 4MCS Exec transset-df --inc 0.1 -i $[w.id]
+# Mouse 5 W 4MCS Exec transset-df --dec 0.1 -i $[w.id]
+
+Mouse 4 W 4 MaxInEBSS
+Mouse 4 W 4S MaxGrowInEBS
+
+Mouse 5 A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t -h  0 $(($[fvwmiconman_height] + 2*$[back_borderwidth]))p\
+ $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin] -1))p \
+ $(($[vp.height]-$[fvwmiconman_height]-2*$[back_borderwidth] -1))p'
+Mouse 5 A 4S Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t 0 $(($[fvwmiconman_height] + 2*$[back_borderwidth]))p\
+ $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin] -1))p \
+ $(($[vp.height]-$[fvwmiconman_height]-2*$[back_borderwidth] -1))p'
+
+Mouse 5 A 4M FvwmRearrange -tile -mn 3 -m -u -s -t -ewmhiwa 0 0 100 100
+Mouse 5 A 4C FvwmRearrange -tile -mn 3 -m -u -s -t -h -ewmhiwa 0 0 100 100
+
+####Stroke######
+
+Stroke 78963 0 W 4 PointerWindow MouseMiddleButtonTopAction
+Stroke 98741 0 W 4 PointerWindow MouseMiddleButtonTopAction
+
+Stroke 12369 0 W 4 PointerWindow MouseMiddleButtonBottomAction
+Stroke 32147 0 W 4 PointerWindow MouseMiddleButtonBottomAction
+
+Stroke 14789 0 W 4 PointerWindow MouseMiddleButtonRightAction
+Stroke 74123 0 W 4 PointerWindow MouseMiddleButtonRightAction
+
+Stroke 36987 0 W 4 PointerWindow MouseMiddleButtonLeftAction
+Stroke 96321 0 W 4 PointerWindow MouseMiddleButtonLeftAction
+
+Stroke 852 0 W 4S PointerWindow MoveToPage 0p -1p
+Stroke 258 0 W 4S PointerWindow MoveToPage 0p +1p
+Stroke 654 0 W 4S PointerWindow MoveToPage -1p 0p
+Stroke 456 0 W 4S PointerWindow MoveToPage +1p 0p
+
+Stroke 951 0 W 4S PointerWindow MoveToPage -1p -1p
+Stroke 753 0 W 4S PointerWindow MoveToPage +1p -1p
+Stroke 159 0 W 4S PointerWindow MoveToPage +1p +1p
+Stroke 357 0 W 4S PointerWindow MoveToPage -1p +1p
+
+Stroke 8525852 0 W 4S PointerWindow MoveToPage 0p -2p
+Stroke 2585258 0 W 4S PointerWindow MoveToPage 0p +2p
+Stroke 6545654 0 W 4S PointerWindow MoveToPage -2p 0p
+Stroke 4565456 0 W 4S PointerWindow MoveToPage +2p 0p
+
+Stroke 9515951 0 W 4S PointerWindow MoveToPage -2p -2p
+Stroke 7535753 0 W 4S PointerWindow MoveToPage +2p -2p
+Stroke 1595159 0 W 4S PointerWindow MoveToPage +2p +2p
+Stroke 3575357 0 W 4S PointerWindow MoveToPage -2p +2p
+
+Stroke 852 0 A 4 GotoPage 0p +1p
+Stroke 258 0 A 4 GotoPage 0p -1p
+Stroke 654 0 A 4 GotoPage +1p 0p
+Stroke 456 0 A 4 GotoPage -1p 0p
+
+Stroke 951 0 A 4 GotoPage +1p +1p
+Stroke 753 0 A 4 GotoPage -1p +1p
+Stroke 159 0 A 4 GotoPage -1p -1p
+Stroke 357 0 A 4 GotoPage +1p -1p
+
+Mouse 2 W 4S StrokeFunc DrawMotion, StrokeWidth $[front_borderwidth]
+Mouse 2 A 4 StrokeFunc DrawMotion, StrokeWidth $[front_borderwidth]
+Mouse 2 W 4 StrokeFunc DrawMotion, StrokeWidth $[front_borderwidth]

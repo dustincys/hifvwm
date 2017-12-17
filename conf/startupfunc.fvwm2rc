@@ -1,0 +1,48 @@
+#######################
+#  Startup Functions  #
+#######################
+
+DestroyFunc InitFunction
+AddToFunc   InitFunction
++ I Exec exec xcompmgr &
++ I Exec exec fcitx
++ I Exec exec sogou-qimpanel
++ I Exec exec bash -c "/usr/bin/xhost +si:localuser:$USER"
++ I GotoDesk 0 0
++ I GotoPage 0 2
++ I Exec exec bash -c "emacs -mm"
++ I Wait emacs
++ I GotoPage 0 0
++ I Exec exec gnome-terminal --hide-menubar --window --command "bash -c 'LOCAL_CONFIG=qq $[fvwm_mutt]'" --maximize --name=EMAIL
++ I Wait Gnome-terminal
++ I Exec exec brightside &
++ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
++ I Exec exec bash $[HOME]/bin/nut.sh
++ I GotoPage 0 1
+
+DestroyFunc StartFunction
+AddToFunc   StartFunction
++ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
++ I Exec exec bash -c "if pgrep stalonetray >/dev/null 2>&1; then pgrep stalonetray |xargs -n 1 kill;fi"
++ I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
++ I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"
++ I Module FvwmPager MyPager 0 3
++ I Wait MyPager
++ I Module FvwmButtons MyButtons
++ I Wait MyButtons
++ I Module FvwmButtons MyTray
++ I Wait MyTray
++ I Exec exec fvwm-root -r $[fvwm_tmp]/temp.png
++ I Module FvwmEvent
++ I Module FvwmRearrange
++ I Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh
++ I Exec exec stalonetray -c $[HOME]/.fvwm/stalonetrayrc &
++ I Wait stalonetray
++ I Module FvwmAnimate
++ I Module FvwmCommandS
++ I Module FvwmIconMan FvwmIconMan-Windows-Top
++ I Module FvwmIconMan FvwmIconMan-Windows-Bottom
+
+DestroyFunc RestartFunction
+AddToFunc   RestartFunction
++ I All (Iconic) ReThumbnail

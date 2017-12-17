@@ -1,0 +1,115 @@
+####################
+#  General Styles  #
+####################
+
+Style * MouseFocusClickRaises
+Style * GrabFocusOff
+Style * NoPPosition, ResizeOpaque
+Style * DecorateTransient, DontRaiseTransient
+Style * DontLowerTransient, StackTransientParent
+Style * GrabFocusTransientOff
+Style * WindowShadeSteps 20, WindowShadeScrolls
+Style * MwmDecor, SlipperyIcon
+Style * NoIconTitle
+Piperead 'echo Style \\* IconBox screen w $(($[fvwmbuttons_width]+5)) \
+	$(($[fvwmbuttons_width]+5)) $((-$[fvwmpager_width]-5)) \
+	$((-$[fvwmiconman_height]-5)), IconGrid 100 100, IconFill bottom right'
+Style * Icon 48x48/x.png, MiniIcon x.png, EWMHMiniIconOverride
+Style * NoTitle
+Style * Font $[fvwm_font]
+Style * BorderWidth $[front_borderwidth], HandleWidth $[front_borderwidth]
+Style * Colorset 4
+Style * HilightColorset 3
+Style * BorderColorset 5
+Style * HilightBorderColorset 4
+
+####################
+#  Program Styles  #
+####################
+
+Style "goldendict" Icon 48x48/goldendict.png, StartsOnPage 0 1 2, MiniIcon 24x24-goldendict.png, EWMHMiniIconOverride
+Style "eclipse" startsOnPage 1 0 1, MiniIcon 24x24-eclipse.png, EWMHMiniIconOverride
+Style "RStudio" Icon 48x48/rstudio.png, StartsOnPage 1 0 1, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
+Style "gvim" Icon 48x48/vim.png, IconOverride, MiniIcon 24x24-gvim.png, EWMHMiniIconOverride
+Style "Emacs" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
+
+Style "MPlayer" Icon 48x48/mplayer.png, StartsOnPage 3 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
+Style "vlc" StartsOnPage 3 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride
+Style "smplayer" Icon 48x48/mplayer.png, StartsOnPage 3 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
+Style "transmission-gtk" Icon 48x48/transmission.png, StartsOnPage 3 1 0, MiniIcon 24x24-transmission.png, EWMHMiniIconOverride
+Style "remmina" Icon 48x48/remmina.png, MiniIcon remmina.png, EWMHMiniIconOverride
+
+Style "XTerm" Icon 48x48/terminal.png, MiniIcon 24x24-xterm-color_48x48.png, EWMHMiniIconOverride
+Style "Gnome-terminal" Icon 48x48/gnome-terminal.png, MiniIcon 24x24-utilities-terminal.png, EWMHMiniIconOverride
+Style "Nautilus" Icon 48x48/nautilus.png, StartsOnPage 1 1, MiniIcon nautilus.png, EWMHMiniIconOverride
+Style "Firefox" Icon 48x48/firefox.png, MiniIcon 24x24-firefox.png, EWMHMiniIconOverride, StartsOnPage 2 0
+Style "Google-chrome" Icon 48x48/google-chrome.png, MiniIcon 24x24-google-chrome.png, EWMHMiniIconOverride
+
+Style "okular" Icon 48x48/okular.png, MiniIcon 24x24-okular.png,  EWMHMiniIconOverride, StartsOnPage 1 0
+Style "CAJVieweru.exe" StartsOnPage 1 0, MiniIcon 24x24-B033_Icon38CE8FAD1.1.png, EWMHMiniIconOverride
+
+##################
+#  Cursor Style  #
+##################
+
+CursorStyle DEFAULT left_ptr
+CursorStyle ROOT dotbox
+CursorStyle MENU right_ptr
+CursorStyle SYS left_ptr
+CursorStyle MOVE fleur
+CursorStyle RESIZE fleur
+CursorStyle WAIT watch
+CursorStyle SELECT cross
+CursorStyle DESTROY pirate
+CursorStyle TOP top_side
+CursorStyle RIGHT right_side
+CursorStyle BOTTOM bottom_side
+CursorStyle LEFT left_side
+CursorStyle TOP_LEFT top_left_corner
+CursorStyle TOP_RIGHT top_right_corner
+CursorStyle BOTTOM_LEFT bottom_left_corner
+CursorStyle BOTTOM_RIGHT bottom_right_corner
+CursorStyle TOP_EDGE top_side
+CursorStyle RIGHT_EDGE right_side
+CursorStyle BOTTOM_EDGE bottom_side
+CursorStyle LEFT_EDGE left_side
+CursorStyle STROKE plus
+
+#################
+#  Menu Styles  #
+#################
+
+MenuStyle * PopupDelayed, PopupDelay 300, PopdownImmediately
+MenuStyle * PopupOffset -5 100, TitleWarpOff
+MenuStyle * TitleUnderlines2, SeparatorsLong, TrianglesSolid
+MenuStyle * AnimationOff, AutomaticHotkeysOff
+MenuStyle * BorderWidth $[back_borderwidth]
+MenuStyle * PopupAsSubmenu, HoldSubmenus, SubmenusRight
+MenuStyle * ItemFormat "%|%5.5i%1.3l%2.3>%|"
+MenuStyle * VerticalItemSpacing 1 1, VerticalTitleSpacing 2 2
+MenuStyle * MenuColorset 11
+MenuStyle * ActiveFore, Hilight3DOff
+MenuStyle * ActiveColorset 8
+MenuStyle * Font $[fvwm_font]
+
+###################
+#  Module Styles  #
+###################
+
+Style FvwmIconMan*    Sticky, NoTitle, WindowListSkip, CirculateSkipIcon,\
+	NoHandles, BorderWidth $[back_borderwidth], FixedSize, !Iconifiable, StaysOnBottom,\
+	CirculateSkip, FixedPosition, !Maximizable, BorderColorset 19,\
+	HilightBorderColorset 19
+
+Style "MyPager" NoTitle, NoHandles, Sticky, WindowListSkip, CirculateSkip,\
+	StaysOnBottom, FixedPosition, FixedSize, !Iconifiable,\
+	ParentalRelativity, !Maximizable, BorderWidth $[back_borderwidth], BorderColorset 19,\
+	HilightBorderColorset 19
+
+Style "MyButtons" NoTitle, !Handles, Sticky, WindowListSkip, CirculateSkip,\
+	StaysOnBottom, FixedPosition, FixedSize, !Iconifiable, !Maximizable,\
+	BorderWidth $[back_borderwidth], BorderColorset 19, HilightBorderColorset 19
+
+Style "MyTray" NoTitle, !Handles, !Borders, Sticky, WindowListSkip,\
+	CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable,\
+	!Maximizable

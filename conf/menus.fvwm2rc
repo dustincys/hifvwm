@@ -1,0 +1,101 @@
+##################
+#  FvwmRootMenu  #
+##################
+
+DestroyMenu FvwmRootMenu
+AddToMenu   FvwmRootMenu "Root Menu" Title
++ "Programs%menu/programs.png%"  Popup Programs
++ "Terminal%menu/terminal.png%"  FvwmGTerm
++ "FVWM Console%menu/terminal.png%"  Module FvwmConsole
++ "" Nop
++ "Update Wallpaper%menu/wallpaper.png%" Exec exec bash $[HOME]/.fvwm/scripts/updateWallpaper.sh
++ "" Nop
++ "Help%menu/help.png%"  Popup FvwmManPagesMenu
++ "Restart FVWM%menu/restart.png%"  Restart
++ "Quit FVWM%menu/quit.png%"  Quit
+
+###################
+#  Programs Menu  #
+###################
+
+PipeRead 'python2 /usr/local/bin/fvwm-menu-desktop -t Programs'
+
+###############
+#  Help Menu  #
+###############
+
+DestroyMenu FvwmManPagesMenu
+AddToMenu   FvwmManPagesMenu "FVWM Man Pages" Title
++ "%menu/help.png%fvwm"                FvwmViewManPage fvwm
++ "%menu/help.png%FvwmAnimate"         FvwmViewManPage FvwmAnimate
++ "%menu/help.png%FvwmAuto"            FvwmViewManPage FvwmAuto
++ "%menu/help.png%FvwmBacker"          FvwmViewManPage FvwmBacker
++ "%menu/help.png%FvwmBanner"          FvwmViewManPage FvwmBanner
++ "%menu/help.png%FvwmButtons"         FvwmViewManPage FvwmButtons
++ "%menu/help.png%FvwmCommand"         FvwmViewManPage FvwmCommand
++ "%menu/help.png%FvwmConsole"         FvwmViewManPage FvwmConsole
++ "%menu/help.png%FvwmConsoleC.pl"     FvwmViewManPage FvwmConsoleC.pl
++ "%menu/help.png%FvwmCpp"             FvwmViewManPage FvwmCpp
++ "%menu/help.png%FvwmDebug"           FvwmViewManPage FvwmDebug
++ "%menu/help.png%FvwmDragWell"        FvwmViewManPage FvwmDragWell
++ "%menu/help.png%FvwmEvent"           FvwmViewManPage FvwmEvent
++ "%menu/help.png%FvwmForm"            FvwmViewManPage FvwmForm
++ "%menu/help.png%FvwmGtk"             FvwmViewManPage FvwmGtk
++ "%menu/help.png%FvwmGtkDebug"        FvwmViewManPage FvwmGtkDebug
++ "%menu/help.png%FvwmIconBox"         FvwmViewManPage FvwmIconBox
++ "%menu/help.png%FvwmIconMan"         FvwmViewManPage FvwmIconMan
++ "%menu/help.png%FvwmIdent"           FvwmViewManPage FvwmIdent
++ "%menu/help.png%FvwmM4"              FvwmViewManPage FvwmM4
++ "%menu/help.png%FvwmPager"           FvwmViewManPage FvwmPager
++ "%menu/help.png%FvwmPerl"            FvwmViewManPage FvwmPerl
++ "%menu/help.png%FvwmProxy"           FvwmViewManPage FvwmProxy
++ "%menu/help.png%FvwmRearrange"       FvwmViewManPage FvwmRearrange
++ "%menu/help.png%FvwmSave"            FvwmViewManPage FvwmSave
++ "%menu/help.png%FvwmSaveDesk"        FvwmViewManPage FvwmSaveDesk
++ "%menu/help.png%FvwmScript"          FvwmViewManPage FvwmScript
++ "%menu/help.png%FvwmScroll"          FvwmViewManPage FvwmScroll
++ "%menu/help.png%FvwmTaskBar"         FvwmViewManPage FvwmTaskBar
++ "%menu/help.png%FvwmTheme"           FvwmViewManPage FvwmTheme
++ "%menu/help.png%FvwmWharf"           FvwmViewManPage FvwmWharf
++ "%menu/help.png%FvwmWinList"         FvwmViewManPage FvwmWinList
++ "%menu/help.png%FvwmWindowMenu"      FvwmViewManPage FvwmWindowMenu
++ "" Nop
++ "%menu/help.png%fvwm-config"         FvwmViewManPage fvwm-config
++ "%menu/help.png%fvwm-perllib"        FvwmViewManPage fvwm-perllib
++ "%menu/help.png%fvwm-root"           FvwmViewManPage fvwm-root
++ "%menu/help.png%fvwm-bug"            FvwmViewManPage fvwm-bug
++ "%menu/help.png%fvwm-convert-2.2"    FvwmViewManPage fvwm-convert-2.2
++ "%menu/help.png%fvwm-convert-2.4"    FvwmViewManPage fvwm-convert-2.4
++ "" Nop
++ "%menu/help.png%fvwm-menu-desktop"   FvwmViewManPage fvwm-menu-desktop
++ "%menu/help.png%fvwm-menu-directory" FvwmViewManPage fvwm-menu-directory
++ "%menu/help.png%fvwm-menu-headlines" FvwmViewManPage fvwm-menu-headlines
++ "%menu/help.png%fvwm-menu-xlock"     FvwmViewManPage fvwm-menu-xlock
+
+###########################
+#  Window Operation Menu  #
+###########################
+
+DestroyMenu FvwmWindowOpsMenu
+AddToMenu   FvwmWindowOpsMenu "Window Operations" Title
++ "Move%menu/window-move.xpm%"  Move
++ "Resize%menu/window-resize.xpm%"  Resize
++ "(De)Iconify%menu/window-iconify.xpm%"  Iconify
++ "(Un)Maximize%menu/window-maximize.xpm%"  Maximize
++ "(Un)Shade%menu/window-shade.xpm%"  WindowShade
++ "(Un)Stick%menu/window-stick.xpm%"  Stick
++ "" Nop
++ "Close%menu/window-close.xpm%"  Close
++ "Delete%menu/window-delete.xpm%"  Delete
++ "Destroy%menu/window-destroy.xpm%"  Destroy
++ "" Nop
++ "StaysOnTop%menu/window-raise.xpm%"  Pick (CirculateHit) Layer 0 6
++ "Layer +1%menu/window-raise.xpm%"  Pick (CirculateHit) Layer +1
++ "StaysPut%menu/window.xpm%"  Pick (CirculateHit) Layer 0 4
++ "Layer -1%menu/window-lower.xpm%"  Pick (CirculateHit) Layer -1
++ "StaysOnBottom%menu/window-lower.xpm%"  Pick (CirculateHit) Layer 0 2
++ "" Nop
++ "%menu/window.xpm%Window Screenshot"  Pick (CirculateHit) FvwmWindowScreenshot
++ "%menu/display.xpm%Screenshot" FvwmDesktopScreenshot 5
++ "" Nop
++ "Identify%menu/window-identify.xpm%"  Module FvwmIdent

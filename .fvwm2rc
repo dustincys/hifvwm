@@ -1,0 +1,125 @@
+#=============================================================================
+#     FileName: .fvwm2rc
+#         Desc: fvwm config
+#       Author: Chu Yanshuo
+#        Email: chu@yanshuo.name
+#     HomePage: http://yanshuo.name
+#      Version: 0.0.1
+#   LastChange: 2017-12-16 15:16:52
+#      History:
+#=============================================================================
+#######################################################################
+#                      set environment variables                      #
+#######################################################################
+
+################
+#  set folder  #
+################
+
+SetEnv fvwm_home $[HOME]/.fvwm
+SetEnv fvwm_icon $[fvwm_home]/icons
+SetEnv fvwm_script $[fvwm_home]/scripts
+SetEnv fvwm_tmp $[fvwm_home]/tmp
+SetEnv fvwm_screenshot $[fvwm_home]/screenshot
+SetEnv fvwm_path1 /usr/bin
+
+#######################
+#  Set software path  #
+#######################
+
+SetEnv fvwm_mutt $[fvwm_path1]/mutt
+SetEnv fvwm_firefox $[fvwm_path1]/firefox
+SetEnv fvwm_chrome $[fvwm_path1]/google_chrome_stable
+SetEnv fvwm_xterm $[fvwm_path1]/xterm
+SetEnv fvwm_gnome-terminal $[fvwm_path1]/gnome-terminal
+SetEnv fvwm_goldendict $[fvwm_path1]/goldendict
+SetEnv fvwm_rstudio $[fvwm_path1]/rstudio
+
+######################
+#  set width length  #
+######################
+
+SetEnv back_borderwidth 1
+SetEnv front_borderwidth 8
+
+SetEnv fvwmbuttons_width 58
+SetEnv fvwmbuttons_height 420
+
+SetEnv fvwmpager_width 158
+SetEnv fvwmpager_height 350
+SetEnv fvwmtray_height 200
+
+SetEnv fvwmiconman_height 28
+
+##############
+#  set font  #
+##############
+
+SetEnv fvwm_font "Shadow=2:xft:WenQuanYi Micro Hei:Bold:size=14:antialias=True"
+
+############
+#  margin  #
+############
+
+Piperead "echo SetEnv fvwm_left_margin $(($[fvwmbuttons_width]+2*$[back_borderwidth]))"
+Piperead "echo SetEnv fvwm_right_margin $(($[fvwmpager_width]+2*$[back_borderwidth]))"
+EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
+
+####################
+#  set image path  #
+####################
+
+ImagePath $[fvwm_icon]:$[fvwm_icon];.png:+
+
+#######################################################################
+#                           desktop config                            #
+#######################################################################
+
+########################
+#  size and name, etc  #
+########################
+
+DesktopSize 3x3
+DesktopName 0 Main
+DesktopName 1 Work
+DesktopName 2 Fun
+EdgeScroll 0 0
+EdgeResistance 150  150
+EdgeThickness 4
+ClickTime 350
+DoubleClickTime 500
+MoveThreshold 3
+
+OpaqueMoveSize -1
+Emulate MWM
+HideGeometryWindow Never
+SnapAttraction 5 SameType Screen
+SnapGrid 3 3
+XorValue 55555
+SetAnimation  10  -.01 0 .01 .03 .08 .18 .3 .45 .6 .75 .85 .90 .94 .97 .99 1.0
+
+#################
+#  font config  #
+#################
+
+DefaultFont $[fvwm_font]
+WindowFont $[fvwm_font]
+IconFont $[fvwm_font]
+
+#######################################################################
+#                          Load source files                          #
+#######################################################################
+
+Read ./conf/colorsets.fvwm2rc
+Read ./conf/styles.fvwm2rc
+
+Read ./conf/programfunc.fvwm2rc
+
+Read ./conf/functions.fvwm2rc
+Read ./conf/key.fvwm2rc
+Read ./conf/mouse.fvwm2rc
+
+Read ./conf/menus.fvwm2rc
+Read ./conf/modules.fvwm2rc
+
+Read ./conf/startupfunc.fvwm2rc

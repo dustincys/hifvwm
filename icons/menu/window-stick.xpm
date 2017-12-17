@@ -1,0 +1,23 @@
+/* XPM */
+static char * mini_stick_xpm[] = {
+"16 16 3 1 0 0",
+" 	c None",
+".	c black",
+"X	c red",
+"                ",
+"     .....      ",
+"    .XXXXX.     ",
+"    .XXXXX.     ",
+"    ..XXX..     ",
+"     .XXX.      ",
+"     .XXX.      ",
+"     .XXX.      ",
+"     .XXX.      ",
+"    .XXXXX.     ",
+"   .XXXXXXX.    ",
+"  ...........   ",
+"      .X.       ",
+"      .X.       ",
+"      .X.       ",
+"                ",
+};

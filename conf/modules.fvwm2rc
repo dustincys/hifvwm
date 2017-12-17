@@ -1,0 +1,205 @@
+#################
+#  FvwmAnimate  #
+#################
+
+DestroyModuleConfig FvwmAnimate: *
+# I don't care which effect I use.  I like variety.
+*FvwmAnimate: Effect Zoom3D
+# How many steps the iterations will be.  25 is about right, but if
+*FvwmAnimate: Delay 10
+# How thick (in pixels) the lines for the animation are to be drawn.
+*FvwmAnimate: Width $[front_borderwidth]
+# How many revolutions to twist the iconification frame.
+
+#################
+#  FvwmIconMan  #
+#################
+
+All (FvwmIconMan-Windows-Top) Close
+DestroyModuleConfig FvwmIconMan-Windows-Top: *
+*FvwmIconMan-Windows-Top: Resolution Page
+*FvwmIconMan-Windows-Top: UseWinList True
+*FvwmIconMan-Windows-Top: DontShow Class=xmms,FvwmButtons,FvwmIconMan,FvwmPager,FvwmIdent,FvwmForm
+*FvwmIconMan-Windows-Top: ShowNoIcons False
+*FvwmIconMan-Windows-Top: DrawIcons Always
+*FvwmIconMan-Windows-Top: Sort Id
+*FvwmIconMan-Windows-Top: FollowFocus True
+*FvwmIconMan-Windows-Top: Format "%t"
+*FvwmIconMan-Windows-Top: Title ""
+*FvwmIconMan-Windows-Top: ReliefThickness 0
+PipeRead "echo \*FvwmIconMan-Windows-Top: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-308))x$[fvwmiconman_height]"
+PipeRead "echo \*FvwmIconMan-Windows-Top: ManagerGeometry 1x1-$(($[fvwm_right_margin] +11))+0"
+*FvwmIconMan-Windows-Top: MaxButtonWidthByColumns 1
+# Tips {{{2
+*FvwmIconMan-Windows-Top: TipsFormat "%t"
+*FvwmIconMan-Windows-Top: Font $[fvwm_font]
+*FvwmIconMan-Windows-Top: Tips needed
+*FvwmIconMan-Windows-Top: TipsDelays 500 200
+*FvwmIconMan-Windows-Top: TipsFont $[fvwm_font]
+*FvwmIconMan-Windows-Top: TipsBorderWidth 0
+*FvwmIconMan-Windows-Top: TipsJustification leftup
+# Button look {{{2
+*FvwmIconMan-Windows-Top: PlainButton flat
+*FvwmIconMan-Windows-Top: FocusButton flat
+*FvwmIconMan-Windows-Top: SelectButton flat
+*FvwmIconMan-Windows-Top: FocusAndSelectButton flat
+*FvwmIconMan-Windows-Top: IconButton flat
+# Colorsets {{{2
+*FvwmIconMan-Windows-Top: Colorset 11
+*FvwmIconMan-Windows-Top: PlainColorset 11
+*FvwmIconMan-Windows-Top: FocusColorset 16
+*FvwmIconMan-Windows-Top: SelectColorset 14
+*FvwmIconMan-Windows-Top: FocusAndSelectColorset 15
+*FvwmIconMan-Windows-Top: IconColorset 13
+# Actions {{{2
+*FvwmIconMan-Windows-Top: Action Mouse 1 N SendCommand "MaxInEBSS"
+*FvwmIconMan-Windows-Top: Action Mouse 2 N SendCommand "MouseMiddleButtonBottomAction"
+*FvwmIconMan-Windows-Top: Action Mouse 3 N SendCommand "MouseMiddleButtonRightAction"
+*FvwmIconMan-Windows-Top: Action Mouse 3 4 SendCommand "FullScreen"
+*FvwmIconMan-Windows-Top: Action Mouse 4 N SendCommand "MaxLInEBSIM"
+*FvwmIconMan-Windows-Top: Action Mouse 5 N SendCommand "MaxRInEBSIM"
+*FvwmIconMan-Windows-Top: Action Mouse 4 S SendCommand "MaxUInEBSIM"
+*FvwmIconMan-Windows-Top: Action Mouse 5 S SendCommand "MaxDInEBSIM"
+# }}}2
+Module FvwmIconMan FvwmIconMan-Windows-Top
+
+# Right window list {{{1
+All (FvwmIconMan-Windows-Bottom) Close
+DestroyModuleConfig FvwmIconMan-Windows-Bottom: *
+*FvwmIconMan-Windows-Bottom: Resolution Desk
+#*FvwmIconMan-Windows-Bottom: Resolution Global
+*FvwmIconMan-Windows-Bottom: UseWinList True
+*FvwmIconMan-Windows-Bottom: DontShow Class=xmms,FvwmButtons,FvwmIconMan,FvwmPager,FvwmIdent,FvwmForm,
+#*FvwmIconMan-Windows-Bottom: Show Class=XTerm,Eterm,xfce4-terminal,konsole,gnome-terminal,Multi-gnome-terminal,urxvt
+*FvwmIconMan-Windows-Bottom: ShowNoIcons False
+*FvwmIconMan-Windows-Bottom: DrawIcons Always
+*FvwmIconMan-Windows-Bottom: Sort Id
+*FvwmIconMan-Windows-Bottom: FollowFocus True
+*FvwmIconMan-Windows-Bottom: Format "%t"
+*FvwmIconMan-Windows-Bottom: Title ""
+*FvwmIconMan-Windows-Bottom: ReliefThickness 0
+*FvwmIconMan-Windows-Bottom: TitleButton NoHandles, BorderWidth 0
+PipeRead "echo \*FvwmIconMan-Windows-Bottom: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-23))x$[fvwmiconman_height]"
+PipeRead "echo \*FvwmIconMan-Windows-Bottom: ManagerGeometry 1x1+$(($[fvwm_left_margin]+11))-0"
+*FvwmIconMan-Windows-Bottom: MaxButtonWidthByColumns 1
+*FvwmIconMan-Windows-Bottom: Font $[fvwm_font]
+# Tips {{{2
+*FvwmIconMan-Windows-Bottom: Tips needed
+*FvwmIconMan-Windows-Bottom: TipsDelays 500 200
+*FvwmIconMan-Windows-Bottom: TipsFormat "%t"
+*FvwmIconMan-Windows-Bottom: TipsFont $[fvwm_font]
+*FvwmIconMan-Windows-Bottom: TipsBorderWidth 0
+*FvwmIconMan-Windows-Bottom: TipsJustification leftup
+# Button look {{{2
+*FvwmIconMan-Windows-Bottom: PlainButton flat
+*FvwmIconMan-Windows-Bottom: FocusButton flat
+*FvwmIconMan-Windows-Bottom: SelectButton flat
+*FvwmIconMan-Windows-Bottom: FocusAndSelectButton flat
+*FvwmIconMan-Windows-Bottom: IconButton flat
+# Colorsets {{{2
+*FvwmIconMan-Windows-Bottom: Colorset 11
+*FvwmIconMan-Windows-Bottom: PlainColorset 11
+*FvwmIconMan-Windows-Bottom: FocusColorset 16
+*FvwmIconMan-Windows-Bottom: SelectColorset 14
+*FvwmIconMan-Windows-Bottom: FocusAndSelectColorset 15
+*FvwmIconMan-Windows-Bottom: IconColorset 13
+# Actions {{{2
+*FvwmIconMan-Windows-Bottom: Action Mouse 1 A SendCommand "FuncFlipWindow"
+*FvwmIconMan-Windows-Bottom: Action Mouse 3 A SendCommand "MoveToDeskAndPageIM"
+*FvwmIconMan-Windows-Bottom: Action Mouse 2 A SendCommand "Nop"
+*FvwmIconMan-Windows-Bottom: Action Mouse 4 A SendCommand "Nop"
+*FvwmIconMan-Windows-Bottom: Action Mouse 5 A SendCommand "Nop"
+# }}}2
+Module FvwmIconMan FvwmIconMan-Windows-Bottom
+
+###############
+#  FvwmPager  #
+###############
+
+DestroyModuleConfig MyPager: *
+*MyPager: Geometry $[fvwmpager_width]x$[fvwmpager_height]-0+0
+*MyPager: Colorset * 11
+*MyPager: HilightColorset * 14
+*MyPager: BalloonColorset * 12
+*MyPager: WindowLabelFormat "%r"
+*MyPager: BallonStringFormat "%r"
+*MyPager: Font none
+*MyPager: SmallFont $[fvwm_font]
+*MyPager: Balloons All
+*MyPager: BalloonFont $[fvwm_font]
+*MyPager: BallonYOffset +2
+*MyPager: Window3dBorders
+*MyPager: WindowColorsets  12 9
+*MyPager: MiniIcons
+*MyPager: UseSkipList
+*MyPager: Rows 4
+*MyPager: NoSeparators
+*MyPager: SloppyFocus
+
+################
+#  FvwmButton  #
+################
+
+DestroyModuleConfig MyButtons: *
+*MyButtons: Geometry $[fvwmbuttons_width]x$[fvwmbuttons_height]+0-0
+*MyButtons: Colorset 11
+*MyButtons: PressColorset 12
+*MyButtons: ActiveColorset 16
+*MyButtons: Rows 38
+*MyButtons: Columns 1
+*MyButtons: Frame 0
+*MyButtons: (1x5, Frame 0, Icon 48x48/gnome-terminal.png, \
+  Action(Mouse 1) "FvwmGTerm", \
+  Action(Mouse 2) All ("Terminator|XTerm|Gnome-terminal", CurrentDesk) MoveToDeskAndPage,\
+  Action(Mouse 4) Prev ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) Focus,\
+  Action(Mouse 5) Next ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) FuncFlipWindow)
+*MyButtons: (1x5, Frame 0, Icon 48x48/nautilus.png, \
+  Action(Mouse 1) "FvwmFileBrowser", \
+  Action(Mouse 2) All ("Nautilus", CurrentDesk) MoveToDeskAndPage,\
+  Action(Mouse 4) Prev ("Nautilus", AcceptsFocus) Focus,\
+  Action(Mouse 5) Next ("Nautilus", AcceptsFocus) FuncFlipWindow)
+*MyButtons: (1x5, Frame 0, Icon 48x48/okular.png, \
+  Action(Mouse 1) "FvwmOkular",\
+  Action(Mouse 2) All ("Okular", CurrentDesk) MoveToDeskAndPage,\
+  Action(Mouse 4) Prev ("Okular", AcceptsFocus) Focus,\
+  Action(Mouse 5) Next ("Okular", AcceptsFocus) FuncFlipWindow)
+*MyButtons: (1x5, Frame 0, Icon 48x48/goldendict.png, \
+  Action(Mouse 1) "FvwmDictionary", \
+  Action(Mouse 2) All ("goldendict") MoveToDeskAndPage,\
+  Action(Mouse 4) Prev ("goldendict", AcceptsFocus) Focus,\
+  Action(Mouse 5) Next ("goldendict", AcceptsFocus) FuncFlipWindow)
+*MyButtons: (1x5, Frame 0, Icon 48x48/firefox.png, \
+  Action(Mosue 1) "FvwmFireFox",\
+  Action(Mouse 2) All ("Firefox|Google-chrome", CurrentDesk) MoveToDeskAndPage,\
+  Action(Mosue 3) "FvwmChrome",\
+  Action(Mouse 4) Prev ("Firefox|Google-chrome", AcceptsFocus) Focus,\
+  Action(Mouse 5) Next ("Firefox|Google-chrome", AcceptsFocus) FuncFlipWindow)
+*MyButtons: (1x5, Frame 0, Icon 48x48/icon.png, \
+  Action(Mouse 1) Next (CurrentDesk, Iconic) FuncFlipWindow,\
+  Action(Mouse 2) Next (CurrentDesk, Overlapped) FuncFlipWindow,\
+  Action(Mouse 3) "FuncMoveAllIconToPage")
+
+############################
+#  FvwmButton stalonetray  #
+############################
+
+DestroyModuleConfig MyTray: *
+*MyTray: Geometry $[fvwmbuttons_width]x$[fvwmtray_height]+0+10
+*MyTray: Colorset 15
+*MyTray: Frame 0
+*MyTray: (Top,Frame0, Colorset 15, Swallow(NoClose, UseOld) stalonetray)
+
+###############
+#  FvwmIdent  #
+###############
+
+DestroyModuleConfig FvwmIdent: *
+*FvwmIdent: Colorset 9
+*FvwmIdent: Font $[fvwm_font]
+
+###############
+#  FvwmEvent  #
+###############
+
+DestroyModuleConfig FvwmEvent: *
+*FvwmEvent: deiconify DeThumbnail

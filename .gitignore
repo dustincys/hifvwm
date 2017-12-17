@@ -1,0 +1,6 @@
+screenshot/
+*.swp
+*History
+.FvwmConsole-History
+tmp/*
+

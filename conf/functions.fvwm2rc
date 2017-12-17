@@ -1,0 +1,457 @@
+#####
+# Basic Functions
+###########
+DestroyFunc FvwmMoveOrFullScreen
+AddToFunc   FvwmMoveOrFullScreen
++ M Move
++ D FullScreen
+
+DestroyFunc FvwmMoveOrIconify
+AddToFunc   FvwmMoveOrIconify
++ M AnimatedMove
++ D Silent Thumbnail
+
+DestroyFunc MouseTopSideAction
+AddToFunc MouseTopSideAction
++ D Silent Maximize 100 100
++ M AnimatedMove
+
+DestroyFunc MouseLeftSideAction
+AddToFunc MouseLeftSideAction
++ D Silent Destroy
++ M AnimatedMove
+
+DestroyFunc MouseRightSideAction
+AddToFunc MouseRightSideAction
++ D Silent Delete
++ M AnimatedMove
+
+DestroyFunc MouseBottomSideAction
+AddToFunc MouseBottomSideAction
++ D Silent Thumbnail
++ M AnimatedMove
+
+DestroyFunc MouseMiddleButtonBottomActionClick
+AddToFunc MouseMiddleButtonBottomActionClick
++ C Silent Thumbnail
+
+DestroyFunc MouseMiddleButtonBottomAction
+AddToFunc MouseMiddleButtonBottomAction
++ I Silent Thumbnail
+
+DestroyFunc MouseMiddleButtonTopAction
+AddToFunc MouseMiddleButtonTopAction
++ I Silent Maximize 100 100
+
+DestroyFunc MouseMiddleButtonLeftAction
+AddToFunc MouseMiddleButtonLeftAction
++ I Silent Destroy
+
+DestroyFunc MouseMiddleButtonRightAction
+AddToFunc MouseMiddleButtonRightAction
++ I Silent Delete
+
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ I Raise
++ I ThisWindow (!Iconic) SetEnv Icon-$[w.id] $[w.iconfile]
+#+ I ThisWindow (!Shaded Iconifiable !Iconic) PipeRead "xwd -silent -id $[w.id] | convert -resize 50x50^ -gravity center -crop 50x50+0+0 +repage -frame 1x1 -mattecolor black -quality 0 xwd:- png:$[fvwm_tmp]/icon.tmp.$[w.id].png && echo Nop"
++ I ThisWindow (!Shaded Iconifiable !Iconic) PipeRead \
+    "xwd -silent -id $[w.id] | convert -scale 300 -frame 1x1 \
+    -mattecolor black -quality 0 xwd:- png:$[fvwm_tmp]/icon.tmp.$[w.id].png \
+    && echo Nop"
++ I TestRc (Match) Test (f $[w.iconfile]) PipeRead "composite -gravity center -geometry +0+0 $[w.iconfile] $[fvwm_tmp]/icon.tmp.$[w.id].png $[fvwm_tmp]/icon.tmp.$[w.id].png && echo WindowStyle IconOverride, Icon $[fvwm_tmp]/icon.tmp.$[w.id].png || echo Nop"
++ I TestRc (NoMatch) WindowStyle IconOverride, Icon $[fvwm_tmp]/icon.tmp.$[w.id].png
++ I Iconify
+
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ I PipeRead "echo WindowStyle IconOverride, Icon \\$\\[Icon-$[w.id]\\]"
++ I UnsetEnv Icon-$[w.id]
++ I Exec rm -f $[fvwm_tmp]/icon.tmp.$[w.id].png
++ I ThisWindow State 1 False
++ I ThisWindow focus
+
+DestroyFunc ReThumbnail
+AddToFunc   ReThumbnail
++ I Iconify
++ I Thumbnail
+
+DestroyFunc FuncDeiconifyAndRearrange
+AddToFunc FuncDeiconifyAndRearrange
++ I Iconify off
++ I All (CurrentPage, Iconic) PlaceAgain Icon
+
+DestroyFunc FuncMoveAllIconToPage
+AddToFunc FuncMoveAllIconToPage
++ I All (CurrentDesk, Iconic) MoveToDeskAndPage
++ I All (CurrentPage, Iconic) PlaceAgain Icon
+
+DestroyFunc FuncDeiconFlipFocusWindow
+AddToFunc FuncDeiconFlipFocusWindow
++ I FuncDeiconifyAndRearrange
++ I FlipFocus
++ I Raise
++ I WarpToWindow 50 50
+
+
+DestroyFunc FuncFlipWindow
+AddToFunc FuncFlipWindow
++ I FlipFocus
++ I Raise
+
+DestroyFunc FuncFlipFocusWindow
+AddToFunc FuncFlipFocusWindow
++ I FuncFlipWindow
++ I WarpToWindow 50 50
+
+DestroyFunc MoveToDeskAndPage
+AddToFunc MoveToDeskAndPage
++ I MoveToDesk
++ I MoveToPage
+
+DestroyFunc MoveToDeskAndPageIM
+AddToFunc MoveToDeskAndPageIM
++ I MoveToDeskAndPage
++ I Raise
+
+DestroyFunc MoveToDeskAndGotoDesk
+AddToFunc MoveToDeskAndGotoDesk
++ I MoveToDesk $0 $1 $2
++ I GoToDesk $0 $1 $2
+
+DestroyFunc MoveToDeskAndGotoDeskC
+AddToFunc MoveToDeskAndGotoDeskC
++ I MoveToDesk $0 $1 $2
++ I GoToDesk $0 $1 $2
+
+DestroyFunc MoveToDeskAndGotoDeskCA
+AddToFunc MoveToDeskAndGotoDeskCA
++ I All (CurrentPage) MoveToDesk $0 $1 $2
++ I GoToDesk $0 $1 $2
+
+DestroyFunc MoveToPageAndGotoPage
+AddToFunc MoveToPageAndGotoPage
++ I MoveToPage $0 $1
++ I GotoPage $0 $1
+
+DestroyFunc MoveToPageAndGotoPageA
+AddToFunc MoveToPageAndGotoPageA
++ I All (CurrentPage) MoveToPage $0 $1
++ I GotoPage $0 $1
+
+DestroyFunc MaxInEBS
+AddToFunc  MaxInEBS
++ I Maximize 100 100
++ I Raise
+
+#######################################################################
+#                           resize function                           #
+#######################################################################
+
+DestroyFunc ResizeEBSS
+AddToFunc ResizeEBSS
+#+ I ThisWindow (!Iconic) Piperead 'echo Resize `expr $[vp.width] - 223`p `expr $[vp.height] - 76`p'
++ I ThisWindow (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]\
+	-$[fvwm_left_margin]\
+	-$[fvwm_right_margin]\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]\
+	-2*($[fvwmiconman_height]\
+	+2*$[back_borderwidth]\
+	+$[front_borderwidth])))p'
+
+DestroyFunc ResizeHalfHEBSS
+AddToFunc ResizeHalfHEBSS
+#+ I ThisWindow (!Iconic) Piperead 'echo Resize `expr $[vp.width] / 2 - 119`p `expr $[vp.height] - 76`p'
++ I  ThisWindow (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]/2\
+	-($[fvwm_left_margin]+$[fvwm_right_margin])/2\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]\
+	-2*($[fvwmiconman_height]\
+	+2*$[back_borderwidth]\
+	+$[front_borderwidth])))p'
+
+
+DestroyFunc ResizeHalfVEBSS
+AddToFunc ResizeHalfVEBSS
+#+ I ThisWindow (!Iconic) Piperead 'echo Resize `expr $[vp.width] - 223`p `expr $[vp.height] / 2 - 46`p'
++ I  ThisWindow (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]\
+	-$[fvwm_left_margin]\
+	-$[fvwm_right_margin]\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]/2\
+	-($[fvwmiconman_height]+2*$[back_borderwidth])\
+	-2*$[front_borderwidth]))p'
+
+
+DestroyFunc ResizeHalfH
+AddToFunc ResizeHalfH
+#+ I ThisWindow (!Iconic) Piperead 'echo Resize `expr $[vp.width] / 2 - 16`p `expr $[vp.height] - 16`p'
++ I  ThisWindow (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]/2\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]\
+	-2*$[front_borderwidth]))p'
+
+
+DestroyFunc ResizeHalfHEBSSFullV
+AddToFunc ResizeHalfHEBSSFullV
+#+ I ThisWindow (!Iconic) Piperead 'echo Resize `expr $[vp.width] / 2 - 119`p `expr $[vp.height] - 16`p'
++ I  ThisWindow (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]/2\
+	-($[fvwm_left_margin]+$[fvwm_right_margin])/2\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]\
+	-2*$[front_borderwidth]))p'
+
+DestroyFunc MoveCenter
+AddToFunc MoveCenter
++ I ThisWindow (!Iconic) AnimatedMove 50-50w 50-50w
+
+DestroyFunc MoveLCenter
+AddToFunc MoveLCenter
++ I ThisWindow (!Iconic) AnimatedMove 50-100w 50-50w
+
+DestroyFunc MoveRCenter
+AddToFunc MoveRCenter
++ I ThisWindow (!Iconic) AnimatedMove 50 50-50w
+
+DestroyFunc MoveUCenter
+AddToFunc MoveUCenter
++ I ThisWindow (!Iconic) AnimatedMove 50-50w 50-100w
+
+DestroyFunc MoveDCenter
+AddToFunc MoveDCenter
++ I ThisWindow (!Iconic) AnimatedMove 50-50w 50
+
+DestroyFunc MaxInEBSS
+AddToFunc MaxInEBSS
++ I ResizeEBSS
++ I MoveCenter
++ I Raise
+
+DestroyFunc MaxLInEBSIM
+AddToFunc MaxLInEBSIM
++ I ResizeHalfHEBSS
++ I MoveLCenter
++ I Raise
+
+DestroyFunc MaxRInEBSIM
+AddToFunc MaxRInEBSIM
++ I ResizeHalfHEBSS
++ I MoveRCenter
++ I Raise
+
+DestroyFunc MaxUInEBSIM
+AddToFunc MaxUInEBSIM
++ I ResizeHalfVEBSS
++ I MoveUCenter
++ I Raise
+
+DestroyFunc MaxDInEBSIM
+AddToFunc MaxDInEBSIM
++ I ResizeHalfVEBSS
++ I MoveDCenter
++ I Raise
+
+DestroyFunc MaxGrowInEBS
+AddToFunc MaxGrowInEBS
++ I Maximize growonlayers $[w.layer] -1 grow grow
++ I Raise
+
+DestroyFunc FullScreen
+AddToFunc FullScreen
++ I EwmhBaseStruts 0 0 0 0
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (!Match) WindowStyle !Borders
++ I TestRc (!Match) Raise
++ I TestRc (!Match) UpdateStyles
++ I Maximize 100 100
++ I TestRc (Match) EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
++ I TestRc (!Match) AnimatedMove 50-50w 50-50w
++ I TestRc (!Match) EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
++ I TestRc (Match) All (CurrentPage, State 2) ThisWindow State 2 False
+
+DestroyFunc ResizeHalfMoveL
+AddToFunc ResizeHalfMoveL
++ I EwmhBaseStruts 0 0 0 0
++ I ResizeHalfH
++ I MoveLCenter
++ I Raise
++ I WarpToWindow 50 50
++ I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
+
+DestroyFunc ResizeHalfMoveR
+AddToFunc ResizeHalfMoveR
++ I EwmhBaseStruts 0 0 0 0
++ I ResizeHalfH
++ I MoveRCenter
++ I Raise
++ I WarpToWindow 50 50
++ I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
+
+DestroyFunc ResizeMaxInEBSS
+AddToFunc ResizeMaxInEBSS
++ I ResizeEBSS
++ I MoveCenter
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ResizeHalfMoveLIn
+AddToFunc ResizeHalfMoveLIn
++ I ResizeHalfHEBSS
++ I MoveLCenter
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ResizeHalfMoveRIn
+AddToFunc ResizeHalfMoveRIn
++ I ResizeHalfHEBSS
++ I MoveRCenter
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ResizeHalfMoveUIn
+AddToFunc ResizeHalfMoveUIn
++ I ResizeHalfVEBSS
++ I MoveUCenter
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ResizeHalfMoveDIn
+AddToFunc ResizeHalfMoveDIn
++ I ResizeHalfVEBSS
++ I MoveDCenter
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ResizeHalfMoveLInAll
+AddToFunc ResizeHalfMoveLInAll
++ I ResizeHalfHEBSSFullV
++ I MoveLCenter
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ResizeHalfMoveRInAll
+AddToFunc ResizeHalfMoveRInAll
++ I ResizeHalfHEBSSFullV
++ I MoveRCenter
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ShowDesktop
+AddToFunc   ShowDesktop
++ I Any (CurrentPage, Iconifiable, !Iconic) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, Iconifiable, Iconic) ThisWindow State 1 False
++ I TestRc (Match) KeepRc All (CurrentPage, Iconifiable, !Iconic) ThumbnailDesktop
++ I TestRc (NoMatch) RestoreDesktop
+
+DestroyFunc ThumbnailDesktop
+AddToFunc   ThumbnailDesktop
++ I All (CurrentPage, Iconifiable, !Iconic, !State 1) ThisWindow State 1 True
++ I All (CurrentPage, Iconifiable, !Iconic, State 1) Silent Thumbnail
+
+DestroyFunc RestoreDesktop
+AddToFunc   RestoreDesktop
++ I All (CurrentPage, Iconifiable, Iconic, State 1) Silent Iconify
+
+DestroyFunc Tile_X
+AddToFunc Tile_X
++ I Maximize grow 0
++ I Max2Size $[w.width] $[w.height] $[w.x] $[w.y]
+
+DestroyFunc Tile_Y
+AddToFunc Tile_Y
++ I Maximize 0 grow
++ I Max2Size $[w.width] $[w.height] $[w.x] $[w.y]
+
+DestroyFunc Max2Size
+AddToFunc Max2Size
++ I Maximize
++ I PipeRead 'echo ResizeMove\
+	$(($0 - 2*$[front_borderwidth]))p
+	$(($1 - 2*$[front_borderwidth]))p
+	$(($2 - $[fvwm_left_margin]))p
+	$3p'
+
+DestroyFunc BLC_Alt
+AddToFunc BLC_Alt
++ I GotoDeskAndPage prev
+
+DestroyFunc TXorC
+AddToFunc TXorC
++ I Test (F $[fvwm_tmp]/.winidlist.temp) Exec exec rm -f $[fvwm_tmp]/.winidlist.temp
++ I All (CurrentPage, !Iconic, Iconifiable) PipeRead 'echo "$$$$[w.id]" >> $[fvwm_tmp]/.winidlist.temp'
++ I TestRc (Match) PipeRead 'sh $[fvwm_script]/txorc.sh'
+
+DestroyFunc TYorC
+AddToFunc TYorC
++ I Test (F $[fvwm_tmp]/.winidlist.temp) Exec exec rm -f $[fvwm_tmp]/.winidlist.temp
++ I All (CurrentPage, !Iconic, Iconifiable) PipeRead 'echo "$$$$[w.id]" >> $[fvwm_tmp]/.winidlist.temp'
++ I TestRc (Match) PipeRead 'sh $[fvwm_script]/tyorc.sh'
+
+DestroyFunc ForTXorC
+AddToFunc  ForTXorC
++ I Any (CurrentPage, Maximized, !Iconic) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow State 2 True
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow WindowStyle Borders
++ I TestRc (Match) UpdateStyles
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow Maximize 100 100
++ I TestRc (Match) TXorC
++ I TestRc (Match) Break
++ I TestRc (!Match) Any (CurrentPage, State 2, !Iconic) Nop
++ I TestRc (!Match) TXorC
++ I TestRc (!Match) Break
++ I TestRc (Match) All (CurrentPage, State 2, !Iconic) ThisWindow FullScreen
+
+DestroyFunc  ForTYorC
+AddToFunc  ForTYorC
++ I Any (CurrentPage, Maximized, !Iconic) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow State 2 True
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow WindowStyle Borders
++ I TestRc (Match) UpdateStyles
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow Maximize 100 100
++ I TestRc (Match) TYorC
++ I TestRc (Match) Break
++ I TestRc (!Match) Any (CurrentPage, State 2, !Iconic) Nop
++ I TestRc (!Match) TYorC
++ I TestRc (!Match) Break
++ I TestRc (Match) All (CurrentPage, State 2, !Iconic) ThisWindow FullScreen
+
+DestroyFunc WindowListFunc
+AddToFunc WindowListFunc
++ I Iconify off
++ I FlipFocus
++ I Raise
++ I WarpToWindow 50 50
+
+DestroyFunc ToggleThumbnail
+AddToFunc ToggleThumbnail
++ I Thiswindow (Iconic) Iconify
++ I TestRc (Match) Break
++ I TestRc (!Match) Thiswindow (!Iconic) Silent Thumbnail
+
+DestroyFunc FvwmWindowScreenshot
+AddToFunc   FvwmWindowScreenshot
++ I ThisWindow (!Shaded !Iconic Iconifiable) \
+  Exec import -window $[w.id] -quality 100 -silent \
+  "$[fvwm_screenshot]/screenshot-`date +%F[%R]`.$[w.id].jpg"; \
+  notify-send Fvwm  "Screenshot saved!"
+
+DestroyFunc FvwmDesktopScreenshot
+AddToFunc   FvwmDesktopScreenshot
++ I Exec sleep $0; import -window root -quality 100 -silent \
+  "$[fvwm_screenshot]/screenshot-`date +%F[%R]`.jpg";\
+  notify-send Fvwm  "Screenshot saved!"
+
+DestroyFunc NextWindowFocus
+AddToFunc   NextWindowFocus
++ I PipeRead "sh $[fvwm_script]/next.sh"
+
+DestroyFunc PrevWindowFocus
+AddToFunc   PrevWindowFocus
++ I PipeRead "sh $[fvwm_script]/prev.sh"
