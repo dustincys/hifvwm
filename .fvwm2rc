@@ -47,6 +47,7 @@ SetEnv fvwmbuttons_height 420
 
 SetEnv fvwmpager_width 158
 SetEnv fvwmpager_height 350
+SetEnv fvwmpager_desktop_rows 4
 SetEnv fvwmtray_height 200
 
 SetEnv fvwmiconman_height 28

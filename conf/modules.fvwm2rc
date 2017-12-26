@@ -132,7 +132,7 @@ DestroyModuleConfig MyPager: *
 *MyPager: WindowColorsets  12 9
 *MyPager: MiniIcons
 *MyPager: UseSkipList
-*MyPager: Rows 4
+*MyPager: Rows $[fvwmpager_desktop_rows]
 *MyPager: NoSeparators
 *MyPager: SloppyFocus
 
