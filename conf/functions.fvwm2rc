@@ -455,3 +455,98 @@ AddToFunc   NextWindowFocus
 DestroyFunc PrevWindowFocus
 AddToFunc   PrevWindowFocus
 + I PipeRead "sh $[fvwm_script]/prev.sh"
+
+#######################################################################
+#                         Navigation function                         #
+#######################################################################
+
+DestroyFunc FuncFocusWindow
+AddToFunc FuncFocusWindow
++ I Focus
++ I WarpToWindow 50 50
+
+DestroyFunc  MaxAreaFocus
+AddToFunc  MaxAreaFocus
++ I Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent FuncFocusWindow
+
+DestroyFunc  GoUp
+AddToFunc  GoUp
++ I GotoPage 0p -1p
++ I MaxAreaFocus
+
+DestroyFunc  GoDown
+AddToFunc  GoDown
++ I GotoPage 0p +1p
++ I MaxAreaFocus
+
+DestroyFunc  GoLeft
+AddToFunc  GoLeft
++ I GotoPage -1p 0p
++ I MaxAreaFocus
+
+DestroyFunc  GoRight
+AddToFunc  GoRight
++ I GotoPage +1p 0p
++ I MaxAreaFocus
+
+DestroyFunc  GoUpDesk
+AddToFunc  GoUpDesk
++ I GotoDesk -1 0 7
++ I MaxAreaFocus
+
+DestroyFunc  GoDownDesk
+AddToFunc  GoDownDesk
++ I GotoDesk +1 0 7
++ I MaxAreaFocus
+
+DestroyFunc  GoNorthwest
+AddToFunc  GoNorthwest
++ I GotoPage 0 0
++ I MaxAreaFocus
+
+DestroyFunc  GoNorth
+AddToFunc  GoNorth
++ I GotoPage 1 0
++ I MaxAreaFocus
+
+DestroyFunc  GoNortheast
+AddToFunc  GoNortheast
++ I GotoPage 2 0
++ I MaxAreaFocus
+
+DestroyFunc  GoEast
+AddToFunc  GoEast
++ I GotoPage 2 1
++ I MaxAreaFocus
+
+DestroyFunc  GoSoutheast
+AddToFunc  GoSoutheast
++ I GotoPage 2 2
++ I MaxAreaFocus
+
+DestroyFunc  GoSouth
+AddToFunc  GoSouth
++ I GotoPage 1 2
++ I MaxAreaFocus
+
+DestroyFunc  GoSouthwest
+AddToFunc  GoSouthwest
++ I GotoPage 0 2
++ I MaxAreaFocus
+
+DestroyFunc  GoWest
+AddToFunc  GoWest
++ I GotoPage 0 1
++ I MaxAreaFocus
+
+DestroyFunc  GoCenter
+AddToFunc  GoCenter
++ I GotoPage 1 1
++ I MaxAreaFocus
+
+DestroyFunc  GoLast
+AddToFunc  GoLast
++ I GotoDeskAndPage prev
++ I MaxAreaFocus

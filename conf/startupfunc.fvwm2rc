@@ -32,7 +32,6 @@ AddToFunc   StartFunction
 + I Wait MyButtons
 + I Module FvwmButtons MyTray
 + I Wait MyTray
-+ I Exec exec fvwm-root -r $[fvwm_tmp]/temp.png
 + I Module FvwmEvent
 + I Module FvwmRearrange
 + I Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh
@@ -42,6 +41,7 @@ AddToFunc   StartFunction
 + I Module FvwmCommandS
 + I Module FvwmIconMan FvwmIconMan-Windows-Top
 + I Module FvwmIconMan FvwmIconMan-Windows-Bottom
++ I Exec exec fvwm-root -r $[fvwm_tmp]/temp.png
 
 DestroyFunc RestartFunction
 AddToFunc   RestartFunction

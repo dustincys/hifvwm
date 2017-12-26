@@ -8,7 +8,8 @@ AddToMenu   FvwmRootMenu "Root Menu" Title
 + "Terminal%menu/terminal.png%"  FvwmGTerm
 + "FVWM Console%menu/terminal.png%"  Module FvwmConsole
 + "" Nop
-+ "Update Wallpaper%menu/wallpaper.png%" Exec exec bash $[HOME]/.fvwm/scripts/updateWallpaper.sh
++ "Update wallpaper%menu/wallpaper.png%" Exec exec bash $[fvwm_script]/updateWallpaper.sh
++ "Show wallpaper info%menu/wallpaper.png%" Exec exec bash $[fvwm_script]/showWallpaper.sh
 + "" Nop
 + "Help%menu/help.png%"  Popup FvwmManPagesMenu
 + "Restart FVWM%menu/restart.png%"  Restart

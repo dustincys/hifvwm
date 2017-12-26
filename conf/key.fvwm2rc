@@ -12,7 +12,7 @@ Key Tab A MC WindowList (CurrentDesk) CurrentAtEnd,NoDeskSort,SelectOnRelease Me
 Key Tab W 4C Piperead "sh $[fvwm_script]/tabThisWinLstCurDesk.sh"
 Key Tab W 4 Piperead "sh $[fvwm_script]/tabThisWinLstAll.sh"
 
-Key Escape A 4 GotoDeskAndPage prev
+Key Escape A 4 GoLast
 Key Return W M FullScreen
 Key space W 4 FullScreen
 Key Print A A FvwmDesktopScreenshot
@@ -26,15 +26,15 @@ Key slash A 4 Stick
 Key comma A 4 StickAcrossPages
 Key period A 4 StickAcrossDesks
 
-Key q A 4 GotoPage 0 0
-Key a A 4 GotoPage 0 1
-Key z A 4 GotoPage 0 2
-Key w A 4 GotoPage 1 0
-Key s A 4 GotoPage 1 1
-Key x A 4 GotoPage 1 2
-Key e A 4 GotoPage 2 0
-Key d A 4 GotoPage 2 1
-Key c A 4 GotoPage 2 2
+Key q A 4 GoNorthwest
+Key a A 4 GoWest
+Key z A 4 GoSouthwest
+Key w A 4 GoNorth
+Key s A 4 GoCenter
+Key x A 4 GoSouth
+Key e A 4 GoNortheast
+Key d A 4 GoEast
+Key c A 4 GoSoutheast
 
 Key q W S4 PointerWindow MoveToPageAndGotoPage 0 0
 Key a W S4 PointerWindow MoveToPageAndGotoPage 0 1
@@ -67,13 +67,13 @@ Key j A CMS4 MoveToPageAndGotoPageA 0p +1p
 Key h A CMS4 MoveToPageAndGotoPageA -1p 0p
 Key l A CMS4 MoveToPageAndGotoPageA +1p 0p
 
-Key k A 4 GotoPage 0p -1p
-Key j A 4 GotoPage 0p +1p
-Key h A 4 GotoPage -1p 0p
-Key l A 4 GotoPage +1p 0p
+Key k A 4 GoUp
+Key j A 4 GoDown
+Key h A 4 GoLeft
+Key l A 4 GoRight
 
-Key k A 4C GotoDesk -1 0 3
-Key j A 4C GotoDesk +1 0 3
+Key k A 4C GoUpDesk
+Key j A 4C GoDownDesk
 
 Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0 3
 Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 3
