@@ -469,7 +469,7 @@ DestroyFunc  MaxAreaFocus
 AddToFunc  MaxAreaFocus
 + I Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
 + I TestRc (Match) Break
-+ I TestRc (!Match) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent FuncFocusWindow
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent FuncFocusWindow
 
 DestroyFunc  GoUp
 AddToFunc  GoUp
@@ -493,12 +493,12 @@ AddToFunc  GoRight
 
 DestroyFunc  GoUpDesk
 AddToFunc  GoUpDesk
-+ I Piperead 'echo GotoDesk -1 0 $(($[fvwmpager_desktop_rows]-1))'
++ I GotoDesk -1 0 3
 + I MaxAreaFocus
 
 DestroyFunc  GoDownDesk
 AddToFunc  GoDownDesk
-+ I Piperead 'echo GotoDesk +1 0 $(($[fvwmpager_desktop_rows]-1))'
++ I GotoDesk +1 0 3
 + I MaxAreaFocus
 
 DestroyFunc  GoNorthwest
@@ -550,3 +550,13 @@ DestroyFunc  GoLast
 AddToFunc  GoLast
 + I GotoDeskAndPage prev
 + I MaxAreaFocus
+
+DestroyFunc GoDict
+AddToFunc GoDict
++ I Thiswindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I TestRc (NoMatch) Next ("goldendict", AcceptsFocus) FuncFlipWindow
+
+DestroyFunc GoEmacs
+AddToFunc GoEmacs
++ I Thiswindow ("Emacs"|"Emacs24") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I TestRc (NoMatch) Next ("Emacs|Emacs24", AcceptsFocus) FuncFlipWindow

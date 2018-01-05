@@ -5,7 +5,7 @@ Key F1 A M Menu MenuFvwmRoot
 Key L A CM exec lock -f Monaco &
 Key R A 4 exec rofi -show run &
 Key F A 4 exec rofi -show window &
-Key P A 4 exec rofi -show ssh &
+Key T A 4 exec rofi -show ssh &
 
 Key Tab A M WindowList Root c c CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
 Key Tab A MC WindowList (CurrentDesk) CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
@@ -20,7 +20,10 @@ Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
 Key grave A 4 RaiseLower
 
 Key N A 4 Next (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
-Key 6 A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key semicolon A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+
+Key G A 4 GoDict
+Key B A 4 GoEmacs
 
 Key slash A 4 Stick
 Key comma A 4 StickAcrossPages

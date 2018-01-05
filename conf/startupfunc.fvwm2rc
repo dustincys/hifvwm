@@ -26,7 +26,7 @@ AddToFunc   StartFunction
 + I Exec exec bash -c "if pgrep stalonetray >/dev/null 2>&1; then pgrep stalonetray |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"
-+ I Module FvwmPager MyPager 0 3
++ I Piperead "echo Module FvwmPager MyPager 0 $(($[fvwmpager_desktop_rows]-1))"
 + I Wait MyPager
 + I Module FvwmButtons MyButtons
 + I Wait MyButtons

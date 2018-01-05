@@ -32,15 +32,17 @@ Style "eclipse" startsOnPage 1 0 1, MiniIcon 24x24-eclipse.png, EWMHMiniIconOver
 Style "RStudio" Icon 48x48/rstudio.png, StartsOnPage 1 0 1, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
 Style "gvim" Icon 48x48/vim.png, IconOverride, MiniIcon 24x24-gvim.png, EWMHMiniIconOverride
 Style "Emacs" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
+Style "Emacs24" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
 
-Style "MPlayer" Icon 48x48/mplayer.png, StartsOnPage 3 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
-Style "vlc" StartsOnPage 3 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride
-Style "smplayer" Icon 48x48/mplayer.png, StartsOnPage 3 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
-Style "transmission-gtk" Icon 48x48/transmission.png, StartsOnPage 3 1 0, MiniIcon 24x24-transmission.png, EWMHMiniIconOverride
+Style "MPlayer" Icon 48x48/mplayer.png, StartsOnPage 9 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
+Style "vlc" StartsOnPage 9 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride
+Style "smplayer" Icon 48x48/mplayer.png, StartsOnPage 9 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
+Style "transmission-gtk" Icon 48x48/transmission.png, StartsOnPage 9 1 0, MiniIcon 24x24-transmission.png, EWMHMiniIconOverride
 Style "remmina" Icon 48x48/remmina.png, MiniIcon remmina.png, EWMHMiniIconOverride
 
 Style "XTerm" Icon 48x48/terminal.png, MiniIcon 24x24-xterm-color_48x48.png, EWMHMiniIconOverride
 Style "Gnome-terminal" Icon 48x48/gnome-terminal.png, MiniIcon 24x24-utilities-terminal.png, EWMHMiniIconOverride
+Style "terminator" Icon 48x48/terminator.png, MiniIcon 24x24-terminator.png, EWMHMiniIconOverride
 Style "Nautilus" Icon 48x48/nautilus.png, StartsOnPage 1 1, MiniIcon nautilus.png, EWMHMiniIconOverride
 Style "Firefox" Icon 48x48/firefox.png, MiniIcon 24x24-firefox.png, EWMHMiniIconOverride, StartsOnPage 2 0
 Style "Google-chrome" Icon 48x48/google-chrome.png, MiniIcon 24x24-google-chrome.png, EWMHMiniIconOverride

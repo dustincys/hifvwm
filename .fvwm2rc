@@ -29,11 +29,12 @@ SetEnv fvwm_path1 /usr/bin
 
 SetEnv fvwm_mutt $[fvwm_path1]/mutt
 SetEnv fvwm_firefox $[fvwm_path1]/firefox
-SetEnv fvwm_chrome $[fvwm_path1]/google_chrome_stable
+SetEnv fvwm_chrome $[fvwm_path1]/google-chrome
 SetEnv fvwm_xterm $[fvwm_path1]/xterm
 SetEnv fvwm_gnome-terminal $[fvwm_path1]/gnome-terminal
 SetEnv fvwm_goldendict $[fvwm_path1]/goldendict
 SetEnv fvwm_rstudio $[fvwm_path1]/rstudio
+SetEnv fvwm_nautilus $[fvwm_path1]/nautilus
 
 ######################
 #  set width length  #
@@ -46,9 +47,9 @@ SetEnv fvwmbuttons_width 58
 SetEnv fvwmbuttons_height 420
 
 SetEnv fvwmpager_width 158
-SetEnv fvwmpager_height 350
-SetEnv fvwmpager_desktop_rows 4
-SetEnv fvwmtray_height 200
+SetEnv fvwmpager_height 800
+SetEnv fvwmpager_desktop_rows 10
+SetEnv fvwmtray_height 300
 
 SetEnv fvwmiconman_height 28
 
@@ -83,7 +84,12 @@ ImagePath $[fvwm_icon]:$[fvwm_icon];.png:+
 DesktopSize 3x3
 DesktopName 0 Main
 DesktopName 1 Work
-DesktopName 2 Fun
+DesktopName 2 Work
+DesktopName 3 Work
+DesktopName 4 Work
+DesktopName 5 Work
+DesktopName 6 Work
+DesktopName 8 Fun
 EdgeScroll 0 0
 EdgeResistance 150  150
 EdgeThickness 4
@@ -113,14 +119,10 @@ IconFont $[fvwm_font]
 
 Read ./conf/colorsets.fvwm2rc
 Read ./conf/styles.fvwm2rc
-
 Read ./conf/programfunc.fvwm2rc
-
 Read ./conf/functions.fvwm2rc
 Read ./conf/key.fvwm2rc
 Read ./conf/mouse.fvwm2rc
-
 Read ./conf/menus.fvwm2rc
 Read ./conf/modules.fvwm2rc
-
 Read ./conf/startupfunc.fvwm2rc
