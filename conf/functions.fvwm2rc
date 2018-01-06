@@ -553,10 +553,18 @@ AddToFunc  GoLast
 
 DestroyFunc GoDict
 AddToFunc GoDict
-+ I Thiswindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
-+ I TestRc (NoMatch) Next ("goldendict", AcceptsFocus) FuncFlipWindow
++ I Pointerwindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (NoMatch) keepRc Next ("goldendict", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (NoMatch) Break
++ I TestRc (Error) keepRc Next ("goldendict", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (Error) Break
 
 DestroyFunc GoEmacs
 AddToFunc GoEmacs
-+ I Thiswindow ("Emacs"|"Emacs24") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
-+ I TestRc (NoMatch) Next ("Emacs|Emacs24", AcceptsFocus) FuncFlipWindow
++ I Pointerwindow ("Emacs|Emacs24") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (NoMatch) keepRc Next ("Emacs|Emacs24", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (NoMatch) Break
++ I TestRc (Error) keepRc Next ("Emacs|Emacs24", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (Error) Break
