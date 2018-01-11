@@ -15,15 +15,11 @@ Mouse 3 _ N MouseBottomSideAction
 Mouse 4 W 4 MaxInEBSS
 Mouse 4 W 4S MaxGrowInEBS
 
-Mouse 5 A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t -h  0 $(($[fvwmiconman_height] + 2*$[back_borderwidth]))p\
- $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin] -1))p \
- $(($[vp.height]-$[fvwmiconman_height]-2*$[back_borderwidth] -1))p'
-Mouse 5 A 4S Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t 0 $(($[fvwmiconman_height] + 2*$[back_borderwidth]))p\
- $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin] -1))p \
- $(($[vp.height]-$[fvwmiconman_height]-2*$[back_borderwidth] -1))p'
+Mouse 5 A 4 TXorCIn
+Mouse 5 A 4S TYorCIn
 
-Mouse 5 A 4M FvwmRearrange -tile -mn 3 -m -u -s -t -ewmhiwa 0 0 100 100
-Mouse 5 A 4C FvwmRearrange -tile -mn 3 -m -u -s -t -h -ewmhiwa 0 0 100 100
+Mouse 5 A 4M TYorCF
+Mouse 5 A 4C TXorCF
 
 ####Stroke######
 

@@ -34,6 +34,8 @@ Style "gvim" Icon 48x48/vim.png, IconOverride, MiniIcon 24x24-gvim.png, EWMHMini
 Style "Emacs" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
 Style "Emacs24" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
 
+Style "Zotero" Icon 48x48/zotero.png, IconOverride, MiniIcon zotero.png, EWMHMiniIconOverride
+
 Style "MPlayer" Icon 48x48/mplayer.png, StartsOnPage 9 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
 Style "vlc" StartsOnPage 9 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride
 Style "smplayer" Icon 48x48/mplayer.png, StartsOnPage 9 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride

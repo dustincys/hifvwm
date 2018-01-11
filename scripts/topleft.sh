@@ -1,1 +1,1 @@
-FvwmCommand "ForTXorC"
+FvwmCommand "ForTXorCIn"

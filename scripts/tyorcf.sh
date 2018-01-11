@@ -4,7 +4,7 @@ then
     echo "Exec exec ~/.fvwm/scripts/tilefvwmtopright.sh"
 elif [ $wn -eq 2 ]
 then
-    echo "Exec exec ~/.fvwm/scripts/center2v.sh"
+    echo "Exec exec ~/.fvwm/scripts/center2vf.sh"
 elif [ $wn -eq 1 ]
 then
     echo "All (CurrentPage, !Iconic, Iconifiable) MaxInEBSS"

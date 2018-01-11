@@ -2,9 +2,9 @@
 # Basic Bindings
 ###########
 Key F1 A M Menu MenuFvwmRoot
-Key L A CM exec lock -f Monaco &
+Key L A CM Exec exec $[Home]/bin/lock -f Monaco
 Key R A 4 exec rofi -show run &
-Key F A 4 exec rofi -show window &
+Key P A 4 exec rofi -show window &
 Key T A 4 exec rofi -show ssh &
 
 Key Tab A M WindowList Root c c CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
@@ -20,7 +20,7 @@ Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
 Key grave A 4 RaiseLower
 
 Key N A 4 Next (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
-Key semicolon A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key F A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
 
 Key G A 4 GoDict
 Key B A 4 GoEmacs
@@ -59,7 +59,6 @@ Key e A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 0
 Key d A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 1
 Key c A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 2
 
-
 Key k A S4 PointerWindow MoveToPageAndGotoPage 0p -1p
 Key j A S4 PointerWindow MoveToPageAndGotoPage 0p +1p
 Key h A S4 PointerWindow MoveToPageAndGotoPage -1p 0p
@@ -89,7 +88,7 @@ Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key N A 4 Next (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
 Key 6 A 4 Prev (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
 Key M W 4 ResizeMaxInEBSS
-Key U A 4 Next (CurrentPage,Iconifiable,Iconic,AcceptsFocus) FuncFlipFocusWindow
+Key U A 4 Prev (CurrentPage,Iconifiable,Iconic,AcceptsFocus) ToggleThumbnail
 Key I W 4 ToggleThumbnail
 Key I I 4 ToggleThumbnail
 
@@ -106,11 +105,11 @@ Key Right W 4M ResizeHalfMoveR
 Key Up W 4C MaxInEBS
 Key Left W 4C ResizeHalfMoveLInAll
 Key Right W 4C ResizeHalfMoveRInAll
-Key Down A 4 TXorC
-Key Down A 4S TYorC
 
-Key Down A 4M FvwmRearrange -tile -mn 3 -m -u -s -t -h -ewmhiwa 0 0 100 100
-Key Down A 4C FvwmRearrange -tile -mn 3 -m -u -s -t -ewmhiwa 0 0 100 100
+Key Down A 4 TXorCIn
+Key Down A 4S TYorCIn
+Key Down A 4M TXorCF
+Key Down A 4C TYorCF
 
 Key Page_Up A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t -h  0 0 \
 	$(($[vp.width] - $[fvwm_left_margin] -$[fvwm_right_margin]))p \
@@ -118,7 +117,7 @@ Key Page_Up A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t -h  0 0 \
 Key Page_Down A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t  0 0 \
 	$(($[vp.width] - $[fvwm_left_margin] -$[fvwm_right_margin]))p \
 	$[vp.height]p'
-Key m A 4M Silent Maximize growonlayers $[w.layer] -1 grow grow
+Key  W 4 Silent Maximize growonlayers $[w.layer] -1 grow grow
 Key backslash W 4M Silent Maximize growonlayers $[w.layer] -1 0 grow
 Key minus W 4M Silent Maximize growonlayers $[w.layer] -1 grow 0
 
