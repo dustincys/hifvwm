@@ -458,23 +458,33 @@ DestroyFunc RestoreDesktop
 AddToFunc   RestoreDesktop
 + I All (CurrentPage, Iconifiable, Iconic, State 1) Silent Iconify
 
+DestroyFunc FRTile_X
+AddToFunc FRTile_X
++ I Piperead "echo 'All (CurrentPage, Iconifiable, !Iconic, !Shaded) Tile_X'"
++ I Piperead "echo 'Prev (CurrentPage, Iconifiable, !Iconic, !Shaded) silent FlipFocus'"
+
 DestroyFunc Tile_X
 AddToFunc Tile_X
-+ I Maximize grow 0
++ I Piperead "echo Maximize grow 0"
 + I Max2Size $[w.width] $[w.height] $[w.x] $[w.y]
+
+DestroyFunc FRTile_Y
+AddToFunc FRTile_Y
++ I Piperead "echo 'All (CurrentPage, Iconifiable, !Iconic, !Shaded) Tile_Y'"
++ I Piperead "echo 'Prev (CurrentPage, Iconifiable, !Iconic, !Shaded) silent FlipFocus'"
 
 DestroyFunc Tile_Y
 AddToFunc Tile_Y
-+ I Maximize 0 grow
++ I Piperead "echo Maximize 0 grow"
 + I Max2Size $[w.width] $[w.height] $[w.x] $[w.y]
 
 DestroyFunc Max2Size
 AddToFunc Max2Size
 + I Maximize
-+ I PipeRead 'echo ResizeMove\
-	$(($0 - 2*$[front_borderwidth]))p
-	$(($1 - 2*$[front_borderwidth]))p
-	$(($2 - $[fvwm_left_margin]))p
++ I PipeRead 'echo ResizeMove \
+	$(($0 - 2 * $[front_borderwidth]))p \
+	$(($1 - 2 * $[front_borderwidth]))p \
+	$(($2 - $[fvwm_left_margin]))p \
 	$3p'
 
 DestroyFunc BLC_Alt
