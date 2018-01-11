@@ -36,10 +36,11 @@ Style "Emacs24" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EW
 
 Style "Zotero" Icon 48x48/zotero.png, IconOverride, MiniIcon zotero.png, EWMHMiniIconOverride
 
-Style "MPlayer" Icon 48x48/mplayer.png, StartsOnPage 9 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
-Style "vlc" StartsOnPage 9 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride
-Style "smplayer" Icon 48x48/mplayer.png, StartsOnPage 9 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride
-Style "transmission-gtk" Icon 48x48/transmission.png, StartsOnPage 9 1 0, MiniIcon 24x24-transmission.png, EWMHMiniIconOverride
+Piperead "echo Style \"MPlayer\" Icon 48x48/mplayer.png, StartsOnPage  $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride"
+Piperead "echo Style \"vlc\" StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride"
+Piperead "echo Style \"smplayer\" Icon 48x48/mplayer.png, StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride"
+Piperead "echo Style \"transmission-gtk\" Icon 48x48/transmission.png, StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 1 0, MiniIcon 24x24-transmission.png, EWMHMiniIconOverride"
+
 Style "remmina" Icon 48x48/remmina.png, MiniIcon remmina.png, EWMHMiniIconOverride
 
 Style "XTerm" Icon 48x48/terminal.png, MiniIcon 24x24-xterm-color_48x48.png, EWMHMiniIconOverride

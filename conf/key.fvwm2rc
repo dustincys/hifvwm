@@ -77,8 +77,8 @@ Key l A 4 GoRight
 Key k A 4C GoUpDesk
 Key j A 4C GoDownDesk
 
-Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0 3
-Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 3
+Piperead "echo Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0   $(($[fvwmpager_desktop_rows]-1))"
+Piperead "echo Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 $(($[fvwmpager_desktop_rows]-1))"
 
 Key H A 4M Direction West  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key J A 4M Direction South (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow

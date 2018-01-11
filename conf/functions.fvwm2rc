@@ -682,12 +682,12 @@ AddToFunc  GoRight
 
 DestroyFunc  GoUpDesk
 AddToFunc  GoUpDesk
-+ I GotoDesk -1 0 3
++ I Piperead "echo GotoDesk -1 0 $(($[fvwmpager_desktop_rows]-1))"
 + I MaxAreaFocus
 
 DestroyFunc  GoDownDesk
 AddToFunc  GoDownDesk
-+ I GotoDesk +1 0 3
++ I Piperead "echo GotoDesk +1 0 $(($[fvwmpager_desktop_rows]-1))"
 + I MaxAreaFocus
 
 DestroyFunc  GoNorthwest
