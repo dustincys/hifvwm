@@ -7,6 +7,6 @@ then
 	echo "Exec exec ~/.fvwm/scripts/center2v.sh";
 elif [ $wn -eq 1 ]
 then
-	FvwmCommand "All (CurrentPage, "'!'"Iconic, Iconifiable, "'!'"shaded) Silent MaxInEBSS";
+	FvwmCommand "All (CurrentPage, "'!'"Iconic, Iconifiable, "'!'"shaded) Silent MaxInEBS";
 	rm  ~/.fvwm/tmp/.winidlist.temp  -f
 fi
