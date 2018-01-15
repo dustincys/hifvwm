@@ -21,6 +21,7 @@ Key grave A 4 RaiseLower
 
 Key N A 4 Next (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
 Key F A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key semicolon A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
 
 Key G A 4 GoDict
 Key B A 4 GoEmacs
@@ -88,7 +89,9 @@ Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key N A 4 Next (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
 Key 6 A 4 Prev (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
 Key M W 4 ResizeMaxInEBSS
-Key U A 4 Prev (CurrentPage,Iconifiable,Iconic,AcceptsFocus) ToggleThumbnail
+Key U A 4 WindowList (CurrentPage,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
+Key U A 4M WindowList (CurrentDesk,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
+Key U A 4MC WindowList (Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key I W 4 ToggleThumbnail
 Key I I 4 ToggleThumbnail
 
@@ -111,12 +114,8 @@ Key Down A 4S TYorCIn
 Key Down A 4M TXorCF
 Key Down A 4C TYorCF
 
-Key Page_Up A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t -h  0 0 \
-	$(($[vp.width] - $[fvwm_left_margin] -$[fvwm_right_margin]))p \
-	$[vp.height]p'
-Key Page_Down A 4 Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t  0 0 \
-	$(($[vp.width] - $[fvwm_left_margin] -$[fvwm_right_margin]))p \
-	$[vp.height]p'
+Key Page_Up A 4 TXorC
+Key Page_Down A 4 TYorC
 Key  W 4 Silent Maximize growonlayers $[w.layer] -1 grow grow
 Key backslash W 4M Silent Maximize growonlayers $[w.layer] -1 0 grow
 Key minus W 4M Silent Maximize growonlayers $[w.layer] -1 grow 0

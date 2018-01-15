@@ -325,6 +325,7 @@ DestroyFunc ResizeHalfTwoLR
 AddToFunc ResizeHalfTwoLR
 + I WindowId $0 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]/2\
+	-($[fvwm_left_margin]+$[fvwm_right_margin])/2\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]\
 	-2*$[front_borderwidth]))p'
@@ -332,6 +333,7 @@ AddToFunc ResizeHalfTwoLR
 + I WindowId $0 (!Iconic) Raise
 + I WindowId $1 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]/2\
+	-($[fvwm_left_margin]+$[fvwm_right_margin])/2\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]\
 	-2*$[front_borderwidth]))p'
@@ -365,6 +367,49 @@ DestroyFunc ResizeHalfTwoUD
 AddToFunc ResizeHalfTwoUD
 + I WindowId $0 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]\
+	-$[fvwm_left_margin]\
+	-$[fvwm_right_margin]\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]/2\
+	-2*$[front_borderwidth]))p'
++ I WindowId $0 (!Iconic) AnimatedMove 50-50w 50-100w
++ I WindowId $0 (!Iconic) Raise
++ I WindowId $1 (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]\
+	-$[fvwm_left_margin]\
+	-$[fvwm_right_margin]\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]/2\
+	-2*$[front_borderwidth]))p'
++ I WindowId $1 (!Iconic) AnimatedMove 50-50w 50
++ I WindowId $1 (!Iconic) Raise
+
+
+DestroyFunc ResizeHalfTwoLRF
+AddToFunc ResizeHalfTwoLRF
++ I EwmhBaseStruts 0 0 0 0
++ I WindowId $0 (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]/2\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]\
+	-2*$[front_borderwidth]))p'
++ I WindowId $0 (!Iconic) AnimatedMove 50-100w 50-50w
++ I WindowId $0 (!Iconic) Raise
++ I WindowId $1 (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]/2\
+	-2*$[front_borderwidth]))p \
+ 	$(($[vp.height]\
+	-2*$[front_borderwidth]))p'
++ I WindowId $1 (!Iconic) AnimatedMove 50 50-50w
++ I WindowId $1 (!Iconic) Raise
++ I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
+
+
+DestroyFunc ResizeHalfTwoUDF
+AddToFunc ResizeHalfTwoUDF
++ I EwmhBaseStruts 0 0 0 0
++ I WindowId $0 (!Iconic) Piperead 'echo Resize\
+	$(($[vp.width]\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]/2\
 	-2*$[front_borderwidth]))p'
@@ -377,19 +422,6 @@ AddToFunc ResizeHalfTwoUD
 	-2*$[front_borderwidth]))p'
 + I WindowId $1 (!Iconic) AnimatedMove 50-50w 50
 + I WindowId $1 (!Iconic) Raise
-
-
-DestroyFunc ResizeHalfTwoLRF
-AddToFunc ResizeHalfTwoLRF
-+ I EwmhBaseStruts 0 0 0 0
-+ I ResizeHalfTwoLR $0 $1
-+ I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
-
-
-DestroyFunc ResizeHalfTwoUDF
-AddToFunc ResizeHalfTwoUDF
-+ I EwmhBaseStruts 0 0 0 0
-+ I ResizeHalfTwoUD $0 $1
 + I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 
 
