@@ -29,7 +29,8 @@ Colorset 10 fg rgb:00/00/00, hi rgb:dd/00/00, sh rgb:dd/00/00, bg rgb:fb/fc/ec
 Colorset 11 RootTransparent, fg rgb:00/ff/ff,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint black 35, bgTint black 10
 
 Colorset 12 RootTransparent, fg rgb:ff/ff/c4, sh #a38300, hi #a38300, bg average, Tint black 5, bgTint black 5
-Colorset 13 RootTransparent, fg rgb:ff/ff/c4,sh rgb:88/88/88,hi rgb:cc/cc/cc, bg average, Tint #ffa300 50, bgTint #ffa300 50
+#Colorset 13 RootTransparent, fg rgb:ff/ff/c4,sh rgb:88/88/88,hi rgb:cc/cc/cc, bg average, Tint #ffa300 50, bgTint #ffa300 50
+Colorset 13 RootTransparent, fg rgb:00/00/00,sh rgb:aa/aa/aa, hi rgb:cc/cc/cc, bg average, Tint black 35, bgTint black 10
 Colorset 14 RootTransparent, fg rgb:ff/ff/c4,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint #00ffff 50, bgTint #00ffff 50
 Colorset 15 RootTransparent, fg rgb:ff/00/00,sh rgb:00/ff/00, hi rgb:00/00/ff
 Colorset 16 RootTransparent, fg rgb:ff/ff/c4,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint white 30, bgTint white 80
@@ -43,4 +44,5 @@ Colorset 18 RootTransparent, fg rgb:ff/ff/c4, sh #ffa300, hi #ffa300, bg average
 ####################
 
 Colorset 19 RootTransparent, fg rgb:ff/ff/ff,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint #a2a2ff 70, bgTint #a2a2ff 70
+Colorset 20 Translucent, fg rgb:00/ff/ff,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint black 35, bgTint black 10
 

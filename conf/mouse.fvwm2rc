@@ -4,6 +4,9 @@ Mouse 1 W M FvwmMoveOrIconify
 Mouse 3 W M FvwmMoveOrFullScreen
 Mouse 1 I A FvwmMoveOrIconify
 
+Mouse 1 SF N TransResizeHold
+Mouse 1 W 4 TransHold
+
 Mouse 3 - N MouseTopSideAction
 Mouse 3 [ N MouseLeftSideAction
 Mouse 3 ] N MouseRightSideAction

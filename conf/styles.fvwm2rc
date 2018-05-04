@@ -1,7 +1,7 @@
 ####################
 #  General Styles  #
 ####################
-
+Style * PositionPlacement Center
 Style * MouseFocusClickRaises
 Style * GrabFocusOff
 Style * NoPPosition, ResizeOpaque
@@ -29,12 +29,13 @@ Style * HilightBorderColorset 4
 
 Style "goldendict" Icon 48x48/goldendict.png, StartsOnPage 0 1 2, MiniIcon 24x24-goldendict.png, EWMHMiniIconOverride
 Style "eclipse" startsOnPage 1 0 1, MiniIcon 24x24-eclipse.png, EWMHMiniIconOverride
-Style "RStudio" Icon 48x48/rstudio.png, StartsOnPage 1 0 1, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
+Style "RStudio" Icon 48x48/rstudio.png, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
 Style "gvim" Icon 48x48/vim.png, IconOverride, MiniIcon 24x24-gvim.png, EWMHMiniIconOverride
 Style "Emacs" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
 Style "Emacs24" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
 
 Style "Zotero" Icon 48x48/zotero.png, IconOverride, MiniIcon zotero.png, EWMHMiniIconOverride
+Style "umbrello" Icon 48x48/umbrello.png, IconOverride, MiniIcon 24x24-umbrello.png, EWMHMiniIconOverride
 
 Piperead "echo Style \"MPlayer\" Icon 48x48/mplayer.png, StartsOnPage  $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride"
 Piperead "echo Style \"vlc\" StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride"
@@ -46,12 +47,12 @@ Style "remmina" Icon 48x48/remmina.png, MiniIcon remmina.png, EWMHMiniIconOverri
 Style "XTerm" Icon 48x48/terminal.png, MiniIcon 24x24-xterm-color_48x48.png, EWMHMiniIconOverride
 Style "Gnome-terminal" Icon 48x48/gnome-terminal.png, MiniIcon 24x24-utilities-terminal.png, EWMHMiniIconOverride
 Style "terminator" Icon 48x48/terminator.png, MiniIcon 24x24-terminator.png, EWMHMiniIconOverride
-Style "Nautilus" Icon 48x48/nautilus.png, StartsOnPage 1 1, MiniIcon nautilus.png, EWMHMiniIconOverride
-Style "Firefox" Icon 48x48/firefox.png, MiniIcon 24x24-firefox.png, EWMHMiniIconOverride, StartsOnPage 2 0
+Style "Nautilus" Icon 48x48/nautilus.png, MiniIcon nautilus.png, EWMHMiniIconOverride
+Style "Firefox" Icon 48x48/firefox.png, MiniIcon 24x24-firefox.png, EWMHMiniIconOverride
 Style "Google-chrome" Icon 48x48/google-chrome.png, MiniIcon 24x24-google-chrome.png, EWMHMiniIconOverride
 
 Style "okular" Icon 48x48/okular.png, MiniIcon 24x24-okular.png,  EWMHMiniIconOverride, StartsOnPage 1 0
-Style "CAJVieweru.exe" StartsOnPage 1 0, MiniIcon 24x24-B033_Icon38CE8FAD1.1.png, EWMHMiniIconOverride
+Style "CAJVieweru.exe" MiniIcon 24x24-B033_Icon38CE8FAD1.1.png, EWMHMiniIconOverride
 
 ##################
 #  Cursor Style  #
@@ -87,12 +88,12 @@ CursorStyle STROKE plus
 MenuStyle * PopupDelayed, PopupDelay 300, PopdownImmediately
 MenuStyle * PopupOffset -5 100, TitleWarpOff
 MenuStyle * TitleUnderlines2, SeparatorsLong, TrianglesSolid
-MenuStyle * AnimationOff, AutomaticHotkeysOff
+MenuStyle * Animation, AutomaticHotkeysOff
 MenuStyle * BorderWidth $[back_borderwidth]
 MenuStyle * PopupAsSubmenu, HoldSubmenus, SubmenusRight
 MenuStyle * ItemFormat "%|%5.5i%1.3l%2.3>%|"
 MenuStyle * VerticalItemSpacing 1 1, VerticalTitleSpacing 2 2
-MenuStyle * MenuColorset 11
+MenuStyle * MenuColorset 20
 MenuStyle * ActiveFore, Hilight3DOff
 MenuStyle * ActiveColorset 8
 MenuStyle * Font $[fvwm_font]
@@ -118,3 +119,8 @@ Style "MyButtons" NoTitle, !Handles, Sticky, WindowListSkip, CirculateSkip,\
 Style "MyTray" NoTitle, !Handles, !Borders, Sticky, WindowListSkip,\
 	CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable,\
 	!Maximizable
+
+###################
+#  set animation  #
+###################
+SetAnimation  15  -.01 0 .01 .03 .08 .18 .3 .45 .6 .75 .85 .90 .94 .97 .99 1.0

@@ -1,35 +1,60 @@
 #####
 # Basic Functions
 ###########
+DestroyFunc AnimatedDelete
+AddToFunc AnimatedDelete
++ I ThisWindow (!Shaded,!Iconic,Closable) Nop
++ I TestRc (Match) PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ I TestRc (Match) PipeRead "echo AnimatedMove w +0"
++ I TestRc (Match) PipeRead "echo Silent delete"
+
+DestroyFunc TransMove
+AddToFunc TransMove
++ M PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ M PipeRead 'echo Move'
++ M PipeRead 'echo Exec exec transset -i $[w.id] 1'
+
+DestroyFunc TransAnimatedMove
+AddToFunc TransAnimatedMove
++ M PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ M PipeRead 'echo AnimatedMove'
++ M PipeRead 'echo Exec exec transset -i $[w.id] 1'
+
+DestroyFunc TransResizeHold
+AddToFunc TransResizeHold
++ M PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ M PipeRead 'echo Resize'
++ M PipeRead 'echo Exec exec transset -i $[w.id] 1'
+
 DestroyFunc FvwmMoveOrFullScreen
 AddToFunc   FvwmMoveOrFullScreen
-+ M Move
++ M TransMove
 + D FullScreen
 
 DestroyFunc FvwmMoveOrIconify
 AddToFunc   FvwmMoveOrIconify
-+ M AnimatedMove
++ M TransAnimatedMove
 + D Silent Thumbnail
 
 DestroyFunc MouseTopSideAction
 AddToFunc MouseTopSideAction
 + D Silent Maximize 100 100
-+ M AnimatedMove
++ M TransAnimatedMove
 
 DestroyFunc MouseLeftSideAction
 AddToFunc MouseLeftSideAction
 + D Silent Destroy
-+ M AnimatedMove
++ M TransAnimatedMove
 
 DestroyFunc MouseRightSideAction
 AddToFunc MouseRightSideAction
-+ D Silent Delete
-+ M AnimatedMove
++ D Silent AnimatedDelete
++ M TransAnimatedMove
 
 DestroyFunc MouseBottomSideAction
 AddToFunc MouseBottomSideAction
 + D Silent Thumbnail
-+ M AnimatedMove
++ M TransAnimatedMove
 
 DestroyFunc MouseMiddleButtonBottomActionClick
 AddToFunc MouseMiddleButtonBottomActionClick
@@ -49,7 +74,7 @@ AddToFunc MouseMiddleButtonLeftAction
 
 DestroyFunc MouseMiddleButtonRightAction
 AddToFunc MouseMiddleButtonRightAction
-+ I Silent Delete
++ I Silent delete
 
 DestroyFunc Thumbnail
 AddToFunc Thumbnail
@@ -139,6 +164,8 @@ AddToFunc MoveToPageAndGotoPageA
 
 DestroyFunc MaxInEBS
 AddToFunc  MaxInEBS
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I Maximize 100 100
 + I Raise
 
@@ -214,23 +241,23 @@ AddToFunc ResizeHalfHEBSSFullV
 
 DestroyFunc MoveCenter
 AddToFunc MoveCenter
-+ I ThisWindow (!Iconic) AnimatedMove 50-50w 50-50w
++ I ThisWindow (!Iconic) PipeRead 'echo AnimatedMove 50-50w 50-50w'
 
 DestroyFunc MoveLCenter
 AddToFunc MoveLCenter
-+ I ThisWindow (!Iconic) AnimatedMove 50-100w 50-50w
++ I ThisWindow (!Iconic) PipeRead 'echo AnimatedMove 50-100w 50-50w'
 
 DestroyFunc MoveRCenter
 AddToFunc MoveRCenter
-+ I ThisWindow (!Iconic) AnimatedMove 50 50-50w
++ I ThisWindow (!Iconic) PipeRead 'echo AnimatedMove 50 50-50w'
 
 DestroyFunc MoveUCenter
 AddToFunc MoveUCenter
-+ I ThisWindow (!Iconic) AnimatedMove 50-50w 50-100w
++ I ThisWindow (!Iconic) PipeRead 'echo AnimatedMove 50-50w 50-100w'
 
 DestroyFunc MoveDCenter
 AddToFunc MoveDCenter
-+ I ThisWindow (!Iconic) AnimatedMove 50-50w 50
++ I ThisWindow (!Iconic) PipeRead 'echo AnimatedMove 50-50w 50'
 
 DestroyFunc MaxInEBSS
 AddToFunc MaxInEBSS
@@ -283,6 +310,8 @@ AddToFunc FullScreen
 DestroyFunc ResizeHalfMoveL
 AddToFunc ResizeHalfMoveL
 + I EwmhBaseStruts 0 0 0 0
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfH
 + I MoveLCenter
 + I Raise
@@ -292,6 +321,8 @@ AddToFunc ResizeHalfMoveL
 DestroyFunc ResizeHalfMoveR
 AddToFunc ResizeHalfMoveR
 + I EwmhBaseStruts 0 0 0 0
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfH
 + I MoveRCenter
 + I Raise
@@ -325,7 +356,6 @@ DestroyFunc ResizeHalfTwoLR
 AddToFunc ResizeHalfTwoLR
 + I WindowId $0 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]/2\
-	-($[fvwm_left_margin]+$[fvwm_right_margin])/2\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]\
 	-2*$[front_borderwidth]))p'
@@ -333,7 +363,6 @@ AddToFunc ResizeHalfTwoLR
 + I WindowId $0 (!Iconic) Raise
 + I WindowId $1 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]/2\
-	-($[fvwm_left_margin]+$[fvwm_right_margin])/2\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]\
 	-2*$[front_borderwidth]))p'
@@ -367,8 +396,6 @@ DestroyFunc ResizeHalfTwoUD
 AddToFunc ResizeHalfTwoUD
 + I WindowId $0 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]\
-	-$[fvwm_left_margin]\
-	-$[fvwm_right_margin]\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]/2\
 	-2*$[front_borderwidth]))p'
@@ -376,8 +403,6 @@ AddToFunc ResizeHalfTwoUD
 + I WindowId $0 (!Iconic) Raise
 + I WindowId $1 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]\
-	-$[fvwm_left_margin]\
-	-$[fvwm_right_margin]\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]/2\
 	-2*$[front_borderwidth]))p'
@@ -388,45 +413,21 @@ AddToFunc ResizeHalfTwoUD
 DestroyFunc ResizeHalfTwoLRF
 AddToFunc ResizeHalfTwoLRF
 + I EwmhBaseStruts 0 0 0 0
-+ I WindowId $0 (!Iconic) Piperead 'echo Resize\
-	$(($[vp.width]/2\
-	-2*$[front_borderwidth]))p \
- 	$(($[vp.height]\
-	-2*$[front_borderwidth]))p'
-+ I WindowId $0 (!Iconic) AnimatedMove 50-100w 50-50w
-+ I WindowId $0 (!Iconic) Raise
-+ I WindowId $1 (!Iconic) Piperead 'echo Resize\
-	$(($[vp.width]/2\
-	-2*$[front_borderwidth]))p \
- 	$(($[vp.height]\
-	-2*$[front_borderwidth]))p'
-+ I WindowId $1 (!Iconic) AnimatedMove 50 50-50w
-+ I WindowId $1 (!Iconic) Raise
++ I ResizeHalfTwoLR $0 $1
 + I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 
 
 DestroyFunc ResizeHalfTwoUDF
 AddToFunc ResizeHalfTwoUDF
 + I EwmhBaseStruts 0 0 0 0
-+ I WindowId $0 (!Iconic) Piperead 'echo Resize\
-	$(($[vp.width]\
-	-2*$[front_borderwidth]))p \
- 	$(($[vp.height]/2\
-	-2*$[front_borderwidth]))p'
-+ I WindowId $0 (!Iconic) AnimatedMove 50-50w 50-100w
-+ I WindowId $0 (!Iconic) Raise
-+ I WindowId $1 (!Iconic) Piperead 'echo Resize\
-	$(($[vp.width]\
-	-2*$[front_borderwidth]))p \
- 	$(($[vp.height]/2\
-	-2*$[front_borderwidth]))p'
-+ I WindowId $1 (!Iconic) AnimatedMove 50-50w 50
-+ I WindowId $1 (!Iconic) Raise
++ I ResizeHalfTwoUD $0 $1
 + I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 
 
 DestroyFunc ResizeMaxInEBSS
 AddToFunc ResizeMaxInEBSS
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeEBSS
 + I MoveCenter
 + I Raise
@@ -434,6 +435,8 @@ AddToFunc ResizeMaxInEBSS
 
 DestroyFunc ResizeHalfMoveLIn
 AddToFunc ResizeHalfMoveLIn
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSS
 + I MoveLCenter
 + I Raise
@@ -441,6 +444,8 @@ AddToFunc ResizeHalfMoveLIn
 
 DestroyFunc ResizeHalfMoveRIn
 AddToFunc ResizeHalfMoveRIn
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSS
 + I MoveRCenter
 + I Raise
@@ -448,6 +453,8 @@ AddToFunc ResizeHalfMoveRIn
 
 DestroyFunc ResizeHalfMoveUIn
 AddToFunc ResizeHalfMoveUIn
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfVEBSS
 + I MoveUCenter
 + I Raise
@@ -455,6 +462,8 @@ AddToFunc ResizeHalfMoveUIn
 
 DestroyFunc ResizeHalfMoveDIn
 AddToFunc ResizeHalfMoveDIn
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfVEBSS
 + I MoveDCenter
 + I Raise
@@ -462,6 +471,8 @@ AddToFunc ResizeHalfMoveDIn
 
 DestroyFunc ResizeHalfMoveLInAll
 AddToFunc ResizeHalfMoveLInAll
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSSFullV
 + I MoveLCenter
 + I Raise
@@ -469,6 +480,8 @@ AddToFunc ResizeHalfMoveLInAll
 
 DestroyFunc ResizeHalfMoveRInAll
 AddToFunc ResizeHalfMoveRInAll
++ I ThisWindow (Maximized) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSSFullV
 + I MoveRCenter
 + I Raise
@@ -789,3 +802,107 @@ AddToFunc GoEmacs
 + I TestRc (NoMatch) Break
 + I TestRc (Error) keepRc Next ("Emacs|Emacs24", AcceptsFocus)  FuncFlipFocusWindow
 + I TestRc (Error) Break
+
+DestroyFunc SmartFullScreen
+AddToFunc SmartFullScreen
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable, Maximizable) FullScreen
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent FullScreen
+
+DestroyFunc SmartToggleThumbnail
+AddToFunc SmartToggleThumbnail
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable, Maximizable) ToggleThumbnail
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ToggleThumbnail
+
+DestroyFunc SmartResizeMaxInEBSS
+AddToFunc SmartResizeMaxInEBSS
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeMaxInEBSS
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeMaxInEBSS
+
+DestroyFunc SmartResizeHalfMoveLInAll
+AddToFunc SmartResizeHalfMoveLInAll
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveLInAll
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveLInAll
+
+DestroyFunc SmartResizeHalfMoveRInAll
+AddToFunc SmartResizeHalfMoveRInAll
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveRInAll
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveRInAll
+
+DestroyFunc SmartResizeHalfMoveLIn
+AddToFunc SmartResizeHalfMoveLIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveLIn
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveLIn
+
+DestroyFunc SmartResizeHalfMoveRIn
+AddToFunc SmartResizeHalfMoveRIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveRIn
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveRIn
+
+DestroyFunc SmartResizeHalfMoveL
+AddToFunc SmartResizeHalfMoveL
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveL
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveL
+
+DestroyFunc SmartResizeHalfMoveR
+AddToFunc SmartResizeHalfMoveR
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveR
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveR
+
+DestroyFunc SmartResizeHalfMoveUIn
+AddToFunc SmartResizeHalfMoveUIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveUIn
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveUIn
+
+DestroyFunc SmartMaxInEBS
+AddToFunc SmartMaxInEBS
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) MaxInEBS
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent MaxInEBS
+
+DestroyFunc SmartResizeHalfMoveDIn
+AddToFunc SmartResizeHalfMoveDIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveDIn
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveDIn
+
+DestroyFunc SmartAnimatedDelete
+AddToFunc SmartAnimatedDelete
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable) AnimatedDelete
++ I TestRc (Match) Break
++ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent AnimatedDelete

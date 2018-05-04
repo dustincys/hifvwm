@@ -2,7 +2,7 @@
 # Basic Bindings
 ###########
 Key F1 A M Menu MenuFvwmRoot
-Key L A CM Exec exec $[Home]/bin/lock -f Monaco
+Key L A CM Exec exec $[HOME]/bin/lock -f Monaco
 Key R A 4 exec rofi -show run &
 Key P A 4 exec rofi -show window &
 Key T A 4 exec rofi -show ssh &
@@ -13,11 +13,10 @@ Key Tab W 4C Piperead "sh $[fvwm_script]/tabThisWinLstCurDesk.sh"
 Key Tab W 4 Piperead "sh $[fvwm_script]/tabThisWinLstAll.sh"
 
 Key Escape A 4 GoLast
-Key Return W M FullScreen
-Key space W 4 FullScreen
+Key space A 4 SmartFullScreen
 Key Print A A FvwmDesktopScreenshot
 Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
-Key grave A 4 RaiseLower
+Key grave W 4 Silent RaiseLower
 
 Key N A 4 Next (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
 Key F A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
@@ -86,28 +85,28 @@ Key J A 4M Direction South (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key K A 4M Direction North (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 
+Key Y A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key N A 4 Next (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
-Key 6 A 4 Prev (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
-Key M W 4 ResizeMaxInEBSS
+Key f A 4 Prev (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
+Key M A 4 SmartResizeMaxInEBSS
 Key U A 4 WindowList (CurrentPage,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key U A 4M WindowList (CurrentDesk,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key U A 4MC WindowList (Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
-Key I W 4 ToggleThumbnail
-Key I I 4 ToggleThumbnail
+Key I A 4 SmartToggleThumbnail
 
-Key Up W 4 ResizeMaxInEBSS
-Key Left W 4 ResizeHalfMoveLIn
-Key Right W 4 ResizeHalfMoveRIn
-Key Left W 4S  ResizeHalfMoveUIn
-Key Right W 4S ResizeHalfMoveDIn
+Key Up A 4 SmartResizeMaxInEBSS
+Key Left A 4 SmartResizeHalfMoveLIn
+Key Right A 4 SmartResizeHalfMoveRIn
+Key Left A 4S  SmartResizeHalfMoveUIn
+Key Right A 4S SmartResizeHalfMoveDIn
 
-Key Up W 4M FullScreen
-Key Left W 4M  ResizeHalfMoveL
-Key Right W 4M ResizeHalfMoveR
+Key Up A 4M SmartFullScreen
+Key Left A 4M  SmartResizeHalfMoveL
+Key Right A 4M SmartResizeHalfMoveR
 
-Key Up W 4C MaxInEBS
-Key Left W 4C ResizeHalfMoveLInAll
-Key Right W 4C ResizeHalfMoveRInAll
+Key Up A 4C SmartMaxInEBS
+Key Left A 4C SmartResizeHalfMoveLInAll
+Key Right A 4C SmartResizeHalfMoveRInAll
 
 Key Down A 4 TXorCIn
 Key Down A 4S TYorCIn
@@ -120,8 +119,8 @@ Key  W 4 Silent Maximize growonlayers $[w.layer] -1 grow grow
 Key backslash W 4M Silent Maximize growonlayers $[w.layer] -1 0 grow
 Key minus W 4M Silent Maximize growonlayers $[w.layer] -1 grow 0
 
-Key F4 A M Silent Delete
-Key F4 A C Silent Destroy
+Key 4 A 4 SmartAnimatedDelete
+Key 4 W C4 Silent Destroy
 
 Key T A CM FvwmXTerm
 Key Return A 4 FvwmGTerm
