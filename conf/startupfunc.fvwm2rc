@@ -4,7 +4,10 @@
 
 DestroyFunc InitFunction
 AddToFunc   InitFunction
-+ I Exec exec xcompmgr &
++ I Module FvwmBanner
++ I Exec exec bash $[HOME]/bin/screen_duplicate.sh
++ I Exec exec bash -c "compton --config $[fvwm_home]/compton.conf"
++ I Exec exec volumeicon
 + I Exec exec fcitx
 + I Exec exec sogou-qimpanel
 + I Exec exec bash -c "/usr/bin/xhost +si:localuser:$USER"
@@ -18,11 +21,12 @@ AddToFunc   InitFunction
 + I Exec exec brightside &
 + I Exec exec bash $[fvwm_script]/updateWallpaper.sh
 + I Exec exec bash $[HOME]/bin/nut.sh
++ I Exec exec bash $[fvwm_path1]/goldendict
++ I Exec exec bash $[HOME]/bin/unblank.sh
 + I GotoPage 0 1
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
-+ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
 + I Exec exec bash -c "if pgrep stalonetray >/dev/null 2>&1; then pgrep stalonetray |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"

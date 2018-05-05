@@ -67,10 +67,8 @@ Module FvwmIconMan FvwmIconMan-Windows-Top
 All (FvwmIconMan-Windows-Bottom) Close
 DestroyModuleConfig FvwmIconMan-Windows-Bottom: *
 *FvwmIconMan-Windows-Bottom: Resolution Desk
-#*FvwmIconMan-Windows-Bottom: Resolution Global
 *FvwmIconMan-Windows-Bottom: UseWinList True
 *FvwmIconMan-Windows-Bottom: DontShow Class=xmms,FvwmButtons,FvwmIconMan,FvwmPager,FvwmIdent,FvwmForm,
-#*FvwmIconMan-Windows-Bottom: Show Class=XTerm,Eterm,xfce4-terminal,konsole,gnome-terminal,Multi-gnome-terminal,urxvt
 *FvwmIconMan-Windows-Bottom: ShowNoIcons False
 *FvwmIconMan-Windows-Bottom: DrawIcons Always
 *FvwmIconMan-Windows-Bottom: Sort Id
@@ -134,7 +132,6 @@ DestroyModuleConfig MyPager: *
 *MyPager: UseSkipList
 *MyPager: Rows $[fvwmpager_desktop_rows]
 *MyPager: NoSeparators
-*MyPager: SloppyFocus
 
 ################
 #  FvwmButton  #
@@ -203,3 +200,12 @@ DestroyModuleConfig FvwmIdent: *
 
 DestroyModuleConfig FvwmEvent: *
 *FvwmEvent: deiconify DeThumbnail
+
+################
+#  FvwmBanner  #
+################
+
+DestroyModuleConfig FvwmBanner: *
+*FvwmBanner: NoDecor
+*FvwmBanner: Pixmap $[fvwm_home]/icons/logo/hifvwm.png
+*FvwmBanner: Timeout 5
