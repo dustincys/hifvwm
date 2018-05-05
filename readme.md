@@ -1,5 +1,7 @@
 # hifvwm
 
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+
 ![screen1](http://wx1.sinaimg.cn/large/61dccbaaly1fmk5k4srjhj211y0lc4q6.jpg "screen1")
 
 ![screen2](http://wx4.sinaimg.cn/large/61dccbaaly1fmk5k417aoj211y0lc1kj.jpg "screen2")
@@ -12,56 +14,76 @@
 hifvwm is a configuration for FVWM ([version 2.6.7](https://github.com/dustincys/fvwm)) that provides a feature-rich set of window manager defaults.
 hifvwm is designed for clean, simple, elegant, productive window management.
 
+## Features
 
-## hifvwm 是什么
+- Capable of manipulating dozens or even hundreds of windows simultaneously 
 
-hifvwm 是基于FVWM([version 2.6.7](https://github.com/dustincys/fvwm))的桌面配置。
-hifvwm的理念是简单、高效、优雅地窗口管理。
+    Most existing OS running on PC provides 1 desktop with a linear taskbar
+    (such as Windows, MAC, Gnome2/3, Unity, KDE). These desktop environments
+    confuse users while running dozens of window programs in 1 desktop and
+    showing the titles in a linear taskbar. It is quit laborious to locate and
+    switch the target window from these bunch of windows(even Window 10 and
+    Gnome 3 have multiple desktops, the users couldn't see the whole bunch of
+    windows clearly).
 
-## 为什么选择hifvwm
+- Cognitively straightforward
 
-### hifvwm的优点
+    hifvwm provides a series of smart operations which favors human intuition.
+    For example, while switching desktop, the non-overlapped, last focused
+    window in the desktop view is focused automatically.
 
-- 打开数十个左右规模的窗口也不会“蒙圈”
-- 符合人类思维习惯的设计
+- Task oriented
 
-### 其他WM的反人类设计
+    hifvwm provides easy-to-configure and easy-to-manage configuration
+    structure. Users could set desktop number and page (sub-desktop) number as
+    they want. This makes it easy for users to manipulate/organize windows. For example,
+    I could organize my windows as following structure:
 
-#### Windows, Unity 等直线式反人类任务栏
+    Windows (Specific program, such as "GVIM", "Firefox") -> Pages (Sub-Task,
+    specific functions, such as "Programing", "Web browsing") -> Desktops
+    (Tasks, such as "research project 1", "research project 2") -> hifvwm
 
-打开50个以上窗口，并发执行多个任务（例如，同时写论文，project编码、批量下载源数据、阅读新闻、阅读最新paper等等），出现什么情况？——窗口找不着了。
+    hifvwm also provides a series of smart window switch operations. For
+    example, hifvwm could recognize current window type, and navigate to any
+    window opened with the same type. If, there are 100 windows running on my
+    PC and if there are 20 Firefox windows, hifvwm could provides the Firefox
+    window list (length is 20, instead of 100) for user to switch.
 
-#### Windows, Gnome 等动态增加的反人类扩展桌面
+- View space saving
 
-这是Windows, Gnome等看到PC性能越来越强大，为了解决上面的反人类任务栏问题而设计。
-引入新的问题就是，无法掌控所有桌面，新问题是——桌面找不着了。
+    Since most of the monitor nowadays are widescreen, it is not advisable to
+    put the taskbar and menu bar horizontally, such as Windows/MAC/Gnome/KDE
+    default, cause we do not need that wide screen to browse web page or edit
+    text. hifvwm take the advantage of widescreen, puts large elements  (such
+    as program icons, desktop thumbnails) vertically aligned to the left and
+    right edge.
 
-#### i3, awesome WM  等平铺桌面的反人类平铺
+- Optimised key / mouse operation / mouse gesture
 
-即使你是周伯通，你也只能左右互博两个窗口。因为人类天生就是一心无法二用的单线程。平铺完全就是鸡肋，且平铺桌面更有上述两大缺点。几乎集所有缺点于一身。
+    For example, 
 
-#### 所有其他UI（包括MAC、windows的默认状态）的反人类的“宽”
+    1. hifvwm uses "Win" + "Space" to full-screen window, for they are the
+       large keys, and full-screen is the most frequently used operation.
+    2. hifvwm use "Win" + "B"  operation to navigate to Emacs Org-mode window
+       (note book), then hit these keys again, it goes back automatically.
 
-A4纸为什么不横着打印？目前主流显示器16:9，太宽了，人类视野区域在工作时很少用到（即使是左右互博，也太宽了）。所以，不要再占用垂直空间了。
+- Good-looking
 
-### hifvwm的设计思想
+    hifvwm provides a good-looking configuration default. hifvwm uses
+    background of Bing.com as wallpaper and updates daily automatically.
+    hifvwm provides a neat, transparent tool/task/desktop bar, and a feature
+    rich conky configuration.
 
-- 自动同步Bing搜索主页的壁纸
+- Optimized positions 
 
-每次电脑开机，午夜零点自动更新，用户也可以手动更新，从此审美再也不疲劳
+    hifvwm optimized the position of each elements to make it cognitively
+    straightforward.
 
-- 切换窗口自动聚焦到最上面的窗口
 
-使用键盘快捷键切换窗口时候，减少操作过程，自动聚焦到目标窗口。这一特性是虚拟窗口必须的人性化设计。
+## If you'd like to buy me (author) a drink
 
-- 类似window右下角的功能的最小化窗口来显示桌面的功能
+![wechat](http://wx2.sinaimg.cn/large/61dccbaaly1fqwvz6sd4ej20yi1au797.jpg "谢谢")
 
-此处类似win7\win10，实现在一个桌面之内操作多个任务。
+![zfb](http://wx3.sinaimg.cn/large/61dccbaaly1fizali9tafj20k00ucgos.jpg "谢谢")
 
-- 任务栏结合标题栏
-
-此处类似Unity的菜单栏结合标题栏，采用任务栏和标题栏结合，节省空间。
-
-- 同类窗口切换
-
-此处类似Unity的Dock，可以在同类窗口之内类似alt-tab的方式切换。
+Thank you!
