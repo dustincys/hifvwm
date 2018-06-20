@@ -102,21 +102,21 @@ MenuStyle * Font $[fvwm_font]
 #  Module Styles  #
 ###################
 
-Style FvwmIconMan*    Sticky, NoTitle, WindowListSkip, CirculateSkipIcon,\
+Style FvwmIconMan*    Sticky, NoTitle, WindowListSkip, CirculateSkipIcon, NeverFocus,\
 	NoHandles, BorderWidth $[back_borderwidth], FixedSize, !Iconifiable, StaysOnBottom,\
 	CirculateSkip, FixedPosition, !Maximizable, BorderColorset 19,\
 	HilightBorderColorset 19
 
-Style "MyPager" NoTitle, NoHandles, Sticky, WindowListSkip, CirculateSkip,\
+Style "MyPager" NoTitle, NoHandles, Sticky, WindowListSkip, CirculateSkip, NeverFocus,\
 	StaysOnBottom, FixedPosition, FixedSize, !Iconifiable,\
 	ParentalRelativity, !Maximizable, BorderWidth $[back_borderwidth], BorderColorset 19,\
 	HilightBorderColorset 19
 
-Style "MyButtons" NoTitle, !Handles, Sticky, WindowListSkip, CirculateSkip,\
+Style "MyButtons" NoTitle, !Handles, Sticky, WindowListSkip, CirculateSkip, NeverFocus,\
 	StaysOnBottom, FixedPosition, FixedSize, !Iconifiable, !Maximizable,\
 	BorderWidth $[back_borderwidth], BorderColorset 19, HilightBorderColorset 19
 
-Style "MyTray" NoTitle, !Handles, !Borders, Sticky, WindowListSkip,\
+Style "MyTray" NoTitle, !Handles, !Borders, Sticky, WindowListSkip, NeverFocus,\
 	CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable,\
 	!Maximizable
 
