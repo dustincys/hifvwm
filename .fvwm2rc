@@ -35,6 +35,8 @@ SetEnv fvwm_gnome-terminal $[fvwm_path1]/gnome-terminal
 SetEnv fvwm_goldendict $[fvwm_path1]/goldendict
 SetEnv fvwm_rstudio $[fvwm_path1]/rstudio
 SetEnv fvwm_nautilus $[fvwm_path1]/nautilus
+SetEnv fvwm_zotero $[fvwm_path1]/zotero
+SetEnv fvwm_emacs $[fvwm_path1]/emacs
 
 ######################
 #  set width length  #

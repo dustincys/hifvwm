@@ -5,28 +5,23 @@
 DestroyFunc InitFunction
 AddToFunc   InitFunction
 + I Module FvwmBanner
-+ I Exec exec bash $[HOME]/bin/screen_duplicate.sh
 + I Exec exec bash -c "compton --config $[fvwm_home]/compton.conf"
-+ I Exec exec volumeicon
++ I Exec exec bash -c "$HOME/.msmtp/msmtp-notify -l $HOME/.msmtp/msmtp.log &"
++ I Exec exec bash -c "xbanish"
 + I Exec exec fcitx
 + I Exec exec sogou-qimpanel
 + I Exec exec bash -c "/usr/bin/xhost +si:localuser:$USER"
-+ I GotoDesk 0 0
-+ I GotoPage 0 2
-+ I Exec exec bash -c "emacs -mm"
-+ I Wait emacs
-+ I GotoPage 0 0
-+ I Exec exec gnome-terminal --hide-menubar --window --command "bash -c 'LOCAL_CONFIG=qq $[fvwm_mutt]'" --maximize --name=EMAIL
-+ I Wait Gnome-terminal
++ I FvwmEmacs
 + I Exec exec brightside &
 + I Exec exec bash $[fvwm_script]/updateWallpaper.sh
 + I Exec exec bash $[HOME]/bin/nut.sh
-+ I Exec exec bash $[fvwm_path1]/goldendict
-+ I Exec exec bash $[HOME]/bin/unblank.sh
-+ I GotoPage 0 1
++ I Exec exec bash $[fvwm_goldendict]
++ I Exec exec volumeicon
++ I FvwmGTermEmail
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
++ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
 + I Exec exec bash -c "if pgrep stalonetray >/dev/null 2>&1; then pgrep stalonetray |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"

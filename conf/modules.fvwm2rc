@@ -67,8 +67,10 @@ Module FvwmIconMan FvwmIconMan-Windows-Top
 All (FvwmIconMan-Windows-Bottom) Close
 DestroyModuleConfig FvwmIconMan-Windows-Bottom: *
 *FvwmIconMan-Windows-Bottom: Resolution Desk
+#*FvwmIconMan-Windows-Bottom: Resolution Global
 *FvwmIconMan-Windows-Bottom: UseWinList True
 *FvwmIconMan-Windows-Bottom: DontShow Class=xmms,FvwmButtons,FvwmIconMan,FvwmPager,FvwmIdent,FvwmForm,
+#*FvwmIconMan-Windows-Bottom: Show Class=XTerm,Eterm,xfce4-terminal,konsole,gnome-terminal,Multi-gnome-terminal,urxvt
 *FvwmIconMan-Windows-Bottom: ShowNoIcons False
 *FvwmIconMan-Windows-Bottom: DrawIcons Always
 *FvwmIconMan-Windows-Bottom: Sort Id
@@ -132,6 +134,7 @@ DestroyModuleConfig MyPager: *
 *MyPager: UseSkipList
 *MyPager: Rows $[fvwmpager_desktop_rows]
 *MyPager: NoSeparators
+#*MyPager: SloppyFocus
 
 ################
 #  FvwmButton  #
@@ -145,36 +148,65 @@ DestroyModuleConfig MyButtons: *
 *MyButtons: Rows 38
 *MyButtons: Columns 1
 *MyButtons: Frame 0
-*MyButtons: (1x5, Frame 0, Icon 48x48/gnome-terminal.png, \
-  Action(Mouse 1) "FvwmGTerm", \
-  Action(Mouse 2) All ("Terminator|XTerm|Gnome-terminal", CurrentDesk) MoveToDeskAndPage,\
-  Action(Mouse 4) Prev ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) Focus,\
-  Action(Mouse 5) Next ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) FuncFlipWindow)
-*MyButtons: (1x5, Frame 0, Icon 48x48/nautilus.png, \
-  Action(Mouse 1) "FvwmFileBrowser", \
-  Action(Mouse 2) All ("Nautilus", CurrentDesk) MoveToDeskAndPage,\
-  Action(Mouse 4) Prev ("Nautilus", AcceptsFocus) Focus,\
-  Action(Mouse 5) Next ("Nautilus", AcceptsFocus) FuncFlipWindow)
-*MyButtons: (1x5, Frame 0, Icon 48x48/okular.png, \
-  Action(Mouse 1) "FvwmOkular",\
-  Action(Mouse 2) All ("Okular", CurrentDesk) MoveToDeskAndPage,\
-  Action(Mouse 4) Prev ("Okular", AcceptsFocus) Focus,\
-  Action(Mouse 5) Next ("Okular", AcceptsFocus) FuncFlipWindow)
-*MyButtons: (1x5, Frame 0, Icon 48x48/goldendict.png, \
-  Action(Mouse 1) "FvwmDictionary", \
-  Action(Mouse 2) All ("goldendict") MoveToDeskAndPage,\
-  Action(Mouse 4) Prev ("goldendict", AcceptsFocus) Focus,\
-  Action(Mouse 5) Next ("goldendict", AcceptsFocus) FuncFlipWindow)
-*MyButtons: (1x5, Frame 0, Icon 48x48/firefox.png, \
-  Action(Mosue 1) "FvwmFireFox",\
-  Action(Mouse 2) All ("Firefox|Google-chrome", CurrentDesk) MoveToDeskAndPage,\
-  Action(Mosue 3) "FvwmChrome",\
-  Action(Mouse 4) Prev ("Firefox|Google-chrome", AcceptsFocus) Focus,\
-  Action(Mouse 5) Next ("Firefox|Google-chrome", AcceptsFocus) FuncFlipWindow)
-*MyButtons: (1x5, Frame 0, Icon 48x48/icon.png, \
-  Action(Mouse 1) Next (CurrentDesk, Iconic) FuncFlipWindow,\
-  Action(Mouse 2) Next (CurrentDesk, Overlapped) FuncFlipWindow,\
-  Action(Mouse 3) "FuncMoveAllIconToPage")
+*MyButtons: (\
+		1x5,\
+		Frame 0,\
+		ActiveIcon 48x48/gnome-terminal.png, \
+		Icon 48x48/smallgnome-terminal.png,\
+		Action(Mouse 1) "FvwmGTerm", \
+		Action(Mouse 2) All ("Terminator|XTerm|Gnome-terminal", CurrentDesk) MoveToDeskAndPage,\
+		Action(Mouse 4) Prev ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) Focus,\
+		Action(Mouse 5) Next ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) FuncFlipWindow\
+	    )
+*MyButtons: (\
+		1x5,\
+		Frame 0,\
+		ActiveIcon 48x48/nautilus.png, \
+		Icon 48x48/smallnautilus.png, \
+		Action(Mouse 1) "FvwmFileBrowser", \
+		Action(Mouse 2) All ("Nautilus", CurrentDesk) MoveToDeskAndPage,\
+		Action(Mouse 4) Prev ("Nautilus", AcceptsFocus) Focus,\
+		Action(Mouse 5) Next ("Nautilus", AcceptsFocus) FuncFlipWindow\
+	    )
+*MyButtons: (\
+		1x5,\
+		Frame 0,\
+		ActiveIcon 48x48/okular.png, \
+		Icon 48x48/smallokular.png, \
+		Action(Mouse 1) "FvwmOkular",\
+		Action(Mouse 2) All ("Okular", CurrentDesk) MoveToDeskAndPage,\
+		Action(Mouse 4) Prev ("Okular", AcceptsFocus) Focus,\
+		Action(Mouse 5) Next ("Okular", AcceptsFocus) FuncFlipWindow\
+	    )
+*MyButtons: (\
+		1x5,\
+		Frame 0,\
+		ActiveIcon 48x48/goldendict.png, \
+		Icon 48x48/smallgoldendict.png, \
+		Action(Mouse 1) "FvwmDictionary", \
+		Action(Mouse 2) All ("goldendict") MoveToDeskAndPage,\
+		Action(Mouse 4) Prev ("goldendict", AcceptsFocus) Focus,\
+		Action(Mouse 5) Next ("goldendict", AcceptsFocus) FuncFlipWindow\
+	    )
+*MyButtons: (\
+		1x5,\
+		Frame 0,\
+		ActiveIcon 48x48/firefox.png, \
+		Icon 48x48/smallfirefox.png, \
+		Action(Mosue 1) "FvwmFireFox",\
+		Action(Mouse 2) All ("Firefox|Google-chrome", CurrentDesk) MoveToDeskAndPage,\
+		Action(Mosue 3) "FvwmChrome",\
+		Action(Mouse 4) Prev ("Firefox|Google-chrome", AcceptsFocus) Focus,\
+		Action(Mouse 5) Next ("Firefox|Google-chrome", AcceptsFocus) FuncFlipWindow)
+*MyButtons: (\
+		1x5,\
+		Frame 0,\
+		ActiveIcon 48x48/icon.png, \
+		Icon 48x48/smallicon.png, \
+		Action(Mouse 1) Next (CurrentDesk, Iconic) FuncFlipWindow,\
+		Action(Mouse 2) Next (CurrentDesk, Overlapped) FuncFlipWindow,\
+		Action(Mouse 3) "FuncMoveAllIconToPage"\
+	    )
 
 ############################
 #  FvwmButton stalonetray  #
@@ -205,7 +237,4 @@ DestroyModuleConfig FvwmEvent: *
 #  FvwmBanner  #
 ################
 
-DestroyModuleConfig FvwmBanner: *
-*FvwmBanner: NoDecor
-*FvwmBanner: Pixmap $[fvwm_home]/icons/logo/hifvwm.png
-*FvwmBanner: Timeout 5
+*FvwmBanner: Timeout 25

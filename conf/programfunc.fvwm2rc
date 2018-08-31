@@ -1,12 +1,7 @@
-#SetEnv back_borderwidth 1
-#SetEnv front_borderwidth 8
-#SetEnv fvwmbuttons_width 60
-#SetEnv fvwmpager_width 144
-#SetEnv fvwmiconman_height 28
-
 DestroyFunc CurrentCenter
 AddToFunc CurrentCenter
 + I Next Focus
++ I Current WarpToWindow 50 50
 + I Current Piperead 'echo Resize\
 	$(($[vp.width]\
 	-$[fvwm_left_margin]\
@@ -29,6 +24,49 @@ AddToFunc   FvwmGTerm
 + I Exec exec $[fvwm_gnome-terminal] --hide-menubar
 + I Wait Gnome-terminal
 + I CurrentCenter
+
+DestroyFunc FvwmGTermEmail
+AddToFunc   FvwmGTermEmail
++ I Next (State 3) silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I GotoDesk 0 0
++ I GotoPage 0 0
++ I Exec exec $[fvwm_gnome-terminal] --hide-menubar --window -- "$[fvwm_mutt]"
++ I Wait Gnome-terminal
++ I CurrentCenter
++ I Current State 3 True
+
+DestroyFunc FvwmGoldendict
+AddToFunc   FvwmGoldendict
++ I Next ("goldendict") silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I GotoDesk 0 0
++ I GotoPage 1 2
++ I Exec exec $[fvwm_goldendict]
++ I Wait Goldendict
++ I CurrentCenter
+
+DestroyFunc FvwmZotero
+AddToFunc   FvwmZotero
++ I Next ("Zotero") Piperead "echo 'MoveToDesk'"
++ I Next (CurrentDesk, "Zotero") Piperead "echo 'MoveToPage 2 2'"
++ I Next (CurrentDesk, "Zotero") silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I GotoPage 2 2
++ I PipeRead 'sh $[HOME]/bin/zotero'
++ I Wait Zotero
++ I CurrentCenter
+
+DestroyFunc FvwmEmacs
+AddToFunc   FvwmEmacs
++ I Next (State 4) silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I GotoDesk 0 0
++ I GotoPage 0 2
++ I Exec exec bash -c "$[fvwm_emacs] -mm"
++ I Wait Emacs
++ I CurrentCenter
++ I Current State 4 True
 
 DestroyFunc FvwmChrome
 AddToFunc   FvwmChrome

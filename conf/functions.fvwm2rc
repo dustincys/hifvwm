@@ -4,27 +4,37 @@
 DestroyFunc AnimatedDelete
 AddToFunc AnimatedDelete
 + I ThisWindow (!Shaded,!Iconic,Closable) Nop
-+ I TestRc (Match) PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ I TestRc (Match) PipeRead 'echo Exec exec transset-df -i $[w.id] 0.5'
 + I TestRc (Match) PipeRead "echo AnimatedMove w +0"
 + I TestRc (Match) PipeRead "echo Silent delete"
 
 DestroyFunc TransMove
 AddToFunc TransMove
-+ M PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ M PipeRead 'echo Exec exec transset-df -i $[w.id] 0.5'
 + M PipeRead 'echo Move'
-+ M PipeRead 'echo Exec exec transset -i $[w.id] 1'
++ M PipeRead 'echo Exec exec transset-df -i $[w.id] 1'
 
 DestroyFunc TransAnimatedMove
 AddToFunc TransAnimatedMove
-+ M PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ M PipeRead 'echo Exec exec transset-df -i $[w.id] 0.5'
 + M PipeRead 'echo AnimatedMove'
-+ M PipeRead 'echo Exec exec transset -i $[w.id] 1'
++ M PipeRead 'echo Exec exec transset-df -i $[w.id] 1'
 
 DestroyFunc TransResizeHold
 AddToFunc TransResizeHold
-+ M PipeRead 'echo Exec exec transset -i $[w.id] 0.5'
++ M PipeRead 'echo Exec exec transset-df -i $[w.id] 0.5'
 + M PipeRead 'echo Resize'
-+ M PipeRead 'echo Exec exec transset -i $[w.id] 1'
++ M PipeRead 'echo Exec exec transset-df -i $[w.id] 1'
+
+DestroyFunc TogglePageTransparent
+AddToFunc TogglePageTransparent
++ I Any (CurrentPage, State 5) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'transset-df -i $[w.id] 1 &'
++ I TestRc (Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'echo State 5 False'
++ I TestRc (Match) break
++ I TestRc (!Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'transset-df -i $[w.id] 0.5 &'
++ I TestRc (!Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'echo State 5 True'
++ I TestRc (!Match) break
 
 DestroyFunc FvwmMoveOrFullScreen
 AddToFunc   FvwmMoveOrFullScreen
@@ -129,8 +139,8 @@ AddToFunc FuncDeiconFlipFocusWindow
 
 DestroyFunc MoveToDeskAndPage
 AddToFunc MoveToDeskAndPage
-+ I MoveToDesk
-+ I MoveToPage
++ I Piperead "echo 'MoveToDesk'"
++ I Piperead "echo 'MoveToPage'"
 
 DestroyFunc MoveToDeskAndPageIM
 AddToFunc MoveToDeskAndPageIM
@@ -139,18 +149,18 @@ AddToFunc MoveToDeskAndPageIM
 
 DestroyFunc MoveToDeskAndGotoDesk
 AddToFunc MoveToDeskAndGotoDesk
-+ I MoveToDesk $0 $1 $2
-+ I GoToDesk $0 $1 $2
++ I Piperead "echo 'MoveToDesk $0 $1 $2'"
++ I Piperead "echo 'GoToDesk $0 $1 $2'"
 
 DestroyFunc MoveToDeskAndGotoDeskC
 AddToFunc MoveToDeskAndGotoDeskC
-+ I MoveToDesk $0 $1 $2
-+ I GoToDesk $0 $1 $2
++ I Piperead "echo 'MoveToDesk $0 $1 $2'"
++ I Piperead "echo 'GoToDesk $0 $1 $2'"
 
 DestroyFunc MoveToDeskAndGotoDeskCA
 AddToFunc MoveToDeskAndGotoDeskCA
-+ I All (CurrentPage) MoveToDesk $0 $1 $2
-+ I GoToDesk $0 $1 $2
++ I All (CurrentPage) Piperead "echo 'MoveToDesk $0 $1 $2'"
++ I Piperead "echo 'GoToDesk $0 $1 $2'"
 
 DestroyFunc MoveToPageAndGotoPage
 AddToFunc MoveToPageAndGotoPage
@@ -159,8 +169,8 @@ AddToFunc MoveToPageAndGotoPage
 
 DestroyFunc MoveToPageAndGotoPageA
 AddToFunc MoveToPageAndGotoPageA
-+ I All (CurrentPage) MoveToPage $0 $1
-+ I GotoPage $0 $1
++ I All (CurrentPage) Piperead "echo 'MoveToPage $0 $1'"
++ I Piperead "echo 'GotoPage $0 $1'"
 
 DestroyFunc MaxInEBS
 AddToFunc  MaxInEBS
@@ -586,6 +596,22 @@ AddToFunc  ForTXorCIn
 + I TestRc (!Match) Break
 + I TestRc (Match) All (CurrentPage, State 2, !Iconic) ThisWindow FullScreen
 
+DestroyFunc SmartRearrangeH
+AddToFunc SmartRearrangeH
++ I Any (CurrentPage, Maximized, !Iconic) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow WindowStyle Borders
++ I TestRc (Match) Piperead 'echo UpdateStyles'
++ I Piperead 'echo FvwmRearrange -tile -mn 3 -m -u -s -t -h  0  \$((\$[fvwmiconman_height] + 2 * \$[back_borderwidth]))p \$((\$[vp.width]-\$[fvwm_left_margin]-\$[fvwm_right_margin]-1))p \$((\$[vp.height] - (\$[fvwmiconman_height] + 2 * \$[back_borderwidth])))p';
+
+
+DestroyFunc SmartRearrangeV
+AddToFunc SmartRearrangeV
++ I Any (CurrentPage, Maximized, !Iconic) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow WindowStyle Borders
++ I TestRc (Match) Piperead 'echo UpdateStyles'
++ I Piperead 'echo FvwmRearrange -tile -mn 3 -animate -m -u -s -t 0 \$((\$[fvwmiconman_height]+2*\$[back_borderwidth]))p \$((\$[vp.width]-\$[fvwm_left_margin]-\$[fvwm_right_margin]-1))p \$((\$[vp.height]-(\$[fvwmiconman_height]+2*\$[back_borderwidth])-1))p';
+
+
 DestroyFunc  ForTYorCIn
 AddToFunc  ForTYorCIn
 + I Any (CurrentPage, Maximized, !Iconic) Nop
@@ -740,67 +766,149 @@ AddToFunc  GoNorthwest
 + I GotoPage 0 0
 + I MaxAreaFocus
 
+DestroyFunc SmartGoNorthwest
+AddToFunc SmartGoNorthwest
++ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoNorthWest\";fi"
+
 DestroyFunc  GoNorth
 AddToFunc  GoNorth
 + I GotoPage 1 0
 + I MaxAreaFocus
+
+DestroyFunc SmartGoNorth
+AddToFunc SmartGoNorth
++ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoNorth\";fi"
 
 DestroyFunc  GoNortheast
 AddToFunc  GoNortheast
 + I GotoPage 2 0
 + I MaxAreaFocus
 
+DestroyFunc SmartGoNortheast
+AddToFunc SmartGoNortheast
++ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoNortheast\";fi"
+
 DestroyFunc  GoEast
 AddToFunc  GoEast
 + I GotoPage 2 1
 + I MaxAreaFocus
+
+DestroyFunc SmartGoEast
+AddToFunc SmartGoEast
++ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoEast\";fi"
 
 DestroyFunc  GoSoutheast
 AddToFunc  GoSoutheast
 + I GotoPage 2 2
 + I MaxAreaFocus
 
+DestroyFunc SmartGoSoutheast
+AddToFunc SmartGoSoutheast
++ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoSoutheast\";fi"
+
 DestroyFunc  GoSouth
 AddToFunc  GoSouth
 + I GotoPage 1 2
 + I MaxAreaFocus
+
+DestroyFunc SmartGoSouth
+AddToFunc SmartGoSouth
++ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoSouth\";fi"
 
 DestroyFunc  GoSouthwest
 AddToFunc  GoSouthwest
 + I GotoPage 0 2
 + I MaxAreaFocus
 
+DestroyFunc SmartGoSouthwest
+AddToFunc SmartGoSouthwest
++ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoSouthwest\";fi"
+
 DestroyFunc  GoWest
 AddToFunc  GoWest
 + I GotoPage 0 1
 + I MaxAreaFocus
+
+DestroyFunc SmartGoWest
+AddToFunc SmartGoWest
++ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoWest\";fi"
 
 DestroyFunc  GoCenter
 AddToFunc  GoCenter
 + I GotoPage 1 1
 + I MaxAreaFocus
 
-DestroyFunc  GoLast
-AddToFunc  GoLast
+DestroyFunc SmartGoCenter
+AddToFunc SmartGoCenter
++ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"GoLastPage\"; else echo \"GoCenter\";fi"
+
+DestroyFunc  GoLastDeskAndPage
+AddToFunc  GoLastDeskAndPage
 + I GotoDeskAndPage prev
++ I MaxAreaFocus
+
+DestroyFunc  GoLastDesk
+AddToFunc  GoLastDesk
++ I GotoDesk prev
++ I MaxAreaFocus
+
+DestroyFunc  GoLastPage
+AddToFunc  GoLastPage
++ I GotoPage prev
 + I MaxAreaFocus
 
 DestroyFunc GoDict
 AddToFunc GoDict
-+ I Pointerwindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I Pointerwindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !State 3) silent FuncFlipFocusWindow
 + I TestRc (Match) Break
-+ I TestRc (NoMatch) keepRc Next ("goldendict", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (NoMatch) FvwmGoldendict
 + I TestRc (NoMatch) Break
-+ I TestRc (Error) keepRc Next ("goldendict", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (Error) FvwmGoldendict
 + I TestRc (Error) Break
 
 DestroyFunc GoEmacs
 AddToFunc GoEmacs
-+ I Pointerwindow ("Emacs|Emacs24") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I Pointerwindow (State 4) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !"goldendict", !State 3) silent FuncFlipFocusWindow
 + I TestRc (Match) Break
-+ I TestRc (NoMatch) keepRc Next ("Emacs|Emacs24", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (NoMatch) FvwmEmacs
 + I TestRc (NoMatch) Break
-+ I TestRc (Error) keepRc Next ("Emacs|Emacs24", AcceptsFocus)  FuncFlipFocusWindow
++ I TestRc (Error) FvwmEmacs
++ I TestRc (Error) Break
+
+DestroyFunc GoEmail
+AddToFunc GoEmail
++ I Pointerwindow (State 3) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !"goldendict") silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (NoMatch) FvwmGTermEmail
++ I TestRc (NoMatch) Break
++ I TestRc (Error) FvwmGTermEmail
++ I TestRc (Error) Break
+
+DestroyFunc GoZotero
+AddToFunc GoZotero
++ I Pointerwindow ("Zotero") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (NoMatch) FvwmZotero
++ I TestRc (NoMatch) Break
++ I TestRc (Error) FvwmZotero
++ I TestRc (Error) Break
+
+DestroyFunc AltMode
+AddToFunc AltMode
++ I Pointerwindow (Maximized) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded,!Maximized) silent FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (NoMatch) keepRc Prev (Maximized) silent FuncFlipFocusWindow
++ I TestRc (NoMatch) Break
++ I TestRc (Error) keepRc Prev (Maximized) silent FuncFlipFocusWindow
 + I TestRc (Error) Break
 
 DestroyFunc SmartFullScreen

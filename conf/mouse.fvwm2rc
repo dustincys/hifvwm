@@ -4,8 +4,7 @@ Mouse 1 W M FvwmMoveOrIconify
 Mouse 3 W M FvwmMoveOrFullScreen
 Mouse 1 I A FvwmMoveOrIconify
 
-Mouse 1 SF N TransResizeHold
-Mouse 1 W 4 TransHold
+Mouse 1 FS N TransResizeHold
 
 Mouse 3 - N MouseTopSideAction
 Mouse 3 [ N MouseLeftSideAction
@@ -43,6 +42,7 @@ Stroke 258 0 W 4S PointerWindow MoveToPage 0p +1p
 Stroke 654 0 W 4S PointerWindow MoveToPage -1p 0p
 Stroke 456 0 W 4S PointerWindow MoveToPage +1p 0p
 
+
 Stroke 951 0 W 4S PointerWindow MoveToPage -1p -1p
 Stroke 753 0 W 4S PointerWindow MoveToPage +1p -1p
 Stroke 159 0 W 4S PointerWindow MoveToPage +1p +1p
@@ -67,6 +67,32 @@ Stroke 951 0 A 4 GotoPage +1p +1p
 Stroke 753 0 A 4 GotoPage -1p +1p
 Stroke 159 0 A 4 GotoPage -1p -1p
 Stroke 357 0 A 4 GotoPage +1p -1p
+
+Stroke 85258 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 8525 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5258 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 25852 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 2585 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5852 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 65456 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5456 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 6545 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 45654 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5654 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 4565 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+
+Stroke 95159 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 9515 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5159 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 75357 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5357 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 7535 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 15951 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5951 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 1595 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 35753 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 3575 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Stroke 5753 0 A 4 Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
 
 Mouse 2 W 4S StrokeFunc DrawMotion, StrokeWidth $[front_borderwidth]
 Mouse 2 A 4 StrokeFunc DrawMotion, StrokeWidth $[front_borderwidth]

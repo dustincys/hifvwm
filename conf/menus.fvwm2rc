@@ -19,7 +19,7 @@ AddToMenu   FvwmRootMenu "Root Menu" Title
 #  Programs Menu  #
 ###################
 
-PipeRead 'python2 /usr/local/bin/fvwm-menu-desktop -t Programs'
+PipeRead 'python3.7 /usr/local/bin/fvwm-menu-desktop -t Programs'
 
 ###############
 #  Help Menu  #

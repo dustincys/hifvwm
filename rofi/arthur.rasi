@@ -1,0 +1,158 @@
+/**
+ * ROFI Color theme
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+
+configuration {
+
+    // The display name of this browser
+    display-ssh:                   "ssh ";
+    // The display name of this browser
+    display-run:                    "run ";
+    // The display name of this browser
+    display-drun:                   "drun ";
+    // The display name of this browser
+    display-window:                 "window ";
+    display-combi:                  "combi ";
+    show-icons: true;
+}
+
+
+/**
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+* {
+    foreground:  #dddddd;
+    border: #c2c2ff;
+    backlight:   #eeeeee88;
+    background-color:  transparent;
+    dark: #2e2e2e88;
+    // Black
+    black:       #3d3d3daa;
+    tlightblack:  #2e2e2e22;
+	orange: #ef5a29;
+    lightgreen:  #88cc22;
+    blue:      #525277;
+    lightblue:     #87ceeb;
+    highlight:     underline bold #af9f29;
+
+    transparent: rgba(0,0,0,0);
+    font: "Monaco 14";
+}
+#window {
+    location: center;
+    anchor:   center;
+    transparency: "screenshot";
+    padding: 10px;
+    border:  0px;
+    color: @magenta;
+    background-color: @transparent;
+    spacing: 0;
+    children:  [vertb, mainbox];
+    orientation: horizontal;
+}
+
+#mainbox {
+    spacing: 0;
+    children: [ inputbar, message, listview ];
+}
+
+#message {
+    border-color: @border;
+    border:  0px 1px 1px 1px;
+    padding: 5;
+    background-color: @black;
+}
+#message {
+    font: "Monaco 14";
+    color: @black;
+}
+
+#inputbar {
+    color: @lightgreen;
+    padding: 11px;
+    background-color: @tlightblack;
+    border: 1px 1px 1px 1px;
+    border-color: @border;
+    font: "Monaco 14";
+}
+#entry,prompt,case-indicator {
+    text-font: inherit;
+    text-color:inherit;
+}
+#listview {
+    padding: 8px;
+    border-color: @border;
+    border: 0px 1px 1px 1px;
+    background-color: #1c1c1c88;
+    dynamic: true;
+    lines: 10;
+}
+#element {
+    padding: 3px;
+    vertical-align: 0.5;
+    background-color: transparent;
+    color: @foreground;
+    font:inherit;
+}
+#element selected.normal {
+color: @orange;
+}
+#element normal active {
+    foreground: @blue;
+}
+#element normal urgent {
+    foreground: @lightred;
+}
+#element alternate normal {
+}
+#element alternate active {
+    foreground: @lightblue;
+}
+#element alternate urgent {
+    foreground: @lightred;
+}
+#element selected active {
+    background-color: @lightblue;
+    foreground: @dark;
+}
+#element selected urgent {
+    background-color: @lightred;
+    foreground: @dark;
+}
+#element normal normal {
+
+}
+
+#vertb {
+    expand: false;
+    children: [ dummy0, sidebar, dummy1  ];
+}
+#dummy0,  dummy1 {
+    expand: true;
+}
+
+#sidebar {
+    expand: false;
+    orientation: vertical;
+    spacing: 0px;
+    border: 0px 0px 0px 0px;
+}
+#button {
+    font: "Monaco 14";
+    padding: 6px;
+    border: 1px 0px 1px 1px;
+    background-color: @tlightblack;
+    border-color: @border;
+    color: @foreground;
+    horizontal-align: 0.5;
+}
+#button selected normal {
+    color: @dark;
+    border: 1px 0px 1px 1px;
+    background-color: @backlight;
+    border-color: @border;
+}
+

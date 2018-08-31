@@ -2,42 +2,49 @@
 # Basic Bindings
 ###########
 Key F1 A M Menu MenuFvwmRoot
+Key F11 W M Module FvwmIdent
 Key L A CM Exec exec $[HOME]/bin/lock -f Monaco
 Key R A 4 exec rofi -show run &
 Key P A 4 exec rofi -show window &
 Key T A 4 exec rofi -show ssh &
+Key minus W 4 Silent raiselower
 
 Key Tab A M WindowList Root c c CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
 Key Tab A MC WindowList (CurrentDesk) CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
 Key Tab W 4C Piperead "sh $[fvwm_script]/tabThisWinLstCurDesk.sh"
 Key Tab W 4 Piperead "sh $[fvwm_script]/tabThisWinLstAll.sh"
 
-Key Escape A 4 GoLast
+Key Escape A 4 GoLastDeskAndPage
 Key space A 4 SmartFullScreen
 Key Print A A FvwmDesktopScreenshot
 Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
-Key grave W 4 Silent RaiseLower
 
-Key N A 4 Next (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key 6 A 4 Prev (AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key V A 4 Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) FuncFlipFocusWindow
 Key F A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
-Key semicolon A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key BackSpace A 4 AltMode
+Key grave A 4 AltMode
+Key space A M Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
 
 Key G A 4 GoDict
 Key B A 4 GoEmacs
+Key apostrophe A 4 GoEmail
+Key 1 A 4 GoEmail
+Key 0 A 4 GoZotero
 
 Key slash A 4 Stick
 Key comma A 4 StickAcrossPages
 Key period A 4 StickAcrossDesks
 
-Key q A 4 GoNorthwest
-Key a A 4 GoWest
-Key z A 4 GoSouthwest
-Key w A 4 GoNorth
-Key s A 4 GoCenter
-Key x A 4 GoSouth
-Key e A 4 GoNortheast
-Key d A 4 GoEast
-Key c A 4 GoSoutheast
+Key q A 4 SmartGoNorthwest
+Key a A 4 SmartGoWest
+Key z A 4 SmartGoSouthwest
+Key w A 4 SmartGoNorth
+Key s A 4 SmartGoCenter
+Key x A 4 SmartGoSouth
+Key e A 4 SmartGoNortheast
+Key d A 4 SmartGoEast
+Key c A 4 SmartGoSoutheast
 
 Key q W S4 PointerWindow MoveToPageAndGotoPage 0 0
 Key a W S4 PointerWindow MoveToPageAndGotoPage 0 1
@@ -59,23 +66,27 @@ Key e A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 0
 Key d A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 1
 Key c A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 2
 
-Key k A S4 PointerWindow MoveToPageAndGotoPage 0p -1p
-Key j A S4 PointerWindow MoveToPageAndGotoPage 0p +1p
-Key h A S4 PointerWindow MoveToPageAndGotoPage -1p 0p
-Key l A S4 PointerWindow MoveToPageAndGotoPage +1p 0p
+Key k A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage 0p -1p'"
+Key j A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage 0p +1p'"
+Key h A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage -1p 0p'"
+Key l A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage +1p 0p'"
 
-Key k A CMS4 MoveToPageAndGotoPageA 0p -1p
-Key j A CMS4 MoveToPageAndGotoPageA 0p +1p
-Key h A CMS4 MoveToPageAndGotoPageA -1p 0p
-Key l A CMS4 MoveToPageAndGotoPageA +1p 0p
+Key k A CMS4 Piperead "echo 'MoveToPageAndGotoPageA 0p -1p'"
+Key j A CMS4 Piperead "echo 'MoveToPageAndGotoPageA 0p +1p'"
+Key h A CMS4 Piperead "echo 'MoveToPageAndGotoPageA -1p 0p'"
+Key l A CMS4 Piperead "echo 'MoveToPageAndGotoPageA +1p 0p'"
 
 Key k A 4 GoUp
 Key j A 4 GoDown
 Key h A 4 GoLeft
 Key l A 4 GoRight
+Key semicolon A 4 GoLastPage
 
 Key k A 4C GoUpDesk
 Key j A 4C GoDownDesk
+Key bracketleft A 4 GoUpDesk
+Key bracketright A 4 GoDownDesk
+Key backslash A 4 GoLastDesk
 
 Piperead "echo Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0   $(($[fvwmpager_desktop_rows]-1))"
 Piperead "echo Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 $(($[fvwmpager_desktop_rows]-1))"
@@ -85,20 +96,18 @@ Key J A 4M Direction South (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key K A 4M Direction North (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 
-Key Y A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
-Key N A 4 Next (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
-Key f A 4 Prev (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) FuncFlipFocusWindow
-Key M A 4 SmartResizeMaxInEBSS
+Key N A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
+Key Y A 4 WindowList (CurrentDesk,Iconifiable,!Iconic,AcceptsFocus,Maximized) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key U A 4 WindowList (CurrentPage,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
-Key U A 4M WindowList (CurrentDesk,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
-Key U A 4MC WindowList (Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
+Key M A 4 SmartResizeMaxInEBSS
 Key I A 4 SmartToggleThumbnail
+Key O A 4 TogglePageTransparent
 
 Key Up A 4 SmartResizeMaxInEBSS
 Key Left A 4 SmartResizeHalfMoveLIn
 Key Right A 4 SmartResizeHalfMoveRIn
-Key Left A 4S  SmartResizeHalfMoveUIn
-Key Right A 4S SmartResizeHalfMoveDIn
+Key Left W 4S  SmartResizeHalfMoveUIn
+Key Right W 4S SmartResizeHalfMoveDIn
 
 Key Up A 4M SmartFullScreen
 Key Left A 4M  SmartResizeHalfMoveL
@@ -108,19 +117,20 @@ Key Up A 4C SmartMaxInEBS
 Key Left A 4C SmartResizeHalfMoveLInAll
 Key Right A 4C SmartResizeHalfMoveRInAll
 
-Key Down A 4 TXorCIn
-Key Down A 4S TYorCIn
-Key Down A 4M TXorCF
-Key Down A 4C TYorCF
+Key Down A 4 ForTXorCIn
+Key Down A 4S ForTYorCIn
+Key Down A 4M ForTXorCF
+Key Down A 4C ForTYorCF
 
-Key Page_Up A 4 TXorC
-Key Page_Down A 4 TYorC
-Key  W 4 Silent Maximize growonlayers $[w.layer] -1 grow grow
-Key backslash W 4M Silent Maximize growonlayers $[w.layer] -1 0 grow
-Key minus W 4M Silent Maximize growonlayers $[w.layer] -1 grow 0
+Key Page_Up A 4 SmartRearrangeH
+Key Page_Down A 4 SmartRearrangeV
+
+Key equal W 4 Silent Maximize growonlayers $[w.layer] -1 grow grow
+Key bar W 4 Silent Maximize growonlayers $[w.layer] -1 0 grow
+Key underscore W 4 Silent Maximize growonlayers $[w.layer] -1 grow 0
 
 Key 4 A 4 SmartAnimatedDelete
-Key 4 W C4 Silent Destroy
+Key 4 W 4M Silent Destroy
 
 Key T A CM FvwmXTerm
 Key Return A 4 FvwmGTerm
