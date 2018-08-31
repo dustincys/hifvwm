@@ -1,28 +1,19 @@
-
-                                                  
-,--.     ,--. ,---.                               
-|  ,---. `--'/  .-',--.  ,--.,--.   ,--.,--,--,--.
-|  .-.  |,--.|  `-, \  `'  / |  |.'.|  ||        |
-|  | |  ||  ||  .-'  \    /  |   .'.   ||  |  |  |
-`--' `--'`--'`--'     `--'   '--'   '--'`--`--`--'
-                                                  
-
+#hifvwm
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
 
-![screen1](http://wx1.sinaimg.cn/large/61dccbaaly1fmk5k4srjhj211y0lc4q6.jpg "screen1")
-
-![screen2](http://wx4.sinaimg.cn/large/61dccbaaly1fmk5k417aoj211y0lc1kj.jpg "screen2")
-
-![screen3](http://wx4.sinaimg.cn/large/61dccbaaly1fmk5k3qh9vj211y0lcavr.jpg "screen3")
-
+[中文介绍在这里](https://github.com/dustincys/hifvwm/blob/master/cnreadme.md)
 
 ## What is hifvwm
 
-hifvwm is a configuration for FVWM ([version 2.6.7](https://github.com/dustincys/fvwm)) that provides a feature-rich set of window manager defaults.
+hifvwm is a configuration for FVWM ([version 2.6.7 with patches](https://github.com/dustincys/fvwm)) that provides a feature-rich set of window manager defaults.
 hifvwm is designed for clean, simple, elegant, productive window management.
 
 ## Features
+
+- Smart window management
+
+    hifvwm provides a feature-rich set of smart window managements.
 
 - Capable of manipulating dozens or even hundreds of windows simultaneously 
 
