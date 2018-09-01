@@ -11,4 +11,5 @@ hifvwm 是一个干净、简洁、轻量、强大、优雅、智能、高效的L
 
 ### 智能化操作视频
 
-<iframe src="//player.bilibili.com/player.html?aid=30852322&cid=53868047&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<https://www.bilibili.com/video/av30852322/>
