@@ -1,4 +1,4 @@
-#hifvwm
+# hifvwm
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
 
@@ -11,7 +11,7 @@ hifvwm is designed for clean, simple, elegant, productive window management.
 
 ## Video Demo
 
-<iframe src="//player.bilibili.com/player.html?aid=30852322&cid=53868047&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+<https://www.bilibili.com/video/av30852322/>
 
 ## Features
 
