@@ -2,6 +2,7 @@
 #  General Styles  #
 ####################
 Style * PositionPlacement Center
+Style * ClickToFocus
 Style * MouseFocusClickRaises
 Style * GrabFocusOff
 Style * NoPPosition, ResizeOpaque
@@ -29,10 +30,10 @@ Style * HilightBorderColorset 4
 
 Style "goldendict" Icon 48x48/goldendict.png, StartsOnPage 0 1 2, MiniIcon 24x24-goldendict.png, EWMHMiniIconOverride
 Style "eclipse" startsOnPage 1 1, MiniIcon 24x24-eclipse.png, EWMHMiniIconOverride
-Style "RStudio" Icon 48x48/rstudio.png, StartsOnPage 2 2, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
-Style "gvim" Icon 48x48/vim.png, IconOverride, MiniIcon 24x24-gvim.png, EWMHMiniIconOverride
-Style "Emacs" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
-Style "Emacs24" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride
+Style "RStudio" Icon 48x48/rstudio.png, StartsOnPage 0 2, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
+Style "gvim" Icon 48x48/vim.png, IconOverride, MiniIcon 24x24-gvim.png, EWMHMiniIconOverride, ClickToFocus, Lenience
+Style "Emacs" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride, ClickToFocus, Lenience
+Style "Emacs24" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride, ClickToFocus, Lenience
 Style "Zotero" Icon 48x48/zotero.png, IconOverride, MiniIcon zotero.png,\
 	      EWMHMiniIconOverride, StartsOnPage 2 2
 Style "umbrello" Icon 48x48/umbrello, IconOverride, MiniIcon 24x24-umbrello.png, EWMHMiniIconOverride
@@ -47,13 +48,13 @@ Style "remmina" Icon 48x48/remmina.png, MiniIcon remmina.png, EWMHMiniIconOverri
 Style "XTerm" Icon 48x48/terminal.png, MiniIcon 24x24-xterm-color_48x48.png, EWMHMiniIconOverride,FPGrabFocusTransient
 Style "Gnome-terminal" Icon 48x48/gnome-terminal.png, MiniIcon 24x24-utilities-terminal.png, EWMHMiniIconOverride
 Style "terminator" Icon 48x48/terminator.png, MiniIcon 24x24-terminator.png, EWMHMiniIconOverride,FPGrabFocusTransient
-Style "Nautilus" Icon 48x48/nautilus.png, StartsOnPage 1 1, MiniIcon nautilus.png, EWMHMiniIconOverride
-Style "Firefox" Icon 48x48/firefox.png, MiniIcon 24x24-firefox.png, EWMHMiniIconOverride, StartsOnPage 2 1
+Style "Nautilus" Icon 48x48/nautilus.png, MiniIcon nautilus.png, EWMHMiniIconOverride
+style "Firefox" Icon 48x48/firefox.png, MiniIcon 24x24-firefox.png, EWMHMiniIconOverride, StartsOnPage 2 1
 Style "Google-chrome" Icon 48x48/google-chrome.png, MiniIcon 24x24-google-chrome.png, EWMHMiniIconOverride, StartsOnPage 2 1
-Style "okular" Icon 48x48/okular.png, MiniIcon 24x24-okular.png,  EWMHMiniIconOverride, StartsOnPage 1 0
+Style "okular" Icon 48x48/okular.png, MiniIcon 24x24-okular.png,  EWMHMiniIconOverride, StartsOnPage 1 0, InitialMapCommand FuncRaiseFocusWarp
 Style "CAJVieweru.exe" StartsOnPage 1 0, MiniIcon 24x24-B033_Icon38CE8FAD1.1.png, EWMHMiniIconOverride
 style "bilibili-live-helper" WindowListSkip, CirculateSkip, StickyAcrossPages, StickyAcrossDesks, Sticky, MouseFocusClickRaisesOff
-style "conky" FPEnterToFocus,FPLeaveToUnfocus,StaysOnBottom
+style "conky" FPEnterToFocus,FPLeaveToUnfocus,StaysOnBottom,NeverFocus,FixedPosition,FixedSize
 ##################
 #  Cursor Style  #
 ##################

@@ -4,6 +4,7 @@
 
 DestroyFunc InitFunction
 AddToFunc   InitFunction
++ I Module FvwmCommandS
 + I Module FvwmBanner
 + I Exec exec bash -c "compton --config $[fvwm_home]/compton.conf"
 + I Exec exec bash -c "$HOME/.msmtp/msmtp-notify -l $HOME/.msmtp/msmtp.log &"
@@ -13,15 +14,18 @@ AddToFunc   InitFunction
 + I Exec exec bash -c "/usr/bin/xhost +si:localuser:$USER"
 + I FvwmEmacs
 + I Exec exec brightside &
-+ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
 + I Exec exec bash $[HOME]/bin/nut.sh
-+ I Exec exec bash $[fvwm_goldendict]
-+ I Exec exec volumeicon
++ I Exec exec pnmixer
 + I FvwmGTermEmail
++ I FvwmGoldendict
++ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
++ I Exec exec bash $[fvwm_script]/runredshift.sh
++ I InfoStoreAdd CURRENTDESKNUM $[desk.n]
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
-+ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
++ I Module FvwmCommandS
+#+ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
 + I Exec exec bash -c "if pgrep stalonetray >/dev/null 2>&1; then pgrep stalonetray |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"
@@ -36,10 +40,9 @@ AddToFunc   StartFunction
 + I Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh
 + I Exec exec stalonetray -c $[HOME]/.fvwm/stalonetrayrc &
 + I Wait stalonetray
-+ I Module FvwmAnimate
-+ I Module FvwmCommandS
 + I Module FvwmIconMan FvwmIconMan-Windows-Top
 + I Module FvwmIconMan FvwmIconMan-Windows-Bottom
++ I Module FvwmAnimate
 + I Exec exec fvwm-root -r $[fvwm_tmp]/temp.png
 
 DestroyFunc RestartFunction

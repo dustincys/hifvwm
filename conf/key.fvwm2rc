@@ -14,23 +14,27 @@ Key Tab A MC WindowList (CurrentDesk) CurrentAtEnd,NoDeskSort,SelectOnRelease Me
 Key Tab W 4C Piperead "sh $[fvwm_script]/tabThisWinLstCurDesk.sh"
 Key Tab W 4 Piperead "sh $[fvwm_script]/tabThisWinLstAll.sh"
 
-Key Escape A 4 GoLastDeskAndPage
+Key Escape A 4 GoLastDeskAndPage last
 Key space A 4 SmartFullScreen
 Key Print A A FvwmDesktopScreenshot
+Key Print A 4 Exec exec gnome-screenshot -i
 Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
 
-Key 6 A 4 Prev (AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
-Key V A 4 Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) FuncFlipFocusWindow
-Key F A 4 Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
+Key N A 4 SmartNextRaiseFocus
+Key V A 4 SmartPrevRaiseFocus
+
+Key B A 4 SmartPrevDeskFlipFocus
+Key G A 4 SmartPrevPageFlipFocus
+Key F A 4 SmartPrevFlipFocus
 Key BackSpace A 4 AltMode
 Key grave A 4 AltMode
-Key space A M Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd;fi"
+Key space A M Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd --config /home/dustin/.fvwm/skippy-xd/skippy-xd.rc; fi"
 
-Key G A 4 GoDict
-Key B A 4 GoEmacs
-Key apostrophe A 4 GoEmail
+Key 9 A 4 GoDict
+Key 2 A 4 GoEmacs
 Key 1 A 4 GoEmail
 Key 0 A 4 GoZotero
+Key apostrophe A 4 GoEmail
 
 Key slash A 4 Stick
 Key comma A 4 StickAcrossPages
@@ -46,40 +50,35 @@ Key e A 4 SmartGoNortheast
 Key d A 4 SmartGoEast
 Key c A 4 SmartGoSoutheast
 
-Key q W S4 PointerWindow MoveToPageAndGotoPage 0 0
-Key a W S4 PointerWindow MoveToPageAndGotoPage 0 1
-Key z W S4 PointerWindow MoveToPageAndGotoPage 0 2
-Key w W S4 PointerWindow MoveToPageAndGotoPage 1 0
-Key s W S4 PointerWindow MoveToPageAndGotoPage 1 1
-Key x W S4 PointerWindow MoveToPageAndGotoPage 1 2
-Key e W S4 PointerWindow MoveToPageAndGotoPage 2 0
-Key d W S4 PointerWindow MoveToPageAndGotoPage 2 1
-Key c W S4 PointerWindow MoveToPageAndGotoPage 2 2
+Key q W S4 PointerWindow SmartMoveGoPage 0 0
+Key a W S4 PointerWindow SmartMoveGoPage 0 1
+Key z W S4 PointerWindow SmartMoveGoPage 0 2
+Key w W S4 PointerWindow SmartMoveGoPage 1 0
+Key s W S4 PointerWindow SmartMoveGoPage 1 1
+Key x W S4 PointerWindow SmartMoveGoPage 1 2
+Key e W S4 PointerWindow SmartMoveGoPage 2 0
+Key d W S4 PointerWindow SmartMoveGoPage 2 1
+Key c W S4 PointerWindow SmartMoveGoPage 2 2
 
-Key q A CMS4 All (CurrentPage) MoveToPageAndGotoPage 0 0
-Key a A CMS4 All (CurrentPage) MoveToPageAndGotoPage 0 1
-Key z A CMS4 All (CurrentPage) MoveToPageAndGotoPage 0 2
-Key w A CMS4 All (CurrentPage) MoveToPageAndGotoPage 1 0
-Key s A CMS4 All (CurrentPage) MoveToPageAndGotoPage 1 1
-Key x A CMS4 All (CurrentPage) MoveToPageAndGotoPage 1 2
-Key e A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 0
-Key d A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 1
-Key c A CMS4 All (CurrentPage) MoveToPageAndGotoPage 2 2
+Key q W S4 PointerWindow SmartMoveGoPage 0 0
+Key a W S4 PointerWindow SmartMoveGoPage 0 1
+Key z W S4 PointerWindow SmartMoveGoPage 0 2
+Key w W S4 PointerWindow SmartMoveGoPage 1 0
+Key s W S4 PointerWindow SmartMoveGoPage 1 1
+Key x W S4 PointerWindow SmartMoveGoPage 1 2
+Key e W S4 PointerWindow SmartMoveGoPage 2 0
+Key d W S4 PointerWindow SmartMoveGoPage 2 1
+Key c W S4 PointerWindow SmartMoveGoPage 2 2
 
-Key k A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage 0p -1p'"
-Key j A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage 0p +1p'"
-Key h A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage -1p 0p'"
-Key l A S4 PointerWindow Piperead "echo 'MoveToPageAndGotoPage +1p 0p'"
+Key k A S4 PointerWindow Piperead "echo 'SmartMoveGoPage 0p -1p'"
+Key j A S4 PointerWindow Piperead "echo 'SmartMoveGoPage 0p +1p'"
+Key h A S4 PointerWindow Piperead "echo 'SmartMoveGoPage -1p 0p'"
+Key l A S4 PointerWindow Piperead "echo 'SmartMoveGoPage +1p 0p'"
 
-Key k A CMS4 Piperead "echo 'MoveToPageAndGotoPageA 0p -1p'"
-Key j A CMS4 Piperead "echo 'MoveToPageAndGotoPageA 0p +1p'"
-Key h A CMS4 Piperead "echo 'MoveToPageAndGotoPageA -1p 0p'"
-Key l A CMS4 Piperead "echo 'MoveToPageAndGotoPageA +1p 0p'"
-
-Key k A 4 GoUp
-Key j A 4 GoDown
-Key h A 4 GoLeft
-Key l A 4 GoRight
+Key k A 4 SmartGoUp
+Key j A 4 SmartGoDown
+Key h A 4 SmartGoLeft
+Key l A 4 SmartGoRight
 Key semicolon A 4 GoLastPage
 
 Key k A 4C GoUpDesk
@@ -88,7 +87,7 @@ Key bracketleft A 4 GoUpDesk
 Key bracketright A 4 GoDownDesk
 Key backslash A 4 GoLastDesk
 
-Piperead "echo Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0   $(($[fvwmpager_desktop_rows]-1))"
+Piperead "echo Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0 $(($[fvwmpager_desktop_rows]-1))"
 Piperead "echo Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 $(($[fvwmpager_desktop_rows]-1))"
 
 Key H A 4M Direction West  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
@@ -96,12 +95,11 @@ Key J A 4M Direction South (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key K A 4M Direction North (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 
-Key N A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
-Key Y A 4 WindowList (CurrentDesk,Iconifiable,!Iconic,AcceptsFocus,Maximized) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
+Key Y A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key U A 4 WindowList (CurrentPage,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key M A 4 SmartResizeMaxInEBSS
 Key I A 4 SmartToggleThumbnail
-Key O A 4 TogglePageTransparent
+Key O A 4 ToggleDesk
 
 Key Up A 4 SmartResizeMaxInEBSS
 Key Left A 4 SmartResizeHalfMoveLIn
@@ -130,6 +128,7 @@ Key bar W 4 Silent Maximize growonlayers $[w.layer] -1 0 grow
 Key underscore W 4 Silent Maximize growonlayers $[w.layer] -1 grow 0
 
 Key 4 A 4 SmartAnimatedDelete
+Key Delete A 4 SmartDeleteElse
 Key 4 W 4M Silent Destroy
 
 Key T A CM FvwmXTerm

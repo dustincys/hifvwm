@@ -232,9 +232,13 @@ DestroyModuleConfig FvwmIdent: *
 
 DestroyModuleConfig FvwmEvent: *
 *FvwmEvent: deiconify DeThumbnail
+*FvwmEvent: new_desk DeskChangeFocusHook
+*FvwmEvent: new_page PageChangeFocusHook
 
 ################
 #  FvwmBanner  #
 ################
-
+DestroyModuleConfig FvwmBanner: *
+*FvwmBanner: NoDecor
+*FvwmBanner: Pixmap $[fvwm_home]/icons/logo/hifvwm.png
 *FvwmBanner: Timeout 25

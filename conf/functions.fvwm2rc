@@ -26,15 +26,10 @@ AddToFunc TransResizeHold
 + M PipeRead 'echo Resize'
 + M PipeRead 'echo Exec exec transset-df -i $[w.id] 1'
 
-DestroyFunc TogglePageTransparent
-AddToFunc TogglePageTransparent
-+ I Any (CurrentPage, State 5) Nop
-+ I TestRc (Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'transset-df -i $[w.id] 1 &'
-+ I TestRc (Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'echo State 5 False'
-+ I TestRc (Match) break
-+ I TestRc (!Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'transset-df -i $[w.id] 0.5 &'
-+ I TestRc (!Match) KeepRc All (CurrentPage, !Iconic, !Shaded, Iconifiable) PipeRead 'echo State 5 True'
-+ I TestRc (!Match) break
+DestroyFunc ToggleDesk
+AddToFunc ToggleDesk
++ I Piperead "if [ \"20\" = \"$[desk.n]\" ];\
+	then echo \"GoLastDesk\"; else echo \"GotoDesk 0 20\";fi"
 
 DestroyFunc FvwmMoveOrFullScreen
 AddToFunc   FvwmMoveOrFullScreen
@@ -127,10 +122,20 @@ AddToFunc FuncFlipWindow
 + I FlipFocus
 + I Raise
 
+DestroyFunc FocusRaise
+AddToFunc FocusRaise
++ I Raise
++ I Focus
+
 DestroyFunc FuncFlipFocusWindow
 AddToFunc FuncFlipFocusWindow
 + I FuncFlipWindow
 + I WarpToWindow 50 50
+
+DestroyFunc FuncRaiseFocusWarp
+AddToFunc FuncRaiseFocusWarp
++ I Raise
++ I FuncFocusWindow
 
 DestroyFunc FuncDeiconFlipFocusWindow
 AddToFunc FuncDeiconFlipFocusWindow
@@ -151,26 +156,14 @@ DestroyFunc MoveToDeskAndGotoDesk
 AddToFunc MoveToDeskAndGotoDesk
 + I Piperead "echo 'MoveToDesk $0 $1 $2'"
 + I Piperead "echo 'GoToDesk $0 $1 $2'"
++ I Piperead "echo 'EchoDeskPageNumberIfFull orange'"
++ I Piperead "echo 'EchoPageNumberIfFull orange'"
 
-DestroyFunc MoveToDeskAndGotoDeskC
-AddToFunc MoveToDeskAndGotoDeskC
-+ I Piperead "echo 'MoveToDesk $0 $1 $2'"
-+ I Piperead "echo 'GoToDesk $0 $1 $2'"
-
-DestroyFunc MoveToDeskAndGotoDeskCA
-AddToFunc MoveToDeskAndGotoDeskCA
-+ I All (CurrentPage) Piperead "echo 'MoveToDesk $0 $1 $2'"
-+ I Piperead "echo 'GoToDesk $0 $1 $2'"
-
-DestroyFunc MoveToPageAndGotoPage
-AddToFunc MoveToPageAndGotoPage
-+ I MoveToPage $0 $1
-+ I GotoPage $0 $1
-
-DestroyFunc MoveToPageAndGotoPageA
-AddToFunc MoveToPageAndGotoPageA
-+ I All (CurrentPage) Piperead "echo 'MoveToPage $0 $1'"
+DestroyFunc SmartMoveGoPage
+AddToFunc SmartMoveGoPage
++ I Piperead "echo 'MoveToPage $0 $1'"
 + I Piperead "echo 'GotoPage $0 $1'"
++ I Piperead "echo 'EchoPageNumberIfFull orange'"
 
 DestroyFunc MaxInEBS
 AddToFunc  MaxInEBS
@@ -269,40 +262,52 @@ DestroyFunc MoveDCenter
 AddToFunc MoveDCenter
 + I ThisWindow (!Iconic) PipeRead 'echo AnimatedMove 50-50w 50'
 
-DestroyFunc MaxInEBSS
-AddToFunc MaxInEBSS
+DestroyFunc RaiseMaxCenter
+AddToFunc RaiseMaxCenter
++ I Raise
 + I ResizeEBSS
 + I MoveCenter
+
+DestroyFunc MaxInEBSS
+AddToFunc MaxInEBSS
++ I FlipFocus
 + I Raise
++ I ResizeEBSS
++ I MoveCenter
 
 DestroyFunc MaxLInEBSIM
 AddToFunc MaxLInEBSIM
++ I FlipFocus
++ I Raise
 + I ResizeHalfHEBSS
 + I MoveLCenter
-+ I Raise
 
 DestroyFunc MaxRInEBSIM
 AddToFunc MaxRInEBSIM
++ I FlipFocus
++ I Raise
 + I ResizeHalfHEBSS
 + I MoveRCenter
-+ I Raise
 
 DestroyFunc MaxUInEBSIM
 AddToFunc MaxUInEBSIM
++ I FlipFocus
++ I Raise
 + I ResizeHalfVEBSS
 + I MoveUCenter
-+ I Raise
 
 DestroyFunc MaxDInEBSIM
 AddToFunc MaxDInEBSIM
++ I FlipFocus
++ I Raise
 + I ResizeHalfVEBSS
 + I MoveDCenter
-+ I Raise
 
 DestroyFunc MaxGrowInEBS
 AddToFunc MaxGrowInEBS
-+ I Maximize growonlayers $[w.layer] -1 grow grow
++ I FlipFocus
 + I Raise
++ I Maximize growonlayers $[w.layer] -1 grow grow
 
 DestroyFunc FullScreen
 AddToFunc FullScreen
@@ -316,6 +321,7 @@ AddToFunc FullScreen
 + I TestRc (!Match) AnimatedMove 50-50w 50-50w
 + I TestRc (!Match) EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 + I TestRc (Match) All (CurrentPage, State 2) ThisWindow State 2 False
++ I FlipFocus
 
 DestroyFunc ResizeHalfMoveL
 AddToFunc ResizeHalfMoveL
@@ -324,7 +330,7 @@ AddToFunc ResizeHalfMoveL
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfH
 + I MoveLCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 + I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 
@@ -335,7 +341,7 @@ AddToFunc ResizeHalfMoveR
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfH
 + I MoveRCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 + I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 
@@ -350,7 +356,7 @@ AddToFunc ResizeHalfTwoLRIn
 	+2*$[back_borderwidth]\
 	+$[front_borderwidth])))p'
 + I WindowId $0 (!Iconic) AnimatedMove 50-100w 50-50w
-+ I WindowId $0 (!Iconic) Raise
++ I WindowId $0 (!Iconic) FlipFocus
 + I WindowId $1 (!Iconic)Piperead 'echo Resize\
 	$(($[vp.width]/2\
 	-($[fvwm_left_margin]+$[fvwm_right_margin])/2\
@@ -360,7 +366,7 @@ AddToFunc ResizeHalfTwoLRIn
 	+2*$[back_borderwidth]\
 	+$[front_borderwidth])))p'
 + I WindowId $1 (!Iconic) AnimatedMove 50 50-50w
-+ I WindowId $1 (!Iconic) Raise
++ I WindowId $1 (!Iconic) FlipFocus
 
 DestroyFunc ResizeHalfTwoLR
 AddToFunc ResizeHalfTwoLR
@@ -370,14 +376,14 @@ AddToFunc ResizeHalfTwoLR
  	$(($[vp.height]\
 	-2*$[front_borderwidth]))p'
 + I WindowId $0 (!Iconic) AnimatedMove 50-100w 50-50w
-+ I WindowId $0 (!Iconic) Raise
++ I WindowId $0 (!Iconic) FlipFocus
 + I WindowId $1 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]/2\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]\
 	-2*$[front_borderwidth]))p'
 + I WindowId $1 (!Iconic) AnimatedMove 50 50-50w
-+ I WindowId $1 (!Iconic) Raise
++ I WindowId $1 (!Iconic) FlipFocus
 
 DestroyFunc ResizeHalfTwoUDIn
 AddToFunc ResizeHalfTwoUDIn
@@ -390,7 +396,7 @@ AddToFunc ResizeHalfTwoUDIn
 	-($[fvwmiconman_height]+2*$[back_borderwidth])\
 	-2*$[front_borderwidth]))p'
 + I WindowId $0 (!Iconic) AnimatedMove 50-50w 50-100w
-+ I WindowId $0 (!Iconic) Raise
++ I WindowId $0 (!Iconic) FlipFocus
 + I WindowId $1 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]\
 	-$[fvwm_left_margin]\
@@ -400,7 +406,7 @@ AddToFunc ResizeHalfTwoUDIn
 	-($[fvwmiconman_height]+2*$[back_borderwidth])\
 	-2*$[front_borderwidth]))p'
 + I WindowId $1 (!Iconic) AnimatedMove 50-50w 50
-+ I WindowId $1 (!Iconic) Raise
++ I WindowId $1 (!Iconic) FlipFocus
 
 DestroyFunc ResizeHalfTwoUD
 AddToFunc ResizeHalfTwoUD
@@ -410,14 +416,14 @@ AddToFunc ResizeHalfTwoUD
  	$(($[vp.height]/2\
 	-2*$[front_borderwidth]))p'
 + I WindowId $0 (!Iconic) AnimatedMove 50-50w 50-100w
-+ I WindowId $0 (!Iconic) Raise
++ I WindowId $0 (!Iconic) FlipFocus
 + I WindowId $1 (!Iconic) Piperead 'echo Resize\
 	$(($[vp.width]\
 	-2*$[front_borderwidth]))p \
  	$(($[vp.height]/2\
 	-2*$[front_borderwidth]))p'
 + I WindowId $1 (!Iconic) AnimatedMove 50-50w 50
-+ I WindowId $1 (!Iconic) Raise
++ I WindowId $1 (!Iconic) FlipFocus
 
 
 DestroyFunc ResizeHalfTwoLRF
@@ -433,14 +439,13 @@ AddToFunc ResizeHalfTwoUDF
 + I ResizeHalfTwoUD $0 $1
 + I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 
-
 DestroyFunc ResizeMaxInEBSS
 AddToFunc ResizeMaxInEBSS
 + I ThisWindow (Maximized) WindowStyle Borders
 + I TestRc (Match) UpdateStyles
 + I ResizeEBSS
 + I MoveCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 
 DestroyFunc ResizeHalfMoveLIn
@@ -449,7 +454,7 @@ AddToFunc ResizeHalfMoveLIn
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSS
 + I MoveLCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 
 DestroyFunc ResizeHalfMoveRIn
@@ -458,7 +463,7 @@ AddToFunc ResizeHalfMoveRIn
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSS
 + I MoveRCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 
 DestroyFunc ResizeHalfMoveUIn
@@ -467,7 +472,7 @@ AddToFunc ResizeHalfMoveUIn
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfVEBSS
 + I MoveUCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 
 DestroyFunc ResizeHalfMoveDIn
@@ -476,7 +481,7 @@ AddToFunc ResizeHalfMoveDIn
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfVEBSS
 + I MoveDCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 
 DestroyFunc ResizeHalfMoveLInAll
@@ -485,7 +490,7 @@ AddToFunc ResizeHalfMoveLInAll
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSSFullV
 + I MoveLCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 
 DestroyFunc ResizeHalfMoveRInAll
@@ -494,7 +499,7 @@ AddToFunc ResizeHalfMoveRInAll
 + I TestRc (Match) UpdateStyles
 + I ResizeHalfHEBSSFullV
 + I MoveRCenter
-+ I Raise
++ I FlipFocus
 + I WarpToWindow 50 50
 
 DestroyFunc ShowDesktop
@@ -541,10 +546,6 @@ AddToFunc Max2Size
 	$(($1 - 2 * $[front_borderwidth]))p \
 	$(($2 - $[fvwm_left_margin]))p \
 	$3p'
-
-DestroyFunc BLC_Alt
-AddToFunc BLC_Alt
-+ I GotoDeskAndPage prev
 
 DestroyFunc TXorC
 AddToFunc TXorC
@@ -685,9 +686,7 @@ AddToFunc  ForTYorCF
 DestroyFunc WindowListFunc
 AddToFunc WindowListFunc
 + I Iconify off
-+ I FlipFocus
-+ I Raise
-+ I WarpToWindow 50 50
++ I FuncFlipFocusWindow
 
 DestroyFunc ToggleThumbnail
 AddToFunc ToggleThumbnail
@@ -729,37 +728,65 @@ DestroyFunc  MaxAreaFocus
 AddToFunc  MaxAreaFocus
 + I Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
 + I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent FuncFocusWindow
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent FuncFlipFocusWindow
 
 DestroyFunc  GoUp
 AddToFunc  GoUp
-+ I GotoPage 0p -1p
-+ I MaxAreaFocus
++ I Piperead "echo GotoPage 0p -1p"
++ I Piperead "echo MaxAreaFocus"
++ I Piperead "echo EchoPageNumberIfFull green"
+
+DestroyFunc  SmartGoUp
+AddToFunc  SmartGoUp
++ I Piperead "if [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull red\"; else echo \"GoUp\";fi"
 
 DestroyFunc  GoDown
 AddToFunc  GoDown
-+ I GotoPage 0p +1p
-+ I MaxAreaFocus
++ I Piperead "echo GotoPage 0p +1p"
++ I Piperead "echo MaxAreaFocus"
++ I Piperead "echo EchoPageNumberIfFull green"
+
+DestroyFunc  SmartGoDown
+AddToFunc  SmartGoDown
++ I Piperead "if [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull red\"; else echo \"GoDown\";fi"
 
 DestroyFunc  GoLeft
 AddToFunc  GoLeft
-+ I GotoPage -1p 0p
-+ I MaxAreaFocus
++ I Piperead "echo GotoPage -1p 0p"
++ I Piperead "echo MaxAreaFocus"
++ I Piperead "echo EchoPageNumberIfFull green"
+
+DestroyFunc  SmartGoLeft
+AddToFunc  SmartGoLeft
++ I Piperead "if [ \"0\" = \"$[page.nx]\" ];\
+	then echo \"EchoPageNumberIfFull red\"; else echo \"GoLeft\";fi"
 
 DestroyFunc  GoRight
 AddToFunc  GoRight
-+ I GotoPage +1p 0p
-+ I MaxAreaFocus
++ I Piperead "echo GotoPage +1p 0p"
++ I Piperead "echo MaxAreaFocus"
++ I Piperead "echo EchoPageNumberIfFull green"
+
+DestroyFunc  SmartGoRight
+AddToFunc  SmartGoRight
++ I Piperead "if [ \"2\" = \"$[page.nx]\" ];\
+	then echo \"EchoPageNumberIfFull red\"; else echo \"GoRight\";fi"
 
 DestroyFunc  GoUpDesk
 AddToFunc  GoUpDesk
 + I Piperead "echo GotoDesk -1 0 $(($[fvwmpager_desktop_rows]-1))"
-+ I MaxAreaFocus
++ I Piperead "echo MaxAreaFocus"
++ I Piperead "echo EchoDeskPageNumberIfFull green"
++ I Piperead "echo EchoPageNumberIfFull green"
 
 DestroyFunc  GoDownDesk
 AddToFunc  GoDownDesk
 + I Piperead "echo GotoDesk +1 0 $(($[fvwmpager_desktop_rows]-1))"
-+ I MaxAreaFocus
++ I Piperead "echo MaxAreaFocus"
++ I Piperead "echo EchoDeskPageNumberIfFull green"
++ I Piperead "echo EchoPageNumberIfFull green"
 
 DestroyFunc  GoNorthwest
 AddToFunc  GoNorthwest
@@ -770,6 +797,8 @@ DestroyFunc SmartGoNorthwest
 AddToFunc SmartGoNorthwest
 + I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoNorthWest\";fi"
++ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoNorth
 AddToFunc  GoNorth
@@ -780,6 +809,8 @@ DestroyFunc SmartGoNorth
 AddToFunc SmartGoNorth
 + I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoNorth\";fi"
++ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoNortheast
 AddToFunc  GoNortheast
@@ -790,6 +821,8 @@ DestroyFunc SmartGoNortheast
 AddToFunc SmartGoNortheast
 + I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoNortheast\";fi"
++ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoEast
 AddToFunc  GoEast
@@ -800,6 +833,8 @@ DestroyFunc SmartGoEast
 AddToFunc SmartGoEast
 + I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoEast\";fi"
++ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoSoutheast
 AddToFunc  GoSoutheast
@@ -810,6 +845,8 @@ DestroyFunc SmartGoSoutheast
 AddToFunc SmartGoSoutheast
 + I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoSoutheast\";fi"
++ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoSouth
 AddToFunc  GoSouth
@@ -820,6 +857,8 @@ DestroyFunc SmartGoSouth
 AddToFunc SmartGoSouth
 + I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoSouth\";fi"
++ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoSouthwest
 AddToFunc  GoSouthwest
@@ -830,6 +869,8 @@ DestroyFunc SmartGoSouthwest
 AddToFunc SmartGoSouthwest
 + I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoSouthwest\";fi"
++ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoWest
 AddToFunc  GoWest
@@ -840,6 +881,8 @@ DestroyFunc SmartGoWest
 AddToFunc SmartGoWest
 + I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoWest\";fi"
++ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoCenter
 AddToFunc  GoCenter
@@ -850,167 +893,324 @@ DestroyFunc SmartGoCenter
 AddToFunc SmartGoCenter
 + I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoCenter\";fi"
++ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"EchoPageNumberIfFull green\";fi"
+
+DestroyFunc EchoPageNumberIfFull
+AddToFunc EchoPageNumberIfFull
++ I Any (CurrentPage, Maximized) Piperead "\
+if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_C\]\\" | $[fvwm_osd_cat_s] $0\";\
+elif [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_W\]\\" | $[fvwm_osd_cat_s] $0\";\
+elif [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_E\]\\" | $[fvwm_osd_cat_s] $0\";\
+elif [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_N\]\\" | $[fvwm_osd_cat_s] $0\";\
+elif [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_S\]\\" | $[fvwm_osd_cat_s] $0\";\
+fi"
++ I Any (CurrentPage, Maximized) Piperead "\
+if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_NE\]\\" | $[fvwm_osd_cat_s] $0\";\
+elif [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_SW\]\\" | $[fvwm_osd_cat_s] $0\";\
+elif [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_SE\]\\" | $[fvwm_osd_cat_s] $0\";\
+elif [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo -e \\"\$\[fvwm_page_NW\]\\" | $[fvwm_osd_cat_s] $0\";\
+fi"
+
+DestroyFunc EchoDeskPageNumberIfFull
+AddToFunc EchoDeskPageNumberIfFull
++ I Any (CurrentPage, Maximized) Piperead "\
+if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:C\\" | $[fvwm_osd_cat_b] $0\";\
+elif [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:W\\" | $[fvwm_osd_cat_b] $0\";\
+elif [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:E\\" | $[fvwm_osd_cat_b] $0\";\
+elif [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:N\\" | $[fvwm_osd_cat_b] $0\";\
+elif [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:S\\" | $[fvwm_osd_cat_b] $0\";\
+fi"
++ I Any (CurrentPage, Maximized) Piperead "\
+if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:NE\\" | $[fvwm_osd_cat_b] $0\";\
+elif [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:SW\\" | $[fvwm_osd_cat_b] $0\";\
+elif [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:SE\\" | $[fvwm_osd_cat_b] $0\";\
+elif [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
+	then echo \"Exec exec echo \\"$[desk.n]:NW\\" | $[fvwm_osd_cat_b] $0\";\
+fi"
 
 DestroyFunc  GoLastDeskAndPage
 AddToFunc  GoLastDeskAndPage
-+ I GotoDeskAndPage prev
++ I GotoDeskAndPage $0
 + I MaxAreaFocus
++ I EchoDeskPageNumberIfFull blue
++ I EchoPageNumberIfFull blue
 
 DestroyFunc  GoLastDesk
 AddToFunc  GoLastDesk
 + I GotoDesk prev
 + I MaxAreaFocus
++ I EchoDeskPageNumberIfFull blue
++ I EchoPageNumberIfFull blue
 
 DestroyFunc  GoLastPage
 AddToFunc  GoLastPage
 + I GotoPage prev
 + I MaxAreaFocus
++ I EchoPageNumberIfFull blue
 
 DestroyFunc GoDict
 AddToFunc GoDict
-+ I Pointerwindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !State 3) silent FuncFlipFocusWindow
++ I Pointerwindow ("goldendict") KeepRc Prev (Desk $[infostore.PREDESKNUM],AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !State 3) silent FuncFlipFocusWindow
++ I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
++ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
-+ I TestRc (NoMatch) FvwmGoldendict
-+ I TestRc (NoMatch) Break
-+ I TestRc (Error) FvwmGoldendict
-+ I TestRc (Error) Break
++ I TestRc (NoMatch | Error) FvwmGoldendict
 
 DestroyFunc GoEmacs
 AddToFunc GoEmacs
-+ I Pointerwindow (State 4) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !"goldendict", !State 3) silent FuncFlipFocusWindow
++ I Pointerwindow (State 4) KeepRc Prev (Desk $[infostore.PREDESKNUM],AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 3) silent FuncFlipFocusWindow
++ I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
++ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
-+ I TestRc (NoMatch) FvwmEmacs
-+ I TestRc (NoMatch) Break
-+ I TestRc (Error) FvwmEmacs
-+ I TestRc (Error) Break
++ I TestRc (NoMatch | Error) FvwmEmacs
 
 DestroyFunc GoEmail
 AddToFunc GoEmail
-+ I Pointerwindow (State 3) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !"goldendict") silent FuncFlipFocusWindow
++ I Pointerwindow (State 3) KeepRc Prev (Desk $[infostore.PREDESKNUM],AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 4) silent FuncFlipFocusWindow
++ I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
++ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
-+ I TestRc (NoMatch) FvwmGTermEmail
-+ I TestRc (NoMatch) Break
-+ I TestRc (Error) FvwmGTermEmail
-+ I TestRc (Error) Break
++ I TestRc (NoMatch | Error) FvwmGTermEmail
 
 DestroyFunc GoZotero
 AddToFunc GoZotero
 + I Pointerwindow ("Zotero") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
++ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
-+ I TestRc (NoMatch) FvwmZotero
-+ I TestRc (NoMatch) Break
-+ I TestRc (Error) FvwmZotero
-+ I TestRc (Error) Break
++ I TestRc (NoMatch | Error) FvwmZotero
+
+DestroyFunc GotoNotMaximized
+AddToFunc GotoNotMaximized
++ I Prev (CurrentDesk,!Maximized,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (!Maximized,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I TestRc (Match) Break
+
+DestroyFunc GotoMaximized
+AddToFunc GotoMaximized
++ I Prev (CurrentDesk,Maximized,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (Maximized,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I TestRc (Match) Break
++ I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I TestRc (Match) Break
 
 DestroyFunc AltMode
 AddToFunc AltMode
-+ I Pointerwindow (Maximized) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded,!Maximized) silent FuncFlipFocusWindow
++ I Pointerwindow (Maximized) KeepRc GotoNotMaximized
 + I TestRc (Match) Break
-+ I TestRc (NoMatch) keepRc Prev (Maximized) silent FuncFlipFocusWindow
-+ I TestRc (NoMatch) Break
-+ I TestRc (Error) keepRc Prev (Maximized) silent FuncFlipFocusWindow
++ I TestRc (!Match) GotoMaximized
++ I TestRc (!Match) Break
++ I TestRc (Error) GotoMaximized
 + I TestRc (Error) Break
+
+DestroyFunc SmartPrevPageFlipFocus
+AddToFunc SmartPrevPageFlipFocus
++ I Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I TestRc (Match) EchoPageNumberIfFull blue
+
+DestroyFunc SmartPrevDeskFlipFocus
+AddToFunc SmartPrevDeskFlipFocus
++ I Piperead "echo GotoDeskAndPage prev"
++ I Piperead "echo EchoDeskPageNumberIfFull blue"
++ I Piperead "echo EchoPageNumberIfFull blue"
+
+DestroyFunc SmartPrevFlipFocus
+AddToFunc SmartPrevFlipFocus
++ I Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull red"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (!Match) Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (!Match) Prev (!CurrentDesk,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) keepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull blue"
+
+DestroyFunc SmartPrevFullScreenFlipFocus
+AddToFunc SmartPrevFullScreenFlipFocus
++ I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
 
 DestroyFunc SmartFullScreen
 AddToFunc SmartFullScreen
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable, Maximizable) FullScreen
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent FullScreen
++ I PointerWindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo FullScreen"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo FullScreen"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent KeepRc Piperead "echo FullScreen"
 
 DestroyFunc SmartToggleThumbnail
 AddToFunc SmartToggleThumbnail
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable, Maximizable) ToggleThumbnail
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ToggleThumbnail
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable, Maximizable) KeepRc Piperead "echo ToggleThumbnail"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ToggleThumbnail"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent KeepRc Piperead "echo ToggleThumbnail"
 
 DestroyFunc SmartResizeMaxInEBSS
 AddToFunc SmartResizeMaxInEBSS
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeMaxInEBSS
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeMaxInEBSS
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeMaxInEBSS"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeMaxInEBSS"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent KeepRc Piperead "echo ResizeMaxInEBSS"
 
 DestroyFunc SmartResizeHalfMoveLInAll
 AddToFunc SmartResizeHalfMoveLInAll
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveLInAll
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveLInAll
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveLInAll"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveLInAll"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveLInAll"
 
 DestroyFunc SmartResizeHalfMoveRInAll
 AddToFunc SmartResizeHalfMoveRInAll
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveRInAll
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveRInAll
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveRInAll"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveRInAll"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveRInAll"
 
 DestroyFunc SmartResizeHalfMoveLIn
 AddToFunc SmartResizeHalfMoveLIn
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveLIn
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveLIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveLIn"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveLIn"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveLIn"
 
 DestroyFunc SmartResizeHalfMoveRIn
 AddToFunc SmartResizeHalfMoveRIn
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveRIn
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveRIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveRIn"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveRIn"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveRIn"
 
 DestroyFunc SmartResizeHalfMoveL
 AddToFunc SmartResizeHalfMoveL
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveL
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveL
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveL"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveL"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveL"
 
 DestroyFunc SmartResizeHalfMoveR
 AddToFunc SmartResizeHalfMoveR
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveR
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveR
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveR"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveR"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveR"
 
 DestroyFunc SmartResizeHalfMoveUIn
 AddToFunc SmartResizeHalfMoveUIn
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveUIn
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveUIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveUIn"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveUIn"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveUIn"
 
 DestroyFunc SmartMaxInEBS
 AddToFunc SmartMaxInEBS
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) MaxInEBS
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent MaxInEBS
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo MaxInEBS"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo MaxInEBS"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo MaxInEBS"
 
 DestroyFunc SmartResizeHalfMoveDIn
 AddToFunc SmartResizeHalfMoveDIn
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) ResizeHalfMoveDIn
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent ResizeHalfMoveDIn
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeHalfMoveDIn"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeHalfMoveDIn"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo ResizeHalfMoveDIn"
 
 DestroyFunc SmartAnimatedDelete
 AddToFunc SmartAnimatedDelete
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable) AnimatedDelete
-+ I TestRc (Match) Break
-+ I TestRc (Error|NoMatch) Any (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused,!overlapped) Nop
-+ I TestRc (Match) Break
-+ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent AnimatedDelete
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable) KeepRc Piperead "echo AnimatedDelete"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo AnimatedDelete"
++ I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo AnimatedDelete"
+
+DestroyFunc SmartDeleteElse
+AddToFunc SmartDeleteElse
++ I All (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!Focused,Overlapped) silent AnimatedDelete
+
+DestroyFunc SmartNextFullScreenRaiseFocus
+AddToFunc SmartNextFullScreenRaiseFocus
++ I Next (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (!Match) Next (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
+
+DestroyFunc SmartPrevFullScreenRaiseFocus
+AddToFunc SmartPrevFullScreenRaiseFocus
++ I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
+
+DestroyFunc SmartNextRaiseFocus
+AddToFunc SmartNextRaiseFocus
++ I Next (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (!Match) Next (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
+
+DestroyFunc SmartPrevRaiseFocus
+AddToFunc SmartPrevRaiseFocus
++ I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
+
+DestroyFunc MouseClickFocusHook
+AddToFunc MouseClickFocusHook
++ I Any (CurrentPage,AcceptsFocus,!Iconic,Iconifiable,Focused) Piperead "echo Nop"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (!Match) Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipWindow"
+
+DestroyFunc PageChangeFocusHook
+AddToFunc PageChangeFocusHook
++ I Piperead "if [ \"20\" = \"$[desk.n]\" ];\
+	then echo \"Nop\"; else echo \"PageChangeFocusHookFunc\";fi"
+
+DestroyFunc PageChangeFocusHookFunc
+AddToFunc PageChangeFocusHookFunc
++ I Piperead "if [ \"$[infostore.CURRENTDESKNUM]\" = \"$[desk.n]\" ];\
+	then echo \"MouseClickFocusHook\"; else echo \"Nop\";fi"
+
+DestroyFunc DeskChangeFocusHook
+AddToFunc DeskChangeFocusHook
++ I Piperead "if [ \"20\" = \"$[desk.n]\" ];\
+	then echo \"Nop\"; else echo \"DeskChangeFocusHookFunc\";fi"
+
+DestroyFunc DeskChangeFocusHookFunc
+AddToFunc DeskChangeFocusHookFunc
++ I Piperead "if [ \"$[infostore.CURRENTDESKNUM]\" = \"$[desk.n]\" ];\
+		then echo \"Nop\";\
+		else echo InfoStoreAdd PREDESKNUM \"$[infostore.CURRENTDESKNUM]\"; fi"
++ I Piperead "echo InfoStoreAdd CURRENTDESKNUM \"$[desk.n]\""
++ I Piperead "echo MouseClickFocusHook"
