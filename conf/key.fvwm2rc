@@ -20,7 +20,7 @@ Key Print A A FvwmDesktopScreenshot
 Key Print A 4 Exec exec gnome-screenshot -i
 Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
 
-Key N A 4 SmartNextRaiseFocus
+Key Y A 4 SmartNextRaiseFocus
 Key V A 4 SmartPrevRaiseFocus
 
 Key B A 4 SmartPrevDeskFlipFocus
@@ -30,6 +30,7 @@ Key BackSpace A 4 AltMode
 Key grave A 4 AltMode
 Key space A M Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd --config /home/dustin/.fvwm/skippy-xd/skippy-xd.rc; fi"
 
+Key 8 A 4 GoNautilus
 Key 9 A 4 GoDict
 Key 2 A 4 GoEmacs
 Key 1 A 4 GoEmail
@@ -95,7 +96,7 @@ Key J A 4M Direction South (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key K A 4M Direction North (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 
-Key Y A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
+Key N A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key U A 4 WindowList (CurrentPage,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key M A 4 SmartResizeMaxInEBSS
 Key I A 4 SmartToggleThumbnail

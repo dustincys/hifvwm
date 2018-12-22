@@ -968,7 +968,7 @@ AddToFunc  GoLastPage
 
 DestroyFunc GoDict
 AddToFunc GoDict
-+ I Pointerwindow ("goldendict") KeepRc Prev (Desk $[infostore.PREDESKNUM],AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !State 3) silent FuncFlipFocusWindow
++ I Pointerwindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !State 3) silent FuncFlipFocusWindow
 + I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
 + I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
@@ -976,7 +976,7 @@ AddToFunc GoDict
 
 DestroyFunc GoEmacs
 AddToFunc GoEmacs
-+ I Pointerwindow (State 4) KeepRc Prev (Desk $[infostore.PREDESKNUM],AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 3) silent FuncFlipFocusWindow
++ I Pointerwindow (State 4) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 3) silent FuncFlipFocusWindow
 + I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
 + I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
@@ -984,7 +984,7 @@ AddToFunc GoEmacs
 
 DestroyFunc GoEmail
 AddToFunc GoEmail
-+ I Pointerwindow (State 3) KeepRc Prev (Desk $[infostore.PREDESKNUM],AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 4) silent FuncFlipFocusWindow
++ I Pointerwindow (State 3) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 4) silent FuncFlipFocusWindow
 + I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
 + I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
@@ -996,6 +996,13 @@ AddToFunc GoZotero
 + I TestRc (Match) KeepRc EchoPageNumberIfFull blue
 + I TestRc (Match) Break
 + I TestRc (NoMatch | Error) FvwmZotero
+
+DestroyFunc GoNautilus
+AddToFunc GoNautilus
++ I Pointerwindow ("Nautilus") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent SmartAnimatedDelete
++ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
++ I TestRc (Match) Break
++ I TestRc (NoMatch | Error) FvwmFileBrowser
 
 DestroyFunc GotoNotMaximized
 AddToFunc GotoNotMaximized

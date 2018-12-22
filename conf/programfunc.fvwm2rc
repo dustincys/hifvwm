@@ -10,21 +10,22 @@ AddToFunc CurrentCenter
 	-2*($[fvwmiconman_height]\
 	+2*$[back_borderwidth]\
 	+$[front_borderwidth])))p'
-+ I Current AnimatedMove 50-50w 50-50w
++ I Current Move 50-50w 50-50w
+
+DestroyFunc InitFocusCenter
+AddToFunc InitFocusCenter
++ I Focus
++ I CurrentCenter
 
 DestroyFunc FvwmXTerm
 AddToFunc   FvwmXTerm
 + I Exec exec $[fvwm_xterm]
 + I Wait Xterm
-+ I Next ("Xterm") Piperead "echo FuncFlipFocusWindow"
-+ I CurrentCenter
 
 DestroyFunc FvwmGTerm
 AddToFunc   FvwmGTerm
 + I Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar"
 + I Piperead "echo Wait Gnome-terminal"
-+ I Next ("Gnome-terminal") Piperead "echo FuncFlipFocusWindow"
-+ I Piperead "echo CurrentCenter"
 
 DestroyFunc FvwmGTermEmail
 AddToFunc   FvwmGTermEmail
@@ -35,18 +36,17 @@ AddToFunc   FvwmGTermEmail
 + I Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar --window -t neomutt -- \"\"$[fvwm_mutt]\"\""
 + I Piperead "echo Wait Gnome-terminal"
 + I Next (CurrentPage, "Gnome-terminal") Piperead "echo FuncFlipFocusWindow"
-+ I Piperead "echo CurrentCenter"
 + I Piperead "echo Current State 3 True"
 
 DestroyFunc FvwmGoldendict
 AddToFunc   FvwmGoldendict
-+ I Next ("goldendict") silent Piperead "echo FuncFlipFocusWindow"
++ I Next ("GoldenDict") silent Piperead "echo FuncFlipFocusWindow"
 + I TestRc (Match) Piperead "echo Break"
 + I Piperead "echo GotoDesk 0 0"
 + I Piperead "echo GotoPage 1 2"
 + I Piperead "echo Exec exec \"$[fvwm_goldendict]\""
-+ I Piperead "echo Wait Goldendict"
-+ I Next (CurrentPage "goldendict") Piperead "echo FuncFlipFocusWindow"
++ I Piperead "echo Wait GoldenDict"
++ I Next (CurrentPage "GoldenDict") Piperead "echo FuncFlipFocusWindow"
 + I Piperead "echo CurrentCenter"
 
 DestroyFunc FvwmZotero
@@ -77,36 +77,21 @@ DestroyFunc FvwmChrome
 AddToFunc   FvwmChrome
 + I Exec exec $[fvwm_chrome]
 + I Wait Google-chrome
-+ I Next ("Google-chrome") Piperead "echo FuncFlipFocusWindow"
-+ I CurrentCenter
-
-DestroyFunc FvwmFileBrowser
-AddToFunc   FvwmFileBrowser
-+ I Exec exec $[fvwm_nautilus]
-+ I Wait nautilus
-+ I Next ("nautilus") Piperead "echo FuncFlipFocusWindow"
-+ I CurrentCenter
 
 DestroyFunc FvwmGvim
 AddToFunc   FvwmGvim
 + I Exec exec $[fvwm_gvim]
 + I Wait Gvim
-+ I Next ("Gvim") Piperead "echo FuncFlipFocusWindow"
-+ I CurrentCenter
 
 DestroyFunc FvwmOkular
 AddToFunc   FvwmOkular
 + I Exec exec $[fvwm_okular]
 + I Wait Okular
-+ I Next ("Okular") Piperead "echo FuncFlipFocusWindow"
-+ I CurrentCenter
 
 DestroyFunc FvwmFireFox
 AddToFunc   FvwmFireFox
 + I Exec exec $[fvwm_firefox]
 + I Wait Firefox
-+ I Next ("Firefox") Piperead "echo FuncFlipFocusWindow"
-+ I CurrentCenter
 
 DestroyFunc FvwmDictionary
 AddToFunc   FvwmDictionary
@@ -120,3 +105,11 @@ DestroyFunc FvwmViewManPage
 AddToFunc   FvwmViewManPage
 + I Exec exec $[fvwm_xterm] -fg White -bg DarkBlue -g 80x20 -fn 7x14 -fb 7x14bold \
  -n "Manual Page - $0" -T "Manual Page - $0" -e man "$0"
+
+DestroyFunc FvwmFileBrowser
+AddToFunc   FvwmFileBrowser
++ I Next ("Nautilus") Piperead "echo MoveToDesk"
++ I Next (CurrentDesk, "Nautilus") Piperead "echo MoveToPage"
++ I Next (CurrentDesk, "Nautilus") silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) Piperead "echo Break"
++ I Exec exec $[fvwm_nautilus]
