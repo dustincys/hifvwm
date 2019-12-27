@@ -2,15 +2,15 @@
 #  Window Colorsets  #
 ######################
 
-Colorset 3 bg #101010, fg #e6e7d7
-Colorset 4 bg #9a9a9a, fg Black
-Colorset 5 bg #388, fg White
+Colorset 3 bg #101010, fg Black
+Colorset 4 bg #00ffff, fg Black
+Colorset 5 bg #ffa300, fg White
 
 ####################
 #  Menu Colorsets  #
 ####################
 
-Colorset 7 Translucent Black 50, fg #e9e9ff, sh #e9e9ff, hi #e9e9ff, bg #e9e9ff
+Colorset 7 Translucent, fg #e9e9ff, sh #e9e9ff, hi #e9e9ff, bg #e9e9ff
 Colorset 8 fg #ffa300, bg #ffa300, sh #e9e9ff, hi #e9e9ff
 Colorset 9 fg rgb:00/00/00, hi rgb:00/00/00, sh rgb:00/00/00, bg rgb:e9/e9/d9
 
@@ -25,9 +25,9 @@ Colorset 10 fg rgb:00/00/00, hi rgb:dd/00/00, sh rgb:dd/00/00, bg rgb:fb/fc/ec
 #  Menu colorset  #
 ###################
 
-Colorset 11 RootTransparent, fg rgb:00/ff/ff,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint black 35, bgTint black 10, IconAlpha 90
-Colorset 12 RootTransparent, fg rgb:ff/ff/c4, sh #a38300, hi #a38300, bg average, Tint black 5, bgTint black 5, IconAlpha 90
-Colorset 13 RootTransparent, fg rgb:00/00/00,sh rgb:aa/aa/aa, hi rgb:cc/cc/cc, bg average, Tint black 35, bgTint black 10
+Colorset 11 RootTransparent, fg rgb:00/ff/ff,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint black 35, bgTint black 10
+Colorset 12 RootTransparent, fg rgb:ff/ff/c4,sh #a38300, hi #a38300, bg average, Tint black 5, bgTint black 5
+Colorset 13 RootTransparent, fg rgb:aa/aa/aa,sh rgb:aa/aa/aa, hi rgb:cc/cc/cc, bg average, Tint black 35, bgTint black 10
 Colorset 14 RootTransparent, fg rgb:ff/ff/c4,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint #00ffff 50, bgTint #00ffff 50
 Colorset 15 RootTransparent, fg rgb:ff/00/00,sh rgb:00/ff/00, hi rgb:00/00/ff
 Colorset 16 RootTransparent, fg rgb:ff/ff/c4,sh rgb:88/88/88, hi rgb:cc/cc/cc, bg average, Tint white 30, bgTint white 80

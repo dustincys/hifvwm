@@ -16,43 +16,43 @@ Changelog:
 ]]
 
 settings_table = {
-    {
-        -- Edit this table to customise your rings.
-        -- You can create more rings simply by adding more elements to settings_table.
-        -- "name" is the type of stat to display; you can choose from 'cpu', 'memperc', 'fs_used_perc', 'battery_used_perc'.
-        name='time',
-        -- "arg" is the argument to the stat type, e.g. if in Conky you would write ${cpu cpu0}, 'cpu0' would be the argument. If you would not use an argument in the Conky variable, use ''.
-        arg='%I.%M',
-        -- "max" is the maximum value of the ring. If the Conky variable outputs a percentage, use 100.
-        max=12,
-        -- "bg_colour" is the colour of the base ring.
-        bg_colour=0xffffff,
-        -- "bg_alpha" is the alpha value of the base ring.
-        bg_alpha=0.1,
-        -- "fg_colour" is the colour of the indicator part of the ring.
-        fg_colour=0x339900,
-        -- "fg_alpha" is the alpha value of the indicator part of the ring.
-        fg_alpha=0.2,
-        -- "x" and "y" are the x and y coordinates of the centre of the ring, relative to the top left corner of the Conky window.
-        x=200, y=120,
-        -- "radius" is the radius of the ring.
-        radius=100,
-        -- "thickness" is the thickness of the ring, centred around the radius.
-        thickness=5,
-        -- "start_angle" is the starting angle of the ring, in degrees, clockwise from top. Value can be either positive or negative.
-        start_angle=0,
-        -- "end_angle" is the ending angle of the ring, in degrees, clockwise from top. Value can be either positive or negative, but must be larger than start_angle.
-        end_angle=360
-    },
+    --{
+        ---- Edit this table to customise your rings.
+        ---- You can create more rings simply by adding more elements to settings_table.
+        ---- "name" is the type of stat to display; you can choose from 'cpu', 'memperc', 'fs_used_perc', 'battery_used_perc'.
+        --name='time',
+        ---- "arg" is the argument to the stat type, e.g. if in Conky you would write ${cpu cpu0}, 'cpu0' would be the argument. If you would not use an argument in the Conky variable, use ''.
+        --arg='%I.%M',
+        ---- "max" is the maximum value of the ring. If the Conky variable outputs a percentage, use 100.
+        --max=12,
+        ---- "bg_colour" is the colour of the base ring.
+        --bg_colour=0xffffff,
+        ---- "bg_alpha" is the alpha value of the base ring.
+        --bg_alpha=0.5,
+        ---- "fg_colour" is the colour of the indicator part of the ring.
+        --fg_colour=0x00BFC4,
+        ---- "fg_alpha" is the alpha value of the indicator part of the ring.
+        --fg_alpha=0.9,
+        ---- "x" and "y" are the x and y coordinates of the centre of the ring, relative to the top left corner of the Conky window.
+        --x=120, y=120,
+        ---- "radius" is the radius of the ring.
+        --radius=100,
+        ---- "thickness" is the thickness of the ring, centred around the radius.
+        --thickness=5,
+        ---- "start_angle" is the starting angle of the ring, in degrees, clockwise from top. Value can be either positive or negative.
+        --start_angle=0,
+        ---- "end_angle" is the ending angle of the ring, in degrees, clockwise from top. Value can be either positive or negative, but must be larger than start_angle.
+        --end_angle=360
+    --},
     {
         name='time',
         arg='%H',
         max=24,
         bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x0099ff,
-        fg_alpha=0.4,
-        x=200, y=120,
+        bg_alpha=0.5,
+        fg_colour=0x00BFC4,
+        fg_alpha=0.9,
+        x=120, y=120,
         radius=70,
         thickness=5,
         start_angle=0,
@@ -63,10 +63,10 @@ settings_table = {
         arg='%H',
         max=12,
         bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x0099ff,
-        fg_alpha=0.4,
-        x=200, y=120,
+        bg_alpha=0.5,
+        fg_colour=0x00BFC4,
+        fg_alpha=0.9,
+        x=120, y=120,
         radius=80,
         thickness=5,
         start_angle=0,
@@ -77,10 +77,10 @@ settings_table = {
         arg='%M',
         max=60,
         bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0xff0000,
-        fg_alpha=0.4,
-        x=200, y=120,
+        bg_alpha=0.5,
+        fg_colour=0xF8766D,
+        fg_alpha=0.9,
+        x=120, y=120,
         radius=90,
         thickness=5,
         start_angle=0,
@@ -91,10 +91,10 @@ settings_table = {
         arg='%S',
         max=60,
         bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x00ff00,
-        fg_alpha=0.4,
-        x=200, y=120,
+        bg_alpha=0.5,
+        fg_colour=0x7CAE00,
+        fg_alpha=0.9,
+        x=120, y=120,
         radius=100,
         thickness=5,
         start_angle=0,
@@ -105,10 +105,10 @@ settings_table = {
         arg='%w',
         max=6,
         bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=1,
-        x=200, y=120,
+        bg_alpha=0.5,
+        fg_colour=0x7CAE00,
+        fg_alpha=0.5,
+        x=120, y=120,
         radius=110,
         thickness=5,
         start_angle=0,
@@ -119,10 +119,10 @@ settings_table = {
         arg='%d',
         max=31,
         bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=0.8,
-        x=200, y=120,
+        bg_alpha=0.5,
+        fg_colour=0x7CAE00,
+        fg_alpha=0.5,
+        x=120, y=120,
         radius=120,
         thickness=5,
         start_angle=45,
@@ -133,10 +133,10 @@ settings_table = {
         arg='%m',
         max=12,
         bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=1,
-        x=200, y=120,
+        bg_alpha=0.5,
+        fg_colour=0x7CAE00,
+        fg_alpha=0.5,
+        x=120, y=120,
         radius=130,
         thickness=5,
         start_angle=45,
@@ -145,73 +145,73 @@ settings_table = {
 }
 
 
-settings_table_back = {
-    {
-        name='background',
-        max=12,
-        bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=1,
-        x=200, y=120,
-        radius=260,
-        thickness=1,
-        start_angle=80,
-        end_angle=180
-    },
-    {
-        name='background2',
-        max=12,
-        bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=1,
-        x=200, y=-100,
-        radius=480,
-        thickness=2,
-        start_angle=140,
-        end_angle=180
-    },
-    {
-        name='background2',
-        max=12,
-        bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=1,
-        x=200, y=-600,
-        radius=980,
-        thickness=3,
-        start_angle=170,
-        end_angle=180
-    },
-    {
-        name='background2',
-        max=12,
-        bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=1,
-        x=200, y=0,
-        radius=380,
-        thickness=2,
-        start_angle=120,
-        end_angle=180
-    },
-    {
-        name='background2',
-        max=12,
-        bg_colour=0xffffff,
-        bg_alpha=0.1,
-        fg_colour=0x339900,
-        fg_alpha=1,
-        x=200, y=220,
-        radius=160,
-        thickness=2,
-        start_angle=100,
-        end_angle=180
-    },
-}
+--settings_table_back = {
+    --{
+        --name='background',
+        --max=12,
+        --bg_colour=0xffffff,
+        --bg_alpha=0.1,
+        --fg_colour=0x7CAE00,
+        --fg_alpha=1,
+        --x=120, y=120,
+        --radius=260,
+        --thickness=1,
+        --start_angle=80,
+        --end_angle=180
+    --},
+    --{
+        --name='background2',
+        --max=12,
+        --bg_colour=0xffffff,
+        --bg_alpha=0.1,
+        --fg_colour=0x7CAE00,
+        --fg_alpha=1,
+        --x=120, y=-100,
+        --radius=480,
+        --thickness=2,
+        --start_angle=140,
+        --end_angle=180
+    --},
+    --{
+        --name='background2',
+        --max=12,
+        --bg_colour=0xffffff,
+        --bg_alpha=0.1,
+        --fg_colour=0x7CAE00,
+        --fg_alpha=1,
+        --x=120, y=-600,
+        --radius=980,
+        --thickness=3,
+        --start_angle=170,
+        --end_angle=180
+    --},
+    --{
+        --name='background2',
+        --max=12,
+        --bg_colour=0xffffff,
+        --bg_alpha=0.1,
+        --fg_colour=0x7CAE00,
+        --fg_alpha=1,
+        --x=120, y=0,
+        --radius=380,
+        --thickness=2,
+        --start_angle=120,
+        --end_angle=180
+    --},
+    --{
+        --name='background2',
+        --max=12,
+        --bg_colour=0xffffff,
+        --bg_alpha=0.1,
+        --fg_colour=0x7CAE00,
+        --fg_alpha=1,
+        --x=120, y=220,
+        --radius=160,
+        --thickness=2,
+        --start_angle=100,
+        --end_angle=180
+    --},
+--}
 
 -- Use these settings to define the origin and extent of your clock.
 
@@ -219,7 +219,7 @@ clock_r=100
 
 -- "clock_x" and "clock_y" are the coordinates of the centre of the clock, in pixels, from the top left of the Conky window.
 
-clock_x=200
+clock_x=120
 clock_y=120
 show_seconds=true
 
@@ -255,11 +255,11 @@ end
 
 function draw_clock_hands(cr,xc,yc)
     local secs,mins,hours,secs_arc,mins_arc,hours_arc
-    local xh,yh,xm,ym,xs,ys
+    local xh,yh,xm,ym,xs,ys,hourr
 
     secs=os.date("%S")
     mins=os.date("%M")
-    hours=os.date("%I")
+    hours=os.date("%H")
 
     secs_arc=(2*math.pi/60)*secs
     mins_arc=(2*math.pi/60)*mins+secs_arc/60
@@ -267,14 +267,16 @@ function draw_clock_hands(cr,xc,yc)
 
     -- Draw hour hand
 
-    xh=xc+0.6*clock_r*math.sin(hours_arc)
-    yh=yc-0.6*clock_r*math.cos(hours_arc)
+    hourr=0.7-0.12*math.floor(hours/12)
+
+    xh=xc+hourr*clock_r*math.sin(hours_arc)
+    yh=yc-hourr*clock_r*math.cos(hours_arc)
     cairo_move_to(cr,xc,yc)
     cairo_line_to(cr,xh,yh)
 
     cairo_set_line_cap(cr,CAIRO_LINE_CAP_ROUND)
     cairo_set_line_width(cr,25)
-    cairo_set_source_rgba(cr,0,0.6,1.0,0.6)
+    cairo_set_source_rgba(cr,0,0.7490196,0.7686275,0.8)
     cairo_stroke(cr)
 
     -- Draw minute hand
@@ -285,7 +287,7 @@ function draw_clock_hands(cr,xc,yc)
     cairo_line_to(cr,xm,ym)
 
     cairo_set_line_width(cr,20)
-    cairo_set_source_rgba(cr,1.0,0.0,0.0,0.5)
+    cairo_set_source_rgba(cr,1.0122449,0.4816327,0.4448980,0.8)
     cairo_stroke(cr)
 
     -- Draw seconds hand
@@ -296,7 +298,7 @@ function draw_clock_hands(cr,xc,yc)
         cairo_move_to(cr,xc,yc)
         cairo_line_to(cr,xs,ys)
 
-        cairo_set_source_rgba(cr,0.0,1.0,0.0,0.5)
+        cairo_set_source_rgba(cr, 0.4862745,0.6823529,0.0000000,0.8)
         cairo_set_line_width(cr,10)
         cairo_stroke(cr)
     end
@@ -358,9 +360,9 @@ function conky_clock_rings()
         end
     end
 
-	for i in pairs(settings_table_back) do
-	    draw_ring(cr,1,settings_table_back[i])
-        end
+	--for i in pairs(settings_table_back) do
+	    --draw_ring(cr,1,settings_table_back[i])
+        --end
     draw_clock_hands(cr,clock_x,clock_y)
 
     cairo_surface_destroy(cs)

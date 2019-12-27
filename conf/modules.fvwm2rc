@@ -22,13 +22,15 @@ DestroyModuleConfig FvwmIconMan-Windows-Top: *
 *FvwmIconMan-Windows-Top: DontShow Class=xmms,FvwmButtons,FvwmIconMan,FvwmPager,FvwmIdent,FvwmForm
 *FvwmIconMan-Windows-Top: ShowNoIcons False
 *FvwmIconMan-Windows-Top: DrawIcons Always
-*FvwmIconMan-Windows-Top: Sort Id
+*FvwmIconMan-Windows-Top: Sort none
 *FvwmIconMan-Windows-Top: FollowFocus True
 *FvwmIconMan-Windows-Top: Format "%t"
 *FvwmIconMan-Windows-Top: Title ""
 *FvwmIconMan-Windows-Top: ReliefThickness 0
-PipeRead "echo \*FvwmIconMan-Windows-Top: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-308))x$[fvwmiconman_height]"
-PipeRead "echo \*FvwmIconMan-Windows-Top: ManagerGeometry 1x1-$(($[fvwm_right_margin] +11))+0"
+# PipeRead "echo \*FvwmIconMan-Windows-Top: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-17))x$[fvwmiconman_height]"
+PipeRead "echo \*FvwmIconMan-Windows-Top: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-2*$[back_borderwidth]+1))x$[fvwmiconman_height]"
+PipeRead "echo \*FvwmIconMan-Windows-Top: ManagerGeometry 1x1-$(($[fvwm_right_margin]-1))+0"
+
 *FvwmIconMan-Windows-Top: MaxButtonWidthByColumns 1
 # Tips {{{2
 *FvwmIconMan-Windows-Top: TipsFormat "%t"
@@ -73,14 +75,15 @@ DestroyModuleConfig FvwmIconMan-Windows-Bottom: *
 #*FvwmIconMan-Windows-Bottom: Show Class=XTerm,Eterm,xfce4-terminal,konsole,gnome-terminal,Multi-gnome-terminal,urxvt
 *FvwmIconMan-Windows-Bottom: ShowNoIcons False
 *FvwmIconMan-Windows-Bottom: DrawIcons Always
-*FvwmIconMan-Windows-Bottom: Sort Id
+*FvwmIconMan-Windows-Bottom: Sort name
 *FvwmIconMan-Windows-Bottom: FollowFocus True
 *FvwmIconMan-Windows-Bottom: Format "%t"
 *FvwmIconMan-Windows-Bottom: Title ""
 *FvwmIconMan-Windows-Bottom: ReliefThickness 0
 *FvwmIconMan-Windows-Bottom: TitleButton NoHandles, BorderWidth 0
-PipeRead "echo \*FvwmIconMan-Windows-Bottom: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-23))x$[fvwmiconman_height]"
-PipeRead "echo \*FvwmIconMan-Windows-Bottom: ManagerGeometry 1x1+$(($[fvwm_left_margin]+11))-0"
+# PipeRead "echo \*FvwmIconMan-Windows-Bottom: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-17))x$[fvwmiconman_height]"
+PipeRead "echo \*FvwmIconMan-Windows-Bottom: ButtonGeometry $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]-2*$[back_borderwidth]+1))x$[fvwmiconman_height]"
+PipeRead "echo \*FvwmIconMan-Windows-Bottom: ManagerGeometry 1x1+$(($[fvwm_left_margin]-1))-0"
 *FvwmIconMan-Windows-Bottom: MaxButtonWidthByColumns 1
 *FvwmIconMan-Windows-Bottom: Font $[fvwm_font]
 # Tips {{{2
@@ -151,64 +154,43 @@ DestroyModuleConfig MyButtons: *
 *MyButtons: (\
 		1x5,\
 		Frame 0,\
-		ActiveIcon 48x48/gnome-terminal.png, \
-		Icon 48x48/smallgnome-terminal.png,\
+		ActiveIcon gnome-terminal.svg:45x45, \
+		Icon gnome-terminal.svg:50x50,\
 		Action(Mouse 1) "FvwmGTerm", \
-		Action(Mouse 2) All ("Terminator|XTerm|Gnome-terminal", CurrentDesk) MoveToDeskAndPage,\
-		Action(Mouse 4) Prev ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) Focus,\
-		Action(Mouse 5) Next ("Terminator|XTerm|Gnome-terminal", AcceptsFocus) FuncFlipWindow\
-	    )
+		Action(Mouse 2) Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar -e \"top\"",\
+		Action(Mouse 3) Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar -e \"htop\"")
 *MyButtons: (\
 		1x5,\
 		Frame 0,\
-		ActiveIcon 48x48/nautilus.png, \
-		Icon 48x48/smallnautilus.png, \
+		ActiveIcon dolphin.svg:45x45, \
+		Icon dolphin.svg:50x50, \
 		Action(Mouse 1) "FvwmFileBrowser", \
-		Action(Mouse 2) All ("Nautilus", CurrentDesk) MoveToDeskAndPage,\
-		Action(Mouse 4) Prev ("Nautilus", AcceptsFocus) Focus,\
-		Action(Mouse 5) Next ("Nautilus", AcceptsFocus) FuncFlipWindow\
-	    )
+		Action(Mouse 2) Exec exec $[fvwm_nautilus], \
+		Action(Mouse 3) Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar -e \"ranger\"")
 *MyButtons: (\
 		1x5,\
 		Frame 0,\
-		ActiveIcon 48x48/okular.png, \
-		Icon 48x48/smallokular.png, \
-		Action(Mouse 1) "FvwmOkular",\
-		Action(Mouse 2) All ("Okular", CurrentDesk) MoveToDeskAndPage,\
-		Action(Mouse 4) Prev ("Okular", AcceptsFocus) Focus,\
-		Action(Mouse 5) Next ("Okular", AcceptsFocus) FuncFlipWindow\
-	    )
-*MyButtons: (\
-		1x5,\
-		Frame 0,\
-		ActiveIcon 48x48/goldendict.png, \
-		Icon 48x48/smallgoldendict.png, \
-		Action(Mouse 1) "FvwmDictionary", \
-		Action(Mouse 2) All ("goldendict") MoveToDeskAndPage,\
-		Action(Mouse 4) Prev ("goldendict", AcceptsFocus) Focus,\
-		Action(Mouse 5) Next ("goldendict", AcceptsFocus) FuncFlipWindow\
-	    )
-*MyButtons: (\
-		1x5,\
-		Frame 0,\
-		ActiveIcon 48x48/firefox.png, \
-		Icon 48x48/smallfirefox.png, \
+		ActiveIcon firefox.svg:45x45, \
+		Icon firefox.svg:50x50, \
 		Action(Mosue 1) "FvwmFireFox",\
-		Action(Mouse 2) All ("Firefox|Google-chrome", CurrentDesk) MoveToDeskAndPage,\
-		Action(Mosue 3) "FvwmChrome",\
-		Action(Mouse 4) Prev ("Firefox|Google-chrome", AcceptsFocus) Focus,\
-		Action(Mouse 5) Next ("Firefox|Google-chrome", AcceptsFocus) FuncFlipWindow)
+		Action(Mosue 2) "FvwmFireFox --private-window",\
+		Action(Mosue 3) "FvwmChrome")
 *MyButtons: (\
-		1x5,\
-		Frame 0,\
-		ActiveIcon 48x48/icon.png, \
-		Icon 48x48/smallicon.png, \
-		Action(Mouse 1) Next (CurrentDesk, Iconic) FuncFlipWindow,\
-		Action(Mouse 2) Next (CurrentDesk, Overlapped) FuncFlipWindow,\
-		Action(Mouse 3) "FuncMoveAllIconToPage"\
-	    )
-
-############################
+    1x5,\
+    Frame 0,\
+    ActiveIcon deepin-emacs.svg:45x45, \
+    Icon deepin-emacs.svg:50x50, \
+    Action(Mouse 1) "FetchEmacs", \
+    Action(Mouse 2) "FvwmEmacsClient", \
+    Action(Mouse 3) "GoEmacs")
+*MyButtons: (\
+1x5,\
+Frame 0,\
+ActiveIcon deepin-screenshot.svg:45x45, \
+Icon deepin-screenshot.svg:50x50, \
+Action(Mouse 1) Piperead "echo Exec exec $[fvwm_script]/dmenuscreen.sh",\
+Action(Mouse 3) Exec exec gnome-screenshot -i)
+###########################
 #  FvwmButton stalonetray  #
 ############################
 

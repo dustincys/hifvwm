@@ -73,11 +73,11 @@ kludges force_icons_size
 max_geometry 0x0
 
 # no_shrink [<bool>]         # disables shrink-back mode
-no_shrink false
+no_shrink true
 
 #parent_bg true         # whether to use pseudo-transparency
                              # (looks better when reparented into smth like FvwmButtons)
-parent_bg false
+parent_bg true
 
 # pixmap_bg <path_to_xpm>    # use pixmap from specified xpm file for (tiled) background
 # pixmap_bg /home/user/.stalonetraybg.xpm

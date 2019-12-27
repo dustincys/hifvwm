@@ -33,12 +33,12 @@ AddToFunc ToggleDesk
 
 DestroyFunc FvwmMoveOrFullScreen
 AddToFunc   FvwmMoveOrFullScreen
-+ M TransMove
-+ D FullScreen
++ M Silent TransMove
++ D Silent FullScreen
 
 DestroyFunc FvwmMoveOrIconify
 AddToFunc   FvwmMoveOrIconify
-+ M TransAnimatedMove
++ M Silent TransAnimatedMove
 + D Silent Thumbnail
 
 DestroyFunc MouseTopSideAction
@@ -83,16 +83,20 @@ AddToFunc MouseMiddleButtonRightAction
 
 DestroyFunc Thumbnail
 AddToFunc Thumbnail
-+ I Raise
-+ I ThisWindow (!Iconic) SetEnv Icon-$[w.id] $[w.iconfile]
-#+ I ThisWindow (!Shaded Iconifiable !Iconic) PipeRead "xwd -silent -id $[w.id] | convert -resize 50x50^ -gravity center -crop 50x50+0+0 +repage -frame 1x1 -mattecolor black -quality 0 xwd:- png:$[fvwm_tmp]/icon.tmp.$[w.id].png && echo Nop"
-+ I ThisWindow (!Shaded Iconifiable !Iconic) PipeRead \
-    "xwd -silent -id $[w.id] | convert -scale 300 -frame 1x1 \
-    -mattecolor black -quality 0 xwd:- png:$[fvwm_tmp]/icon.tmp.$[w.id].png \
-    && echo Nop"
-+ I TestRc (Match) Test (f $[w.iconfile]) PipeRead "composite -gravity center -geometry +0+0 $[w.iconfile] $[fvwm_tmp]/icon.tmp.$[w.id].png $[fvwm_tmp]/icon.tmp.$[w.id].png && echo WindowStyle IconOverride, Icon $[fvwm_tmp]/icon.tmp.$[w.id].png || echo Nop"
-+ I TestRc (NoMatch) WindowStyle IconOverride, Icon $[fvwm_tmp]/icon.tmp.$[w.id].png
-+ I Iconify
++ I Piperead "echo Raise"
++ I ThisWindow (!Iconic) Piperead "echo SetEnv Icon-$[w.id] $[w.iconfile]"
++ I ThisWindow (!Shaded,Iconifiable,!Iconic) PipeRead \
+"xwd -silent -id $[w.id] | convert -scale 30%x30% -frame 1x1 \
+-mattecolor black -quality 0 xwd:- png:$[fvwm_tmp]/icon.tmp.$[w.id].png \
+&& echo Nop"
+# + I ThisWindow (!Shaded,Iconifiable,!Iconic) PipeRead \
+# "( inkscape -z -e svgicontemp.png -w 50 -h 50 $[w.iconfile] & xwd -silent -id $[w.id] | convert -scale 30%x30% -frame 1x1 \
+#     -mattecolor black -quality 0 xwd:- png:$[fvwm_tmp]/icon.tmp.$[w.id].png )\
+#     && echo Nop"
+# + I TestRc (Match) Test (f $[w.iconfile]) PipeRead "composite -gravity center -geometry +0+0  svgicontemp.png $[fvwm_tmp]/icon.tmp.$[w.id].png $[fvwm_tmp]/icon.tmp.$[w.id].png || echo Nop"
++ I Piperead "echo WindowStyle IconOverride, Icon $[fvwm_tmp]/icon.tmp.$[w.id].png"
++ I Piperead "echo UpdateStyles"
++ I Piperead "echo Iconify"
 
 DestroyFunc DeThumbnail
 AddToFunc DeThumbnail
@@ -119,8 +123,8 @@ AddToFunc FuncMoveAllIconToPage
 
 DestroyFunc FuncFlipWindow
 AddToFunc FuncFlipWindow
-+ I FlipFocus
-+ I Raise
++ I Piperead "echo Raise"
++ I Piperead "echo FlipFocus"
 
 DestroyFunc FocusRaise
 AddToFunc FocusRaise
@@ -134,8 +138,8 @@ AddToFunc FuncFlipFocusWindow
 
 DestroyFunc FuncRaiseFocusWarp
 AddToFunc FuncRaiseFocusWarp
-+ I Raise
-+ I FuncFocusWindow
++ I FocusRaise
++ I WarpToWindow 50 50
 
 DestroyFunc FuncDeiconFlipFocusWindow
 AddToFunc FuncDeiconFlipFocusWindow
@@ -171,6 +175,22 @@ AddToFunc  MaxInEBS
 + I TestRc (Match) UpdateStyles
 + I Maximize 100 100
 + I Raise
+
+DestroyFunc ShiftToTask
+AddToFunc ShiftToTask
++ I Piperead "if [ \"$0\" = \"$[desk.n]\" ];\
+then echo \"Nop\"; else echo \"GotoDesk 0 $0\";fi"
++ I PipeRead 'echo Exec exec $[fvwm_script]/thumbnailtask.sh;'
+
+DestroyFunc ShiftTask
+AddToFunc ShiftTask
++ I Piperead "echo GotoDesk $0 0 $(($[fvwmpager_desktop_rows]-1))"
++ I PipeRead 'echo Exec exec $[fvwm_script]/thumbnailtask.sh;'
+
+DestroyFunc ShiftLastTask
+AddToFunc ShiftLastTask
++ I Piperead "echo GotoDesk prev"
++ I PipeRead 'echo Exec exec $[fvwm_script]/thumbnailtask.sh;'
 
 #######################################################################
 #                           resize function                           #
@@ -439,13 +459,17 @@ AddToFunc ResizeHalfTwoUDF
 + I ResizeHalfTwoUD $0 $1
 + I EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
 
-DestroyFunc ResizeMaxInEBSS
-AddToFunc ResizeMaxInEBSS
+DestroyFunc ResizeMaxInEBSSNoWarp
+AddToFunc ResizeMaxInEBSSNoWarp
 + I ThisWindow (Maximized) WindowStyle Borders
 + I TestRc (Match) UpdateStyles
 + I ResizeEBSS
 + I MoveCenter
 + I FlipFocus
+
+DestroyFunc ResizeMaxInEBSS
+AddToFunc ResizeMaxInEBSS
++ I ResizeMaxInEBSSNoWarp
 + I WarpToWindow 50 50
 
 DestroyFunc ResizeHalfMoveLIn
@@ -597,6 +621,15 @@ AddToFunc  ForTXorCIn
 + I TestRc (!Match) Break
 + I TestRc (Match) All (CurrentPage, State 2, !Iconic) ThisWindow FullScreen
 
+DestroyFunc ToggleFullScreen
+AddToFunc  ToggleFullScreen
++ I Any (CurrentPage, Maximized, !Iconic, !overlapped) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow WindowStyle Borders
++ I TestRc (Match) UpdateStyles
++ I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow Maximize 100 100
++ I TestRc (Match) Break
++ I TestRc (!Match) SmartFullScreen
+
 DestroyFunc SmartRearrangeH
 AddToFunc SmartRearrangeH
 + I Any (CurrentPage, Maximized, !Iconic) Nop
@@ -683,10 +716,6 @@ AddToFunc  ForTYorCF
 + I TestRc (!Match) Break
 + I TestRc (Match) All (CurrentPage, State 2, !Iconic) ThisWindow FullScreen
 
-DestroyFunc WindowListFunc
-AddToFunc WindowListFunc
-+ I Iconify off
-+ I FuncFlipFocusWindow
 
 DestroyFunc ToggleThumbnail
 AddToFunc ToggleThumbnail
@@ -968,41 +997,62 @@ AddToFunc  GoLastPage
 
 DestroyFunc GoDict
 AddToFunc GoDict
-+ I Pointerwindow ("goldendict") KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded, !State 4, !State 3) silent FuncFlipFocusWindow
-+ I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
-+ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
-+ I TestRc (Match) Break
-+ I TestRc (NoMatch | Error) FvwmGoldendict
-
-DestroyFunc GoEmacs
-AddToFunc GoEmacs
-+ I Pointerwindow (State 4) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 3) silent FuncFlipFocusWindow
-+ I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
-+ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
-+ I TestRc (Match) Break
-+ I TestRc (NoMatch | Error) FvwmEmacs
++ I Any ("goldendict", CurrentPage, !Overlapped) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, "goldendict") Piperead "echo ThisWindow State 4 False"
++ I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
++ I TestRc (NoMatch|Error) Piperead "echo FvwmGoldendict"
 
 DestroyFunc GoEmail
 AddToFunc GoEmail
-+ I Pointerwindow (State 3) KeepRc Prev (AcceptsFocus,!Iconic,Iconifiable,!shaded,!"goldendict",!State 4) silent FuncFlipFocusWindow
-+ I TestRc (Match) KeepRc EchoDeskPageNumberIfFull blue
-+ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
-+ I TestRc (Match) Break
-+ I TestRc (NoMatch | Error) FvwmGTermEmail
++ I Pointerwindow (State 3) Nop
++ I TestRc (Match) KeepRc All (CurrentPage, State 3) Piperead "echo ThisWindow State 4 False"
++ I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
++ I TestRc (NoMatch|Error) FvwmGTermEmail
 
 DestroyFunc GoZotero
 AddToFunc GoZotero
-+ I Pointerwindow ("Zotero") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent FuncFlipFocusWindow
-+ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
-+ I TestRc (Match) Break
-+ I TestRc (NoMatch | Error) FvwmZotero
++ I Pointerwindow ("Zotero") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I FvwmZotero
 
 DestroyFunc GoNautilus
 AddToFunc GoNautilus
-+ I Pointerwindow ("Nautilus") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent SmartAnimatedDelete
-+ I TestRc (Match) KeepRc EchoPageNumberIfFull blue
-+ I TestRc (Match) Break
-+ I TestRc (NoMatch | Error) FvwmFileBrowser
++ I Pointerwindow ("dolphin") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I FvwmFileBrowser
+
+DestroyFunc FetchEmacs
+AddToFunc FetchEmacs
++ I Pointerwindow ("Emacs") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I FvwmEmacs
+
+DestroyFunc GoEmacs
+AddToFunc GoEmacs
++ I Pointerwindow ("Emacs") Nop
++ I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
++ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
++ I TestRc (NoMatch|Error) FvwmGoEmacs
 
 DestroyFunc GotoNotMaximized
 AddToFunc GotoNotMaximized
@@ -1022,6 +1072,116 @@ AddToFunc GotoMaximized
 + I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
 + I TestRc (Match) Break
 
+DestroyFunc MaximizeAllWindowAtPage
+AddToFunc MaximizeAllWindowAtPage
++ I Piperead "echo 'GotoPage $0 $1'"
++ I All (CurrentPage,AcceptsFocus,!Iconic,Iconifiable,Maximizable) Piperead "echo ResizeMaxInEBSSNoWarp"
+
+DestroyFunc FullScreenAllWindowAtPage
+AddToFunc FullScreenAllWindowAtPage
++ I Piperead "echo 'GotoPage $0 $1'"
++ I All (CurrentPage,AcceptsFocus,!Iconic,Iconifiable,Maximizable,!Maximized) Piperead "echo FullScreen"
+
+DestroyFunc MaximizeTheWindowAtPage
+AddToFunc MaximizeTheWindowAtPage
++ I Piperead "echo 'GotoPage $0 $1'"
++ I PipeRead "echo 'All (CurrentDesk,$2) MoveToPage'"
+
+DestroyFunc SmartMaximizeAll
+AddToFunc SmartMaximizeAll
++ I Piperead "echo 'GotoDesk 0 0'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 1'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 2'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 3'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 4'"
++ I Piperead "echo SmartMaximizeAllWindow"
+
+DestroyFunc SmartMaximizeADAll
+AddToFunc SmartMaximizeADAll
++ I Piperead "echo WriteCurrentLocation"
++ I Piperead "echo 'GotoDesk 0 0'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 1'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 2'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 3'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo 'GotoDesk 0 4'"
++ I Piperead "echo SmartMaximizeAllWindow"
++ I Piperead "echo ReadCurrentLocation"
+
+DestroyFunc SmartMaximizeAllWindow
+AddToFunc SmartMaximizeAllWindow
++ I Piperead "echo MaximizeAllWindow"
++ I Piperead "echo 'MaximizeTheWindowAtPage 1 0 okular'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 1 0 Evince'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 0 0 XTerm'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 0 1 Gnome-terminal'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 0 1 terminator'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 2 1 firefox'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 2 1 Google-chrome'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 1 1 Emacs'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 1 1 Emacs24'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 2 2 Zotero'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 0 2 RStudio'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 0 2 eclipse'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 1 2 goldendict'"
+
+DestroyFunc WriteCurrentLocation
+AddToFunc WriteCurrentLocation
++ I Piperead "echo InfoStoreAdd TEMPDESKN $[desk.n]"
++ I Piperead "echo InfoStoreAdd TEMPPAGENX $[page.nx]"
++ I Piperead "echo InfoStoreAdd TEMPPAGENY $[page.ny]"
+
+DestroyFunc ReadCurrentLocation
+AddToFunc ReadCurrentLocation
++ I Piperead "echo GotoDeskAndPage $[infostore.TEMPDESKN] $[infostore.TEMPPAGENX] $[infostore.TEMPPAGENY]"
+
+DestroyFunc MaximizeAllWindow
+AddToFunc MaximizeAllWindow
++ I Piperead "echo 'MaximizeAllWindowAtPage 0 0'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 0 1'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 0 2'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 1 0'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 1 1'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 1 2'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 2 0'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 2 1'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 2 2'"
+
+DestroyFunc MaximizeCDAllWindow
+AddToFunc MaximizeCDAllWindow
++ I Piperead "echo WriteCurrentLocation"
++ I Piperead "echo 'MaximizeAllWindowAtPage 0 0'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 0 1'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 0 2'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 1 0'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 1 1'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 1 2'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 2 0'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 2 1'"
++ I Piperead "echo 'MaximizeAllWindowAtPage 2 2'"
++ I Piperead "echo ReadCurrentLocation"
+
+DestroyFunc FullScreenCDAllWindow
+AddToFunc FullScreenCDAllWindow
++ I Piperead "echo WriteCurrentLocation"
++ I Piperead "echo 'FullScreenAllWindowAtPage 0 0'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 0 1'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 0 2'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 1 0'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 1 1'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 1 2'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 2 0'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 2 1'"
++ I Piperead "echo 'FullScreenAllWindowAtPage 2 2'"
++ I Piperead "echo ReadCurrentLocation"
+
 DestroyFunc AltMode
 AddToFunc AltMode
 + I Pointerwindow (Maximized) KeepRc GotoNotMaximized
@@ -1033,12 +1193,32 @@ AddToFunc AltMode
 
 DestroyFunc SmartPrevPageFlipFocus
 AddToFunc SmartPrevPageFlipFocus
-+ I Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
++ I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
 + I TestRc (Match) EchoPageNumberIfFull blue
 
 DestroyFunc SmartPrevDeskFlipFocus
 AddToFunc SmartPrevDeskFlipFocus
 + I Piperead "echo GotoDeskAndPage prev"
+# + I Any (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo Nop"
+# + I TestRc (!Match) Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo silent FuncFlipFocusWindow"
++ I Piperead "echo EchoDeskPageNumberIfFull blue"
++ I Piperead "echo EchoPageNumberIfFull blue"
+
+DestroyFunc SmartFlipFocus
+AddToFunc SmartFlipFocus
++ I ThisWindow (State 4) Nop
++ I TestRc (Match) KeepRc Piperead "echo ThisWindow State 4 False"
++ I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) Piperead "echo Break""
++ I Piperead "echo SmartLastDeskFlipFocus"
+
+DestroyFunc SmartLastDeskFlipFocus
+AddToFunc SmartLastDeskFlipFocus
++ I Piperead "echo GotoDeskAndPage last"
+# + I Any (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo Nop"
+# + I TestRc (!Match) Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo silent FuncFlipFocusWindow"
 + I Piperead "echo EchoDeskPageNumberIfFull blue"
 + I Piperead "echo EchoPageNumberIfFull blue"
 
@@ -1218,6 +1398,17 @@ DestroyFunc DeskChangeFocusHookFunc
 AddToFunc DeskChangeFocusHookFunc
 + I Piperead "if [ \"$[infostore.CURRENTDESKNUM]\" = \"$[desk.n]\" ];\
 		then echo \"Nop\";\
-		else echo InfoStoreAdd PREDESKNUM \"$[infostore.CURRENTDESKNUM]\"; fi"
+		else echo InfoStoreAdd LASTDESKNUM \"$[infostore.CURRENTDESKNUM]\"; fi"
 + I Piperead "echo InfoStoreAdd CURRENTDESKNUM \"$[desk.n]\""
 + I Piperead "echo MouseClickFocusHook"
+
+DestroyFunc WindowListFunc
+AddToFunc WindowListFunc
++ I Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
++ I Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
++ I Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
++ I Piperead "echo Iconify off"
++ I Piperead "echo FuncFlipFocusWindow"
++ I Piperead "echo WarpToWindow 50 50"
++ I Piperead "echo ThisWindow State 4 True"
+

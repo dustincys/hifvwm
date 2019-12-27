@@ -1,6 +1,9 @@
 Mouse 1 R A Menu FvwmRootMenu
 Mouse 3 R A Menu FvwmWindowOpsMenu
+
 Mouse 1 W M FvwmMoveOrIconify
+Mouse 1 W 4 FvwmMoveOrFullScreen
+
 Mouse 3 W M FvwmMoveOrFullScreen
 Mouse 1 I A FvwmMoveOrIconify
 
@@ -11,15 +14,13 @@ Mouse 3 [ N MouseLeftSideAction
 Mouse 3 ] N MouseRightSideAction
 Mouse 3 _ N MouseBottomSideAction
 
-# Mouse 4 W 4MCS Exec transset-df --inc 0.1 -i $[w.id]
-# Mouse 5 W 4MCS Exec transset-df --dec 0.1 -i $[w.id]
+Mouse 4 W 4MCS Exec transset-df --inc 0.1 -i $[w.id]
+Mouse 5 W 4MCS Exec transset-df --dec 0.1 -i $[w.id]
 
 Mouse 4 W 4 MaxInEBSS
 Mouse 4 W 4S MaxGrowInEBS
-
 Mouse 5 A 4 TXorCIn
 Mouse 5 A 4S TYorCIn
-
 Mouse 5 A 4M TYorCF
 Mouse 5 A 4C TXorCF
 

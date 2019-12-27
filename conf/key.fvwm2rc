@@ -9,33 +9,38 @@ Key P A 4 exec rofi -show window &
 Key T A 4 exec rofi -show ssh &
 Key minus W 4 Silent raiselower
 
-Key Tab A M WindowList Root c c CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
+Key Tab A M WindowList Root c c CurrentAtEnd,SelectOnRelease Meta_L
 Key Tab A MC WindowList (CurrentDesk) CurrentAtEnd,NoDeskSort,SelectOnRelease Meta_L
 Key Tab W 4C Piperead "sh $[fvwm_script]/tabThisWinLstCurDesk.sh"
 Key Tab W 4 Piperead "sh $[fvwm_script]/tabThisWinLstAll.sh"
 
-Key Escape A 4 GoLastDeskAndPage last
 Key space A 4 SmartFullScreen
 Key Print A A FvwmDesktopScreenshot
 Key Print A 4 Exec exec gnome-screenshot -i
 Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
 
-Key Y A 4 SmartNextRaiseFocus
-Key V A 4 SmartPrevRaiseFocus
-
-Key B A 4 SmartPrevDeskFlipFocus
-Key G A 4 SmartPrevPageFlipFocus
-Key F A 4 SmartPrevFlipFocus
+Key F A 4 SmartFlipFocus
+Key G A 4 SmartPrevFlipFocus
+Key B A 4 SmartPrevPageFlipFocus
+Key V A 4 SmartPrevDeskFlipFocus
 Key BackSpace A 4 AltMode
-Key grave A 4 AltMode
 Key space A M Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd --config /home/dustin/.fvwm/skippy-xd/skippy-xd.rc; fi"
 
-Key 8 A 4 GoNautilus
+Key grave A 4 FetchEmacs
+Key 1 A 4 GoEmacs
+Key 2 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"w\")'"
+Key 3 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"l\")'"
+Key 4 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"t\")'"
+Key 7 A 4 GoNautilus
+Key 8 A 4 GoZotero
 Key 9 A 4 GoDict
-Key 2 A 4 GoEmacs
-Key 1 A 4 GoEmail
-Key 0 A 4 GoZotero
-Key apostrophe A 4 GoEmail
+Key 0 A 4 GoEmail
+
+Key 1 A 4M ShiftToTask 0
+Key 2 A 4M ShiftToTask 1
+Key 3 A 4M ShiftToTask 2
+Key 4 A 4M ShiftToTask 3
+Key 5 A 4M ShiftToTask 4
 
 Key slash A 4 Stick
 Key comma A 4 StickAcrossPages
@@ -88,8 +93,18 @@ Key bracketleft A 4 GoUpDesk
 Key bracketright A 4 GoDownDesk
 Key backslash A 4 GoLastDesk
 
+Key bracketleft A 4M ShiftTask -1
+Key bracketright A 4M ShiftTask 1
+Key backslash A 4M ShiftLastTask
+
 Piperead "echo Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0 $(($[fvwmpager_desktop_rows]-1))"
 Piperead "echo Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 $(($[fvwmpager_desktop_rows]-1))"
+
+Key 1 W S4C PointerWindow MoveToDesk 0 0
+Key 2 W S4C PointerWindow MoveToDesk 0 1
+Key 3 W S4C PointerWindow MoveToDesk 0 2
+Key 4 W S4C PointerWindow MoveToDesk 0 3
+Key 5 W S4C PointerWindow MoveToDesk 0 4
 
 Key H A 4M Direction West  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key J A 4M Direction South (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
@@ -99,6 +114,9 @@ Key L A 4M Direction East  (CurrentDesk,AcceptsFocus) FuncFlipFocusWindow
 Key N A 4 WindowList (CurrentPage,Iconifiable,!Iconic,AcceptsFocus) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key U A 4 WindowList (CurrentPage,Iconic) CurrentAtEnd,NoDeskSort,SelectOnRelease Super_L
 Key M A 4 SmartResizeMaxInEBSS
+Key M A 4S MaximizeCDAllWindow
+Key F A 4S FullScreenCDAllWindow
+Key M A 4C SmartMaximizeADAll
 Key I A 4 SmartToggleThumbnail
 Key O A 4 ToggleDesk
 
@@ -128,9 +146,8 @@ Key equal W 4 Silent Maximize growonlayers $[w.layer] -1 grow grow
 Key bar W 4 Silent Maximize growonlayers $[w.layer] -1 0 grow
 Key underscore W 4 Silent Maximize growonlayers $[w.layer] -1 grow 0
 
-Key 4 A 4 SmartAnimatedDelete
+Key Escape A 4 SmartAnimatedDelete
 Key Delete A 4 SmartDeleteElse
-Key 4 W 4M Silent Destroy
 
 Key T A CM FvwmXTerm
 Key Return A 4 FvwmGTerm

@@ -13,10 +13,12 @@ Style * GrabFocusTransientOff
 Style * WindowShadeSteps 20, WindowShadeScrolls
 Style * MwmDecor, SlipperyIcon
 Style * NoIconTitle
+# Style * IconSize 20 20 800 800
 Piperead 'echo Style \\* IconBox screen w $(($[fvwmbuttons_width]+5)) \
 	$(($[fvwmbuttons_width]+5)) $((-$[fvwmpager_width]-5)) \
-	$((-$[fvwmiconman_height]-5)), IconGrid 100 100, IconFill bottom right'
-Style * Icon 48x48/x.png, MiniIcon x.png, EWMHMiniIconOverride
+	$((-$[fvwmiconman_height]-5)), IconFill bottom right'
+# Style * Icon 48x48/x.png,MiniIcon x.png,EWMHMiniIconOverride
+Style * ActiveIconOverride
 Style * NoTitle
 Style * Font $[fvwm_font]
 Style * BorderWidth $[front_borderwidth], HandleWidth $[front_borderwidth]
@@ -24,39 +26,61 @@ Style * Colorset 4
 Style * HilightColorset 3
 Style * BorderColorset 5
 Style * HilightBorderColorset 4
+Style * FvwmBorder
 
 ####################
 #  Program Styles  #
 ####################
 
-Style "goldendict" Icon 48x48/goldendict.png, StartsOnPage 0 1 2, MiniIcon 24x24-goldendict.png, EWMHMiniIconOverride
-Style "eclipse" startsOnPage 1 1, MiniIcon 24x24-eclipse.png, EWMHMiniIconOverride
-Style "RStudio" Icon 48x48/rstudio.png, StartsOnPage 0 2, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
-Style "gvim" Icon 48x48/vim.png, IconOverride, MiniIcon 24x24-gvim.png, EWMHMiniIconOverride, ClickToFocus, Lenience, InitialMapCommand InitFocusCenter
-Style "Emacs" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride, ClickToFocus, Lenience
-Style "Emacs24" Icon 48x48/emacs.png, IconOverride, MiniIcon 24x24-emacs.png, EWMHMiniIconOverride, ClickToFocus, Lenience
-Style "Zotero" Icon 48x48/zotero.png, IconOverride, MiniIcon zotero.png,\
-	      EWMHMiniIconOverride, StartsOnPage 2 2
-Style "umbrello" Icon 48x48/umbrello, IconOverride, MiniIcon 24x24-umbrello.png, EWMHMiniIconOverride
+Style "goldendict" EWMHMiniIconOverride,Icon goldendict.svg:48x48, StartsOnPage 0 1 2, MiniIcon goldendict.svg:24x24, EWMHMiniIconOverride
+Style "eclipse" EWMHMiniIconOverride,Icon eclipse.svg:48x48, startsOnPage 1 1, MiniIcon eclipse.svg:24x24, EWMHMiniIconOverride
+Style "Eclipse" EWMHMiniIconOverride,Icon eclipse.svg:48x48, startsOnPage 1 1, MiniIcon eclipse.svg:24x24, EWMHMiniIconOverride
+Style "RStudio" EWMHMiniIconOverride,Icon 48x48/rstudio.png, StartsOnPage 0 2, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
+Style "gvim" EWMHMiniIconOverride,Icon vim.svg:48x48, IconOverride, MiniIcon vim.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "Emacs" EWMHMiniIconOverride,Icon deepin-emacs.svg:48x48, IconOverride, MiniIcon deepin-emacs.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "Emacs24" EWMHMiniIconOverride,Icon deepin-emacs.svg:48x48, IconOverride, MiniIcon deepin-emacs.svg:24x24, EWMHMiniIconOverride,InitialMapCommand InitFocusCenter
+Style "Eog" EWMHMiniIconOverride,Icon eog.svg:48x48, IconOverride, MiniIcon eog.svg:24x24, EWMHMiniIconOverride
+Style "eog" EWMHMiniIconOverride,Icon eog.svg:48x48, IconOverride, MiniIcon eog.svg:24x24, EWMHMiniIconOverride
+Style "Zotero" EWMHMiniIconOverride,Icon zotero.svg:48x48, IconOverride, MiniIcon zotero.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 2
+Style "umbrello" EWMHMiniIconOverride,Icon 48x48/umbrello, IconOverride, MiniIcon 24x24-umbrello.png, EWMHMiniIconOverride
+Piperead "echo Style \"MPlayer\" EWMHMiniIconOverride,Icon smplayer.svg:48x48, StartsOnPage  $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon smplayer.svg:24x24, EWMHMiniIconOverride"
+Piperead "echo Style \"vlc\" EWMHMiniIconOverride,Icon vlc.svg:48x48, StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon vlc.svg:24x24, EWMHMiniIconOverride"
+Piperead "echo Style \"smplayer\" EWMHMiniIconOverride,Icon smplayer.svg:48x48, StartsOnPage  $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon smplayer.svg:24x24, EWMHMiniIconOverride"
+Piperead "echo Style \"transmission-gtk\" EWMHMiniIconOverride,Icon transmission.svg:48x48, StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 1 0, MiniIcon transmission.svg:24x24, EWMHMiniIconOverride"
 
-Piperead "echo Style \"MPlayer\" Icon 48x48/mplayer.png, StartsOnPage  $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride"
-Piperead "echo Style \"vlc\" StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-vlc.png, EWMHMiniIconOverride"
-Piperead "echo Style \"smplayer\" Icon 48x48/mplayer.png, StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 0 0, MiniIcon 24x24-smplayer.png, EWMHMiniIconOverride"
-Piperead "echo Style \"transmission-gtk\" Icon 48x48/transmission.png, StartsOnPage $(($[fvwmpager_desktop_rows]-1)) 1 0, MiniIcon 24x24-transmission.png, EWMHMiniIconOverride"
+Style "remmina" EWMHMiniIconOverride,Icon remmina.svg:48x48, MiniIcon remmina.svg:24x24, EWMHMiniIconOverride
+Style "Connman-gtk" EWMHMiniIconOverride,Icon tdenetworkmanager.svg:48x48, MiniIcon tdenetworkmanager.svg:24x24, EWMHMiniIconOverride
 
-Style "remmina" Icon 48x48/remmina.png, MiniIcon remmina.png, EWMHMiniIconOverride
-
-Style "XTerm" Icon 48x48/terminal.png, MiniIcon 24x24-xterm-color_48x48.png, EWMHMiniIconOverride,FPGrabFocusTransient, InitialMapCommand InitFocusCenter
-Style "Gnome-terminal" Icon 48x48/gnome-terminal.png, MiniIcon 24x24-utilities-terminal.png, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
-Style "terminator" Icon 48x48/terminator.png, MiniIcon 24x24-terminator.png, EWMHMiniIconOverride,FPGrabFocusTransient, InitialMapCommand InitFocusCenter
-Style "Nautilus" Icon 48x48/nautilus.png, MiniIcon nautilus.png, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
-style "Firefox" Icon 48x48/firefox.png, MiniIcon 24x24-firefox.png, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
-Style "Google-chrome" Icon 48x48/google-chrome.png, MiniIcon 24x24-google-chrome.png, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
-Style "okular" Icon 48x48/okular.png, MiniIcon 24x24-okular.png,  EWMHMiniIconOverride, StartsOnPage 1 0, InitialMapCommand InitFocusCenter
-Style "CAJVieweru.exe" StartsOnPage 1 0, MiniIcon 24x24-B033_Icon38CE8FAD1.1.png, EWMHMiniIconOverride
+Style "XTerm" EWMHMiniIconOverride,Icon roxterm.svg:48x48, MiniIcon roxterm.svg:24x24, EWMHMiniIconOverride,FPGrabFocusTransient, InitialMapCommand InitFocusCenter
+Style "Gnome-terminal" EWMHMiniIconOverride,Icon gnome-terminal.svg:48x48, MiniIcon gnome-terminal.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "terminator" EWMHMiniIconOverride,Icon terminator.svg:48x48, MiniIcon terminator.svg:24x24, EWMHMiniIconOverride,FPGrabFocusTransient, InitialMapCommand InitFocusCenter
+Style "Nautilus" EWMHMiniIconOverride,Icon nautilus.svg:48x48, MiniIcon nautilus.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "dolphin" EWMHMiniIconOverride,Icon dolphin.svg:48x48, MiniIcon dolphin.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "Dolphin" EWMHMiniIconOverride,Icon dolphin.svg:48x48, MiniIcon dolphin.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "Org.gnome.Nautilus" EWMHMiniIconOverride,Icon nautilus.svg:48x48, MiniIcon nautilus.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "org.gnome.Nautilus" EWMHMiniIconOverride,Icon nautilus.svg:48x48, MiniIcon nautilus.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+style "Mozilla Firefox" EWMHMiniIconOverride,Icon firefox.svg:24x24, MiniIcon firefox.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
+style "Firefox" EWMHMiniIconOverride,Icon firefox.svg:24x24, MiniIcon firefox.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
+style "firefox" EWMHMiniIconOverride,Icon firefox.svg:24x24, MiniIcon firefox.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
+Style "Google-chrome" EWMHMiniIconOverride,Icon google-chrome.svg:48x48, MiniIcon google-chrome.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
+Style "okular" EWMHMiniIconOverride,Icon okular.svg:48x48, MiniIcon okular.svg:24x24,  EWMHMiniIconOverride, StartsOnPage 1 0, InitialMapCommand InitFocusCenter
+Style "Evince" EWMHMiniIconOverride,Icon evince.svg:48x48, MiniIcon evince.svg:24x24,  EWMHMiniIconOverride, StartsOnPage 1 0, InitialMapCommand InitFocusCenter
+Style "zoom" EWMHMiniIconOverride,Icon zoom.svg:48x48, MiniIcon zoom.svg:24x24,  EWMHMiniIconOverride
+Style "CAJVieweru.exe" EWMHMiniIconOverride,StartsOnPage 1 0, MiniIcon 24x24-B033_Icon38CE8FAD1.1.png, EWMHMiniIconOverride
 style "bilibili-live-helper" WindowListSkip, CirculateSkip, StickyAcrossPages, StickyAcrossDesks, Sticky, MouseFocusClickRaisesOff
-style "key-mon" WindowListSkip, CirculateSkip, StickyAcrossPages, StickyAcrossDesks, Sticky, MouseFocusClickRaisesOff, StaysOnTop
+style "key-mon" WindowListSkip, CirculateSkip, StickyAcrossPages, StickyAcrossDesks, Sticky, MouseFocusClickRaisesOff, StaysOnTop, !Iconifiable
+style "danmaku" WindowListSkip, CirculateSkip, StickyAcrossPages, StickyAcrossDesks, Sticky, MouseFocusClickRaisesOff, StaysOnTop
 style "conky" FPEnterToFocus,FPLeaveToUnfocus,StaysOnBottom,NeverFocus,FixedPosition,FixedSize
+
+style "Wine" Lenience
+style "winword.exe" EWMHMiniIconOverride,Icon application-msword.svg:48x48, MiniIcon application-msword.svg:24x24
+style "powerpnt.exe" EWMHMiniIconOverride,Icon application-vnd.ms-powerpoint.svg:48x48, MiniIcon application-vnd.ms-powerpoint.svg:24x24
+style "excel.exe" EWMHMiniIconOverride,Icon application-vnd.ms-excel.svg:48x48, MiniIcon application-vnd.ms-excel.svg:24x24
+
+style "baidunetdisk" EWMHMiniIconOverride,Icon baidunetdisk.svg:48x48, MiniIcon baidunetdisk.svg:24x24
+
+style "obs" EWMHMiniIconOverride,Icon obs.svg:48x48, MiniIcon obs.svg:24x24
+style "Crossover" EWMHMiniIconOverride,Icon deepin-crossover.svg:48x48, MiniIcon deepin-crossover.svg:24x24
 ##################
 #  Cursor Style  #
 ##################
@@ -97,7 +121,7 @@ MenuStyle * PopupAsSubmenu, HoldSubmenus, SubmenusRight
 MenuStyle * ItemFormat "%|%5.5i%1.3l%2.3>%|"
 MenuStyle * VerticalItemSpacing 1 1, VerticalTitleSpacing 2 2
 MenuStyle * ActiveFore,Hilight3DThick,Hilight3DThickness 4
-MenuStyle * MenuColorset 7
+MenuStyle * MenuColorset 11
 MenuStyle * ActiveColorset 8
 MenuStyle * TitleColorSet 14
 MenuStyle * TitleFont $[fvwm_font_large]
@@ -107,21 +131,21 @@ MenuStyle * Font $[fvwm_font]
 #  Module Styles  #
 ###################
 
-Style FvwmIconMan*    Sticky, NoTitle, WindowListSkip, CirculateSkipIcon, NeverFocus,\
+Style FvwmIconMan*    Sticky, !Closable, NoTitle, WindowListSkip, CirculateSkipIcon, NeverFocus,\
 	NoHandles, BorderWidth $[back_borderwidth], FixedSize, !Iconifiable, StaysOnBottom,\
 	CirculateSkip, FixedPosition, !Maximizable, BorderColorset 19,\
 	HilightBorderColorset 19
 
-Style "MyPager" NoTitle, NoHandles, Sticky, WindowListSkip, CirculateSkip,\
+Style "MyPager" NoTitle, !Closable, NoHandles, Sticky, WindowListSkip, CirculateSkip,\
 	StaysOnBottom, FixedPosition, FixedSize, !Iconifiable, NeverFocus,\
 	ParentalRelativity, !Maximizable, BorderWidth $[back_borderwidth], BorderColorset 19,\
 	HilightBorderColorset 19
 
-Style "MyButtons" NoTitle, !Handles, Sticky, WindowListSkip, CirculateSkip,\
+Style "MyButtons" NoTitle, !Closable, !Handles, Sticky, WindowListSkip, CirculateSkip,\
 	StaysOnBottom, FixedPosition, FixedSize, !Iconifiable, !Maximizable, NeverFocus,\
 	BorderWidth $[back_borderwidth], BorderColorset 19, HilightBorderColorset 19
 
-Style "MyTray" NoTitle, !Handles, !Borders, Sticky, WindowListSkip, NeverFocus,\
+Style "MyTray" NoTitle, !Closable, !Handles, !Borders, Sticky, WindowListSkip, NeverFocus,\
 	CirculateSkip, StaysOnBottom, FixedPosition, FixedSize, !Iconifiable,\
 	!Maximizable
 

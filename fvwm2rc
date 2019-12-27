@@ -18,6 +18,32 @@
 
 SetEnv fvwm_home $[HOME]/.fvwm
 SetEnv fvwm_icon $[fvwm_home]/icons
+SetEnv system_icon1 /usr/share/icons/deepin/actions
+SetEnv system_icon2 /usr/share/icons/deepin/apps
+SetEnv system_icon3 /usr/share/icons/deepin/cursors
+SetEnv system_icon4 /usr/share/icons/deepin/devices
+SetEnv system_icon5 /usr/share/icons/deepin/emblems
+SetEnv system_icon6 /usr/share/icons/deepin/mimetypes
+SetEnv system_icon7 /usr/share/icons/deepin/places
+SetEnv system_icon8 /usr/share/icons/deepin/status
+SetEnv system_icon9 /usr/share/icons/Papirus/22x22/apps
+SetEnv system_icon10 /usr/share/icons/Faenza/apps/scalable
+SetEnv system_icon12 /usr/share/icons/hicolor/scalable/apps
+SetEnv system_icon13 /usr/share/icons/hicolor/scalable/actions
+SetEnv system_icon14 /usr/share/icons/hicolor/scalable/animations
+SetEnv system_icon15 /usr/share/icons/hicolor/scalable/apps
+SetEnv system_icon16 /usr/share/icons/hicolor/scalable/categories
+SetEnv system_icon17 /usr/share/icons/hicolor/scalable/devices
+SetEnv system_icon18 /usr/share/icons/hicolor/scalable/emblems
+SetEnv system_icon19 /usr/share/icons/hicolor/scalable/emotes
+SetEnv system_icon20 /usr/share/icons/hicolor/scalable/filesystems
+SetEnv system_icon21 /usr/share/icons/hicolor/scalable/intl
+SetEnv system_icon22 /usr/share/icons/hicolor/scalable/mimetypes
+SetEnv system_icon23 /usr/share/icons/hicolor/scalable/places
+SetEnv system_icon24 /usr/share/icons/hicolor/scalable/status
+SetEnv system_icon25 /usr/share/icons/hicolor/scalable/stock
+SetEnv system_icon26 /usr/share/icons/Sea/apps/scalable
+
 SetEnv fvwm_script $[fvwm_home]/scripts
 SetEnv fvwm_tmp $[fvwm_home]/tmp
 SetEnv fvwm_screenshot $[fvwm_home]/screenshot
@@ -31,27 +57,30 @@ SetEnv fvwm_path2 /usr/local/bin
 SetEnv fvwm_mutt $[fvwm_path1]/neomutt
 SetEnv fvwm_firefox $[fvwm_path1]/firefox
 SetEnv fvwm_chrome $[fvwm_path1]/google-chrome-stable
-SetEnv fvwm_nautilus $[fvwm_path1]/nautilus
+SetEnv fvwm_nautilus $[fvwm_path1]/dolphin
+SetEnv fvwm_dolphin $[fvwm_path1]/dolphin
 SetEnv fvwm_xterm $[fvwm_path1]/xterm
 SetEnv fvwm_gnome-terminal $[fvwm_path1]/gnome-terminal
 SetEnv fvwm_goldendict $[fvwm_path2]/goldendict
 SetEnv fvwm_emacs $[fvwm_path1]/emacs
+SetEnv fvwm_emacsclient $[fvwm_path1]/emacsclient
 SetEnv fvwm_rstudio $[fvwm_path1]/rstudio
+SetEnv fvwm_okular $[fvwm_path1]/okular
 
 ######################
 #  set width length  #
 ######################
 
 SetEnv back_borderwidth 1
-SetEnv front_borderwidth 8
+SetEnv front_borderwidth 1
 
 SetEnv fvwmbuttons_width 58
-SetEnv fvwmbuttons_height 420
+SetEnv fvwmbuttons_height 360
 
 SetEnv fvwmpager_width 158
 SetEnv fvwmpager_height 460
 SetEnv fvwmpager_desktop_rows 5
-SetEnv fvwmtray_height 300
+SetEnv fvwmtray_height 360
 
 SetEnv fvwmiconman_height 28
 
@@ -165,13 +194,19 @@ SetEnv fvwm_page_SE "\
 
 Piperead "echo SetEnv fvwm_left_margin $(($[fvwmbuttons_width]+2*$[back_borderwidth]))"
 Piperead "echo SetEnv fvwm_right_margin $(($[fvwmpager_width]+2*$[back_borderwidth]))"
+Piperead "echo SetEnv fvwm_top_margin $(($[fvwmiconman_height]+2*$[back_borderwidth]))"
+Piperead "echo SetEnv fvwm_vpw $(($[vp.width]-$[fvwm_left_margin]-$[fvwm_right_margin]))"
+Piperead "echo SetEnv fvwm_vph $(($[vp.height]-2*$[fvwm_top_margin]))"
+SetEnv fvwm_geometry "$[fvwm_vpw]x$[fvwm_vph]+[fvwm_left_margin]+$[fvwm_top_margin]"
 EwmhBaseStruts $[fvwm_left_margin] $[fvwm_right_margin] 0 0
+
 
 ####################
 #  set image path  #
 ####################
 
-ImagePath $[fvwm_icon]:$[fvwm_icon];.png:+
+ImagePath $[fvwm_icon]:$[fvwm_icon];.png:$[fvwm_icon]/48x48:$[system_icon1]/256:$[system_icon2]/256:$[system_icon3]/256:$[system_icon4]/256:$[system_icon5]/256:$[system_icon6]/256:$[system_icon7]/256:$[system_icon8]/256:$[system_icon9]:$[system_icon10]:$[system_icon11]:$[system_icon12]:$[system_icon13]:$[system_icon14]:$[system_icon15]:$[system_icon16]:$[system_icon17]:$[system_icon18]:$[system_icon19]:$[system_icon20]:$[system_icon21]:$[system_icon22]:$[system_icon23]:$[system_icon24]:$[system_icon25]:$[system_icon26]:
+
 
 #######################################################################
 #                           desktop config                            #
@@ -217,14 +252,10 @@ IconFont $[fvwm_font]
 
 Read ./conf/colorsets.fvwm2rc
 Read ./conf/styles.fvwm2rc
-
 Read ./conf/programfunc.fvwm2rc
-
 Read ./conf/functions.fvwm2rc
 Read ./conf/key.fvwm2rc
 Read ./conf/mouse.fvwm2rc
-
 Read ./conf/menus.fvwm2rc
 Read ./conf/modules.fvwm2rc
-
 Read ./conf/startupfunc.fvwm2rc

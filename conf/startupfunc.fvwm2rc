@@ -12,22 +12,28 @@ AddToFunc   InitFunction
 + I Exec exec fcitx
 + I Exec exec sogou-qimpanel
 + I Exec exec bash -c "/usr/bin/xhost +si:localuser:$USER"
-+ I FvwmEmacs
 + I Exec exec brightside &
 + I Exec exec bash $[HOME]/bin/nut.sh
 + I Exec exec pnmixer
 + I FvwmGTermEmail
 + I FvwmGoldendict
++ I Exec exec $[fvwm_path1]/cbatticon
++ I Exec exec $[fvwm_path1]/connman-gtk
+# + I Exec exec $[fvwm_path1]/nm-applet
 + I Exec exec bash $[fvwm_script]/updateWallpaper.sh
 + I Exec exec bash $[fvwm_script]/runredshift.sh
 + I InfoStoreAdd CURRENTDESKNUM $[desk.n]
++ I Piperead "echo InfoStoreAdd TEMPDESKN $[desk.n]"
++ I Piperead "echo InfoStoreAdd TEMPPAGENX $[page.nx]"
++ I Piperead "echo InfoStoreAdd TEMPPAGENY $[page.ny]"
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
 + I Module FvwmCommandS
 #+ I Exec exec bash $[fvwm_script]/updateWallpaper.sh
+# + I Piperead "echo Exec exec fvwm-root -r $[fvwm_tmp]/temp.png"
 + I Exec exec bash -c "if pgrep stalonetray >/dev/null 2>&1; then pgrep stalonetray |xargs -n 1 kill;fi"
-+ I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
+# + I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
 + I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"
 + I Piperead "echo Module FvwmPager MyPager 0 $(($[fvwmpager_desktop_rows]-1))"
 + I Wait MyPager
@@ -37,13 +43,13 @@ AddToFunc   StartFunction
 + I Wait MyTray
 + I Module FvwmEvent
 + I Module FvwmRearrange
-+ I Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh
 + I Exec exec stalonetray -c $[HOME]/.fvwm/stalonetrayrc &
 + I Wait stalonetray
 + I Module FvwmIconMan FvwmIconMan-Windows-Top
 + I Module FvwmIconMan FvwmIconMan-Windows-Bottom
 + I Module FvwmAnimate
-+ I Exec exec fvwm-root -r $[fvwm_tmp]/temp.png
++ I Piperead "echo Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh"
++ I PipeRead 'echo Exec exec transset-df -n GoldenDict 0.999'
 
 DestroyFunc RestartFunction
 AddToFunc   RestartFunction
