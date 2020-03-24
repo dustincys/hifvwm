@@ -1,9 +1,14 @@
 #####
 # Basic Bindings
 ###########
-Key F1 A M Menu MenuFvwmRoot
-Key F11 W M Module FvwmIdent
-Key L A CM Exec exec $[HOME]/bin/lock -f Monaco
+# Key F1 A M Menu MenuFvwmRoot
+# Key F11 W M Module FvwmIdent
+
+Key XF86Launch1 A N Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd --config /home/dustin/.fvwm/skippy-xd/skippy-xd.rc; else xdotool click 1; fi"
+Key XF86Display A N Piperead "echo Exec exec $[fvwm_script]/dmenuscreen.sh"
+Key XF86ScreenSaver A N Exec exec $[HOME]/bin/lock.sh
+
+Key L A CM Exec exec $[HOME]/bin/lock.sh
 Key R A 4 exec rofi -show run &
 Key P A 4 exec rofi -show window &
 Key T A 4 exec rofi -show ssh &
@@ -20,27 +25,30 @@ Key Print A 4 Exec exec gnome-screenshot -i
 Key Print A M Pick (CirculateHit) FvwmWindowScreenshot
 
 Key F A 4 SmartFlipFocus
-Key G A 4 SmartPrevFlipFocus
 Key B A 4 SmartPrevPageFlipFocus
+Key G A 4 SmartPrevFlipFocus
 Key V A 4 SmartPrevDeskFlipFocus
 Key BackSpace A 4 AltMode
-Key space A M Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd --config /home/dustin/.fvwm/skippy-xd/skippy-xd.rc; fi"
-
+Key space A M Exec exec bash -c "if ! pgrep skippy-xd >/dev/null 2>&1; then skippy-xd --config /home/dustin/.fvwm/skippy-xd/skippy-xd.rc; else xdotool click 1; fi"
 Key grave A 4 FetchEmacs
 Key 1 A 4 GoEmacs
-Key 2 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"w\")'"
-Key 3 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"l\")'"
-Key 4 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"t\")'"
-Key 7 A 4 GoNautilus
+Key 2 A 4 GoNautilus
+Key 7 A 4 GoRanger
 Key 8 A 4 GoZotero
 Key 9 A 4 GoDict
 Key 0 A 4 GoEmail
+Key 6 W 4 EchoOverlappedWindow
 
-Key 1 A 4M ShiftToTask 0
-Key 2 A 4M ShiftToTask 1
-Key 3 A 4M ShiftToTask 2
-Key 4 A 4M ShiftToTask 3
-Key 5 A 4M ShiftToTask 4
+Key F1 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"w\")'"
+Key F2 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"l\")'"
+Key F3 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"t\")'"
+Key F5 A 4 Exec exec bash -c "emacsclient -n -e '(make-capture-frame \"m\")'"
+
+Key 1 A 4C SmartShiftDesk 0
+Key 2 A 4C SmartShiftDesk 1
+Key 3 A 4C SmartShiftDesk 2
+Key 4 A 4C SmartShiftDesk 3
+Key 5 A 4C SmartShiftDesk 4
 
 Key slash A 4 Stick
 Key comma A 4 StickAcrossPages
@@ -93,9 +101,7 @@ Key bracketleft A 4 GoUpDesk
 Key bracketright A 4 GoDownDesk
 Key backslash A 4 GoLastDesk
 
-Key bracketleft A 4M ShiftTask -1
-Key bracketright A 4M ShiftTask 1
-Key backslash A 4M ShiftLastTask
+Key apostrophe A 4 FvwmFireFox
 
 Piperead "echo Key k W S4C PointerWindow MoveToDeskAndGotoDesk -1 0 $(($[fvwmpager_desktop_rows]-1))"
 Piperead "echo Key j W S4C PointerWindow MoveToDeskAndGotoDesk 1 0 $(($[fvwmpager_desktop_rows]-1))"
@@ -134,10 +140,10 @@ Key Up A 4C SmartMaxInEBS
 Key Left A 4C SmartResizeHalfMoveLInAll
 Key Right A 4C SmartResizeHalfMoveRInAll
 
-Key Down A 4 ForTXorCIn
-Key Down A 4S ForTYorCIn
-Key Down A 4M ForTXorCF
-Key Down A 4C ForTYorCF
+Key Down A 4 TXorCIn
+Key Down A 4S TYorCIn
+Key Down A 4M TXorCF
+Key Down A 4C TYorCF
 
 Key Page_Up A 4 SmartRearrangeH
 Key Page_Down A 4 SmartRearrangeV
@@ -150,4 +156,4 @@ Key Escape A 4 SmartAnimatedDelete
 Key Delete A 4 SmartDeleteElse
 
 Key T A CM FvwmXTerm
-Key Return A 4 FvwmGTerm
+Key Return A 4 FvwmTerm

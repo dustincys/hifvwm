@@ -3,8 +3,8 @@
 ######################
 
 Colorset 3 bg #101010, fg Black
-Colorset 4 bg #00ffff, fg Black
-Colorset 5 bg #ffa300, fg White
+Colorset 4 bg #acacac, fg Black
+Colorset 5 bg #69c, fg White
 
 ####################
 #  Menu Colorsets  #

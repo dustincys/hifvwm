@@ -27,37 +27,62 @@ AddToFunc   FvwmGTerm
 + I Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar"
 + I Piperead "echo Wait Gnome-terminal"
 
+DestroyFunc FvwmTerm
+AddToFunc   FvwmTerm
++ I Piperead "echo Exec exec \"$[fvwm_terminal]\""
++ I Piperead "echo Wait $[fvwm_terminal_class]"
+
 DestroyFunc FvwmGTermEmail
 AddToFunc   FvwmGTermEmail
-+ I Next (State 3) silent Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) KeepRc All (CurrentPage, State 3) Piperead "echo ThisWindow State 4 True"
++ I Next (State 3) Piperead "echo MoveToDesk"
++ I Next (CurrentDesk, State 3) Piperead "echo 'MoveToPage 0 0'"
++ I Next (CurrentDesk, State 3) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull orange"
 + I TestRc (Match) Piperead "echo Break"
-+ I Piperead "echo GotoDesk 0 0"
-+ I Piperead "echo GotoPage 1 1"
-+ I Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar --window -t neomutt -- \"\"$[fvwm_mutt]\"\""
-+ I Piperead "echo Wait Gnome-terminal"
-+ I Next (CurrentPage, "Gnome-terminal") Piperead "echo FuncFlipFocusWindow"
++ I Piperead "echo GotoPage 0 0"
++ I Piperead "echo Exec exec \"$[fvwm_terminal]\" -e neomutt"
++ I Piperead "echo Wait $[fvwm_terminal_class]"
++ I Next (CurrentPage, "$[fvwm_terminal_class]") Piperead "echo FuncFlipFocusWindow"
++ I Piperead "echo CurrentCenter"
 + I Piperead "echo Current State 3 True"
+
+DestroyFunc FvwmRanger
+AddToFunc   FvwmRanger
++ I Next (State 5) Piperead "echo MoveToDesk"
++ I Next (CurrentDesk, State 5) Piperead "echo 'MoveToPage 0 2'"
++ I Next (CurrentDesk, State 5) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull orange"
++ I TestRc (Match) Piperead "echo Break"
++ I Piperead "echo GotoPage 0 2"
++ I Piperead "echo Exec exec \"$[fvwm_terminal]\" -e ranger"
++ I Piperead "echo Wait $[fvwm_terminal_class]"
++ I Next (CurrentPage, "$[fvwm_terminal_class]") Piperead "echo FuncFlipFocusWindow"
++ I Piperead "echo CurrentCenter"
++ I Piperead "echo Current State 5 True"
 
 DestroyFunc FvwmGoldendict
 AddToFunc   FvwmGoldendict
-+ I Next ("GoldenDict") silent Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) KeepRc All (CurrentPage, "goldendict") Piperead "echo ThisWindow State 4 True"
++ I Next ("GoldenDict") Piperead "echo MoveToDesk"
++ I Next (CurrentDesk, "GoldenDict") Piperead "echo 'MoveToPage 2 0'"
++ I Next (CurrentDesk, "GoldenDict") silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull orange"
 + I TestRc (Match) Piperead "echo Break"
-+ I Piperead "echo GotoDesk 0 0"
-+ I Piperead "echo GotoPage 1 2"
++ I Piperead "echo GotoPage 2 0"
 + I Piperead "echo Exec exec \"$[fvwm_goldendict]\""
 + I Piperead "echo Wait GoldenDict"
 + I Next (CurrentPage "GoldenDict") Piperead "echo FuncFlipFocusWindow"
 + I Piperead "echo CurrentCenter"
-+ I All (CurrentPage, "goldendict") Piperead "echo ThisWindow State 4 True"
-# + I TestRc (Match) PipeRead 'echo Exec exec transset-df -i $[w.id] 1'
 
 DestroyFunc FvwmZotero
 AddToFunc   FvwmZotero
 + I Next ("Zotero") Piperead "echo 'MoveToDesk'"
 + I Next (CurrentDesk, "Zotero") Piperead "echo 'MoveToPage 2 2'"
 + I Next (CurrentDesk, "Zotero") silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull orange"
 + I TestRc (Match) Piperead "echo Break"
 + I Piperead "echo GotoPage 2 2"
 + I Piperead "echo Exec exec bash /home/dustin/bin/zotero"
@@ -78,12 +103,12 @@ AddToFunc   FvwmGvim
 DestroyFunc FvwmOkular
 AddToFunc   FvwmOkular
 + I Exec exec $[fvwm_okular]
-+ I Wait Okular
++ I Wait okular
 
 DestroyFunc FvwmFireFox
 AddToFunc   FvwmFireFox
 + I Exec exec $[fvwm_firefox] $0
-+ I Wait Firefox
++ I Wait firefox
 
 DestroyFunc FvwmDictionary
 AddToFunc   FvwmDictionary
@@ -100,27 +125,35 @@ AddToFunc   FvwmViewManPage
 
 DestroyFunc FvwmFileBrowser
 AddToFunc   FvwmFileBrowser
-+ I Next ("dolphin") Piperead "echo MoveToDesk"
-+ I Next (CurrentDesk, "dolphin") Piperead "echo MoveToPage"
-+ I Next (CurrentDesk, "dolphin") silent Piperead "echo FuncFlipFocusWindow"
++ I Next ("$[fvwm_filebrowser_class]") Piperead "echo MoveToDesk"
++ I Next (CurrentDesk, "$[fvwm_filebrowser_class]") Piperead "echo MoveToPage"
++ I Next (CurrentDesk, "$[fvwm_filebrowser_class]") silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull orange"
 + I TestRc (Match) Piperead "echo Break"
-+ I Exec exec $[fvwm_nautilus]
++ I Exec exec $[fvwm_filebrowser]
 
 DestroyFunc FvwmEmacs
 AddToFunc   FvwmEmacs
 + I Next ("Emacs") Piperead "echo MoveToDesk"
 + I Next (CurrentDesk, "Emacs") Piperead "echo MoveToPage 1 1"
 + I Next (CurrentDesk, "Emacs") silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull orange"
 + I TestRc (Match) Piperead "echo Break"
 + I Piperead "echo GotoPage 1 1"
 + I Exec exec $[fvwm_emacs]
 + I Piperead "echo Wait Emacs"
 + I Next (CurrentPage,"Emacs") Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull green"
 + I Piperead "echo CurrentCenter"
 
 DestroyFunc FvwmGoEmacs
 AddToFunc   FvwmGoEmacs
 + I Next ("Emacs") silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull green"
 + I TestRc (Match) Piperead "echo Break"
 + I Piperead "echo GotoPage 1 1"
 + I Exec exec $[fvwm_emacs]
@@ -133,4 +166,6 @@ AddToFunc   FvwmEmacsClient
 + I Exec exec $[fvwm_emacsclient] -c
 + I Piperead "echo Wait Emacs"
 + I Next (CurrentPage,"Emacs") Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoDeskNumberIfFullOverlapped  purple  green"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull green"
 + I Piperead "echo CurrentCenter"

@@ -32,13 +32,14 @@ Style * FvwmBorder
 #  Program Styles  #
 ####################
 
-Style "goldendict" EWMHMiniIconOverride,Icon goldendict.svg:48x48, StartsOnPage 0 1 2, MiniIcon goldendict.svg:24x24, EWMHMiniIconOverride
+Style "GoldenDict" EWMHMiniIconOverride,Icon goldendict.svg:48x48, StartsOnPage 2 0, MiniIcon goldendict.svg:24x24, EWMHMiniIconOverride,StickAcrossDesks
 Style "eclipse" EWMHMiniIconOverride,Icon eclipse.svg:48x48, startsOnPage 1 1, MiniIcon eclipse.svg:24x24, EWMHMiniIconOverride
 Style "Eclipse" EWMHMiniIconOverride,Icon eclipse.svg:48x48, startsOnPage 1 1, MiniIcon eclipse.svg:24x24, EWMHMiniIconOverride
 Style "RStudio" EWMHMiniIconOverride,Icon 48x48/rstudio.png, StartsOnPage 0 2, MiniIcon 24x24-rstudio.png, EWMHMiniIconOverride
 Style "gvim" EWMHMiniIconOverride,Icon vim.svg:48x48, IconOverride, MiniIcon vim.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
-Style "Emacs" EWMHMiniIconOverride,Icon deepin-emacs.svg:48x48, IconOverride, MiniIcon deepin-emacs.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
-Style "Emacs24" EWMHMiniIconOverride,Icon deepin-emacs.svg:48x48, IconOverride, MiniIcon deepin-emacs.svg:24x24, EWMHMiniIconOverride,InitialMapCommand InitFocusCenter
+Style "Emacs" EWMHMiniIconOverride,Icon deepin-emacs.svg:48x48, IconOverride, MiniIcon deepin-emacs.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter, StartsOnPage 1 1
+Style "Emacs24" EWMHMiniIconOverride,Icon deepin-emacs.svg:48x48, IconOverride, MiniIcon deepin-emacs.svg:24x24, EWMHMiniIconOverride,InitialMapCommand InitFocusCenter, StartsOnPage 1 1
+Style "Typora" InitialMapCommand InitFocusCenter, StartsOnPage 0 0
 Style "Eog" EWMHMiniIconOverride,Icon eog.svg:48x48, IconOverride, MiniIcon eog.svg:24x24, EWMHMiniIconOverride
 Style "eog" EWMHMiniIconOverride,Icon eog.svg:48x48, IconOverride, MiniIcon eog.svg:24x24, EWMHMiniIconOverride
 Style "Zotero" EWMHMiniIconOverride,Icon zotero.svg:48x48, IconOverride, MiniIcon zotero.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 2
@@ -53,6 +54,7 @@ Style "Connman-gtk" EWMHMiniIconOverride,Icon tdenetworkmanager.svg:48x48, MiniI
 
 Style "XTerm" EWMHMiniIconOverride,Icon roxterm.svg:48x48, MiniIcon roxterm.svg:24x24, EWMHMiniIconOverride,FPGrabFocusTransient, InitialMapCommand InitFocusCenter
 Style "Gnome-terminal" EWMHMiniIconOverride,Icon gnome-terminal.svg:48x48, MiniIcon gnome-terminal.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
+Style "konsole" EWMHMiniIconOverride,Icon konsole.svg:48x48, MiniIcon konsole.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
 Style "terminator" EWMHMiniIconOverride,Icon terminator.svg:48x48, MiniIcon terminator.svg:24x24, EWMHMiniIconOverride,FPGrabFocusTransient, InitialMapCommand InitFocusCenter
 Style "Nautilus" EWMHMiniIconOverride,Icon nautilus.svg:48x48, MiniIcon nautilus.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
 Style "dolphin" EWMHMiniIconOverride,Icon dolphin.svg:48x48, MiniIcon dolphin.svg:24x24, EWMHMiniIconOverride, InitialMapCommand InitFocusCenter
@@ -64,6 +66,7 @@ style "Firefox" EWMHMiniIconOverride,Icon firefox.svg:24x24, MiniIcon firefox.sv
 style "firefox" EWMHMiniIconOverride,Icon firefox.svg:24x24, MiniIcon firefox.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
 Style "Google-chrome" EWMHMiniIconOverride,Icon google-chrome.svg:48x48, MiniIcon google-chrome.svg:24x24, EWMHMiniIconOverride, StartsOnPage 2 1, InitialMapCommand InitFocusCenter
 Style "okular" EWMHMiniIconOverride,Icon okular.svg:48x48, MiniIcon okular.svg:24x24,  EWMHMiniIconOverride, StartsOnPage 1 0, InitialMapCommand InitFocusCenter
+Style "Zathura" StartsOnPage 1 0, InitialMapCommand InitFocusCenter
 Style "Evince" EWMHMiniIconOverride,Icon evince.svg:48x48, MiniIcon evince.svg:24x24,  EWMHMiniIconOverride, StartsOnPage 1 0, InitialMapCommand InitFocusCenter
 Style "zoom" EWMHMiniIconOverride,Icon zoom.svg:48x48, MiniIcon zoom.svg:24x24,  EWMHMiniIconOverride
 Style "CAJVieweru.exe" EWMHMiniIconOverride,StartsOnPage 1 0, MiniIcon 24x24-B033_Icon38CE8FAD1.1.png, EWMHMiniIconOverride
@@ -81,6 +84,10 @@ style "baidunetdisk" EWMHMiniIconOverride,Icon baidunetdisk.svg:48x48, MiniIcon 
 
 style "obs" EWMHMiniIconOverride,Icon obs.svg:48x48, MiniIcon obs.svg:24x24
 style "Crossover" EWMHMiniIconOverride,Icon deepin-crossover.svg:48x48, MiniIcon deepin-crossover.svg:24x24
+
+
+Style "stalonetray" StaysOnBottom
+
 ##################
 #  Cursor Style  #
 ##################

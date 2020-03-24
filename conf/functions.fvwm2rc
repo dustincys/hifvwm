@@ -160,7 +160,6 @@ DestroyFunc MoveToDeskAndGotoDesk
 AddToFunc MoveToDeskAndGotoDesk
 + I Piperead "echo 'MoveToDesk $0 $1 $2'"
 + I Piperead "echo 'GoToDesk $0 $1 $2'"
-+ I Piperead "echo 'EchoDeskPageNumberIfFull orange'"
 + I Piperead "echo 'EchoPageNumberIfFull orange'"
 
 DestroyFunc SmartMoveGoPage
@@ -176,21 +175,19 @@ AddToFunc  MaxInEBS
 + I Maximize 100 100
 + I Raise
 
-DestroyFunc ShiftToTask
-AddToFunc ShiftToTask
+DestroyFunc PointerMaxInEBSS
+AddToFunc  PointerMaxInEBSS
++ I Pointerwindow (Maximized) FlipFocus
++ I TestRc (Match) Raise
++ I TestRc (Match) WindowStyle Borders
++ I TestRc (Match) UpdateStyles
++ I MaxInEBSS
+
+DestroyFunc SmartShiftDesk
+AddToFunc SmartShiftDesk
 + I Piperead "if [ \"$0\" = \"$[desk.n]\" ];\
-then echo \"Nop\"; else echo \"GotoDesk 0 $0\";fi"
-+ I PipeRead 'echo Exec exec $[fvwm_script]/thumbnailtask.sh;'
-
-DestroyFunc ShiftTask
-AddToFunc ShiftTask
-+ I Piperead "echo GotoDesk $0 0 $(($[fvwmpager_desktop_rows]-1))"
-+ I PipeRead 'echo Exec exec $[fvwm_script]/thumbnailtask.sh;'
-
-DestroyFunc ShiftLastTask
-AddToFunc ShiftLastTask
-+ I Piperead "echo GotoDesk prev"
-+ I PipeRead 'echo Exec exec $[fvwm_script]/thumbnailtask.sh;'
+then echo \"GotoDesk prev\"; echo \"EchoPageNumberIfFull cyan\"; else echo \"GotoDesk 0 $0\";echo \"EchoPageNumberIfFull green\";fi"
++ I Piperead "echo MaxAreaFocus"
 
 #######################################################################
 #                           resize function                           #
@@ -331,6 +328,8 @@ AddToFunc MaxGrowInEBS
 
 DestroyFunc FullScreen
 AddToFunc FullScreen
++ I Current (CurrentPage, "$[fvwm_f11_fullscreen_apps]", !Overlapped) Piperead "xdotool windowactivate --sync $[w.id] key --clearmodifiers F11"
++ I TestRc (Match) Break
 + I EwmhBaseStruts 0 0 0 0
 + I ThisWindow (Maximized) WindowStyle Borders
 + I TestRc (!Match) WindowStyle !Borders
@@ -461,8 +460,8 @@ AddToFunc ResizeHalfTwoUDF
 
 DestroyFunc ResizeMaxInEBSSNoWarp
 AddToFunc ResizeMaxInEBSSNoWarp
-+ I ThisWindow (Maximized) WindowStyle Borders
-+ I TestRc (Match) UpdateStyles
++ I WindowStyle Borders
++ I UpdateStyles
 + I ResizeEBSS
 + I MoveCenter
 + I FlipFocus
@@ -623,6 +622,8 @@ AddToFunc  ForTXorCIn
 
 DestroyFunc ToggleFullScreen
 AddToFunc  ToggleFullScreen
+# + I All (CurrentPage, Maximized, "$[fvwm_f11_fullscreen_apps]") Piperead "xdotool windowactivate --sync $[w.id] key --clearmodifiers F11"
+# + I TestRc (Match) Break
 + I Any (CurrentPage, Maximized, !Iconic, !overlapped) Nop
 + I TestRc (Match) KeepRc All (CurrentPage, Maximized, !Iconic) ThisWindow WindowStyle Borders
 + I TestRc (Match) UpdateStyles
@@ -762,283 +763,247 @@ AddToFunc  MaxAreaFocus
 DestroyFunc  GoUp
 AddToFunc  GoUp
 + I Piperead "echo GotoPage 0p -1p"
++ I Piperead "echo \"EchoPageNumberIfFull green\""
 + I Piperead "echo MaxAreaFocus"
-+ I Piperead "echo EchoPageNumberIfFull green"
 
 DestroyFunc  SmartGoUp
 AddToFunc  SmartGoUp
 + I Piperead "if [ \"0\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull red\"; else echo \"GoUp\";fi"
+then echo \"EchoPageNumberIfFull red\"; else echo \"GoUp\";fi"
 
 DestroyFunc  GoDown
 AddToFunc  GoDown
 + I Piperead "echo GotoPage 0p +1p"
-+ I Piperead "echo MaxAreaFocus"
 + I Piperead "echo EchoPageNumberIfFull green"
++ I Piperead "echo MaxAreaFocus"
 
 DestroyFunc  SmartGoDown
 AddToFunc  SmartGoDown
 + I Piperead "if [ \"2\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull red\"; else echo \"GoDown\";fi"
+then echo \"EchoPageNumberIfFull red\"; else echo \"GoDown\";fi"
 
 DestroyFunc  GoLeft
 AddToFunc  GoLeft
 + I Piperead "echo GotoPage -1p 0p"
-+ I Piperead "echo MaxAreaFocus"
 + I Piperead "echo EchoPageNumberIfFull green"
++ I Piperead "echo MaxAreaFocus"
 
 DestroyFunc  SmartGoLeft
 AddToFunc  SmartGoLeft
 + I Piperead "if [ \"0\" = \"$[page.nx]\" ];\
-	then echo \"EchoPageNumberIfFull red\"; else echo \"GoLeft\";fi"
+then echo \"EchoPageNumberIfFull red\"; else echo \"GoLeft\";fi"
 
 DestroyFunc  GoRight
 AddToFunc  GoRight
 + I Piperead "echo GotoPage +1p 0p"
-+ I Piperead "echo MaxAreaFocus"
 + I Piperead "echo EchoPageNumberIfFull green"
++ I Piperead "echo MaxAreaFocus"
 
 DestroyFunc  SmartGoRight
 AddToFunc  SmartGoRight
 + I Piperead "if [ \"2\" = \"$[page.nx]\" ];\
-	then echo \"EchoPageNumberIfFull red\"; else echo \"GoRight\";fi"
+then echo \"EchoPageNumberIfFull red\"; else echo \"GoRight\";fi"
 
 DestroyFunc  GoUpDesk
 AddToFunc  GoUpDesk
 + I Piperead "echo GotoDesk -1 0 $(($[fvwmpager_desktop_rows]-1))"
-+ I Piperead "echo MaxAreaFocus"
-+ I Piperead "echo EchoDeskPageNumberIfFull green"
 + I Piperead "echo EchoPageNumberIfFull green"
++ I Piperead "echo MaxAreaFocus"
 
 DestroyFunc  GoDownDesk
 AddToFunc  GoDownDesk
 + I Piperead "echo GotoDesk +1 0 $(($[fvwmpager_desktop_rows]-1))"
-+ I Piperead "echo MaxAreaFocus"
-+ I Piperead "echo EchoDeskPageNumberIfFull green"
 + I Piperead "echo EchoPageNumberIfFull green"
++ I Piperead "echo MaxAreaFocus"
 
 DestroyFunc  GoNorthwest
 AddToFunc  GoNorthwest
 + I GotoPage 0 0
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoNorthwest
 AddToFunc SmartGoNorthwest
 + I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoNorthWest\";fi"
-+ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoNorth
 AddToFunc  GoNorth
 + I GotoPage 1 0
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoNorth
 AddToFunc SmartGoNorth
 + I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoNorth\";fi"
-+ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoNortheast
 AddToFunc  GoNortheast
 + I GotoPage 2 0
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoNortheast
 AddToFunc SmartGoNortheast
 + I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoNortheast\";fi"
-+ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoEast
 AddToFunc  GoEast
 + I GotoPage 2 1
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoEast
 AddToFunc SmartGoEast
 + I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoEast\";fi"
-+ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoSoutheast
 AddToFunc  GoSoutheast
 + I GotoPage 2 2
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoSoutheast
 AddToFunc SmartGoSoutheast
 + I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoSoutheast\";fi"
-+ I Piperead "if [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoSouth
 AddToFunc  GoSouth
 + I GotoPage 1 2
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoSouth
 AddToFunc SmartGoSouth
 + I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoSouth\";fi"
-+ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoSouthwest
 AddToFunc  GoSouthwest
 + I GotoPage 0 2
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoSouthwest
 AddToFunc SmartGoSouthwest
 + I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoSouthwest\";fi"
-+ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoWest
 AddToFunc  GoWest
 + I GotoPage 0 1
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoWest
 AddToFunc SmartGoWest
 + I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoWest\";fi"
-+ I Piperead "if [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc  GoCenter
 AddToFunc  GoCenter
 + I GotoPage 1 1
++ I EchoPageNumberIfFull green
 + I MaxAreaFocus
 
 DestroyFunc SmartGoCenter
 AddToFunc SmartGoCenter
 + I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
 	then echo \"GoLastPage\"; else echo \"GoCenter\";fi"
-+ I Piperead "if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-	then echo \"EchoPageNumberIfFull green\";fi"
 
 DestroyFunc EchoPageNumberIfFull
 AddToFunc EchoPageNumberIfFull
++ I Any (CurrentPage, Maximized) Nop
++ I TestRc (match) Any (CurrentPage, Overlapped) Exec stdbuf -oL $[fvwm_script]/overlapped.sh
 + I Any (CurrentPage, Maximized) Piperead "\
 if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_C\]\\" | $[fvwm_osd_cat_s] $0\";\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_C\]\\" | $[fvwm_osd_cat_C] $0\";\
 elif [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_W\]\\" | $[fvwm_osd_cat_s] $0\";\
-elif [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_E\]\\" | $[fvwm_osd_cat_s] $0\";\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_W\]\\" | $[fvwm_osd_cat_W] $0\";\
+fi"
++ I Any (CurrentPage, Maximized) Piperead "\
+if [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_E\]\\" | $[fvwm_osd_cat_E] $0\";\
 elif [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_N\]\\" | $[fvwm_osd_cat_s] $0\";\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_N\]\\" | $[fvwm_osd_cat_N] $0\";\
 elif [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_S\]\\" | $[fvwm_osd_cat_s] $0\";\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_S\]\\" | $[fvwm_osd_cat_S] $0\";\
 fi"
 + I Any (CurrentPage, Maximized) Piperead "\
 if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_NE\]\\" | $[fvwm_osd_cat_s] $0\";\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_NE\]\\" | $[fvwm_osd_cat_NE] $0\";\
 elif [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_SW\]\\" | $[fvwm_osd_cat_s] $0\";\
-elif [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_SE\]\\" | $[fvwm_osd_cat_s] $0\";\
-elif [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-then echo \"Exec exec echo -e \\"\$\[fvwm_page_NW\]\\" | $[fvwm_osd_cat_s] $0\";\
-fi"
-
-DestroyFunc EchoDeskPageNumberIfFull
-AddToFunc EchoDeskPageNumberIfFull
-+ I Any (CurrentPage, Maximized) Piperead "\
-if [ \"1\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:C\\" | $[fvwm_osd_cat_b] $0\";\
-elif [ \"0\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:W\\" | $[fvwm_osd_cat_b] $0\";\
-elif [ \"2\" = \"$[page.nx]\" ] && [ \"1\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:E\\" | $[fvwm_osd_cat_b] $0\";\
-elif [ \"1\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:N\\" | $[fvwm_osd_cat_b] $0\";\
-elif [ \"1\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:S\\" | $[fvwm_osd_cat_b] $0\";\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_SW\]\\" | $[fvwm_osd_cat_SW] $0\";\
 fi"
 + I Any (CurrentPage, Maximized) Piperead "\
-if [ \"2\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:NE\\" | $[fvwm_osd_cat_b] $0\";\
-elif [ \"0\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:SW\\" | $[fvwm_osd_cat_b] $0\";\
-elif [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:SE\\" | $[fvwm_osd_cat_b] $0\";\
+if [ \"2\" = \"$[page.nx]\" ] && [ \"2\" = \"$[page.ny]\" ];\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_SE\]\\" | $[fvwm_osd_cat_SE] $0\";\
 elif [ \"0\" = \"$[page.nx]\" ] && [ \"0\" = \"$[page.ny]\" ];\
-	then echo \"Exec exec echo \\"$[desk.n]:NW\\" | $[fvwm_osd_cat_b] $0\";\
+then echo \"Exec exec echo $(($[desk.n]+1)) | xargs -I{} echo -e \\"\$\[fvwm_page_NW\]\\" | $[fvwm_osd_cat_NW] $0\";\
 fi"
 
 DestroyFunc  GoLastDeskAndPage
 AddToFunc  GoLastDeskAndPage
 + I GotoDeskAndPage $0
++ I EchoPageNumberIfFull cyan
 + I MaxAreaFocus
-+ I EchoDeskPageNumberIfFull blue
-+ I EchoPageNumberIfFull blue
 
 DestroyFunc  GoLastDesk
 AddToFunc  GoLastDesk
 + I GotoDesk prev
++ I EchoPageNumberIfFull cyan
 + I MaxAreaFocus
-+ I EchoDeskPageNumberIfFull blue
-+ I EchoPageNumberIfFull blue
 
 DestroyFunc  GoLastPage
 AddToFunc  GoLastPage
 + I GotoPage prev
++ I EchoPageNumberIfFull cyan
 + I MaxAreaFocus
-+ I EchoPageNumberIfFull blue
 
 DestroyFunc GoDict
 AddToFunc GoDict
-+ I Any ("goldendict", CurrentPage, !Overlapped) Nop
-+ I TestRc (Match) KeepRc All (CurrentPage, "goldendict") Piperead "echo ThisWindow State 4 False"
-+ I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I Pointerwindow ("GoldenDict") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
-+ I TestRc (NoMatch|Error) Piperead "echo FvwmGoldendict"
++ I FvwmGoldendict
 
 DestroyFunc GoEmail
 AddToFunc GoEmail
-+ I Pointerwindow (State 3) Nop
-+ I TestRc (Match) KeepRc All (CurrentPage, State 3) Piperead "echo ThisWindow State 4 False"
-+ I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I Pointerwindow (State 3) KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
-+ I TestRc (NoMatch|Error) FvwmGTermEmail
++ I FvwmGTermEmail
 
 DestroyFunc GoZotero
 AddToFunc GoZotero
 + I Pointerwindow ("Zotero") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
 + I FvwmZotero
 
 DestroyFunc GoNautilus
 AddToFunc GoNautilus
-+ I Pointerwindow ("dolphin") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I Pointerwindow ("$[fvwm_filebrowser_class]") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
 + I FvwmFileBrowser
+
+DestroyFunc GoRanger
+AddToFunc GoRanger
++ I Pointerwindow (State 5) KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
++ I TestRc (Match) Piperead "echo Break"
++ I FvwmRanger
+
 
 DestroyFunc FetchEmacs
 AddToFunc FetchEmacs
 + I Pointerwindow ("Emacs") KeepRc Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,!shaded) silent Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
 + I FvwmEmacs
 
@@ -1046,13 +1011,12 @@ DestroyFunc GoEmacs
 AddToFunc GoEmacs
 + I Pointerwindow ("Emacs") Nop
 + I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
-+ I TestRc (NoMatch|Error) KeepRc Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
-+ I TestRc (NoMatch|Error) FvwmGoEmacs
++ I KeepRc Piperead "echo InfoStoreAdd TOOLBACKWDesk $[desk.n]"
++ I KeepRc Piperead "echo InfoStoreAdd TOOLBACKWX $[page.nx]"
++ I KeepRc Piperead "echo InfoStoreAdd TOOLBACKWY $[page.ny]"
++ I FvwmGoEmacs
 
 DestroyFunc GotoNotMaximized
 AddToFunc GotoNotMaximized
@@ -1080,7 +1044,7 @@ AddToFunc MaximizeAllWindowAtPage
 DestroyFunc FullScreenAllWindowAtPage
 AddToFunc FullScreenAllWindowAtPage
 + I Piperead "echo 'GotoPage $0 $1'"
-+ I All (CurrentPage,AcceptsFocus,!Iconic,Iconifiable,Maximizable,!Maximized) Piperead "echo FullScreen"
++ I All (CurrentPage,AcceptsFocus,!Iconic,Iconifiable,Maximizable,!Maximized) silent Piperead "echo FullScreen"
 
 DestroyFunc MaximizeTheWindowAtPage
 AddToFunc MaximizeTheWindowAtPage
@@ -1122,6 +1086,7 @@ AddToFunc SmartMaximizeAllWindow
 + I Piperead "echo 'MaximizeTheWindowAtPage 1 0 Evince'"
 + I Piperead "echo 'MaximizeTheWindowAtPage 0 0 XTerm'"
 + I Piperead "echo 'MaximizeTheWindowAtPage 0 1 Gnome-terminal'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 0 1 konsole'"
 + I Piperead "echo 'MaximizeTheWindowAtPage 0 1 terminator'"
 + I Piperead "echo 'MaximizeTheWindowAtPage 2 1 firefox'"
 + I Piperead "echo 'MaximizeTheWindowAtPage 2 1 Google-chrome'"
@@ -1130,7 +1095,9 @@ AddToFunc SmartMaximizeAllWindow
 + I Piperead "echo 'MaximizeTheWindowAtPage 2 2 Zotero'"
 + I Piperead "echo 'MaximizeTheWindowAtPage 0 2 RStudio'"
 + I Piperead "echo 'MaximizeTheWindowAtPage 0 2 eclipse'"
-+ I Piperead "echo 'MaximizeTheWindowAtPage 1 2 goldendict'"
++ I Piperead "echo 'MaximizeTheWindowAtPage 2 0 goldendict'"
++ I PipeRead "echo 'All (State 3) MoveToPage 0 0'"
++ I PipeRead "echo 'All (State 5) MoveToPage 0 2'"
 
 DestroyFunc WriteCurrentLocation
 AddToFunc WriteCurrentLocation
@@ -1194,23 +1161,21 @@ AddToFunc AltMode
 DestroyFunc SmartPrevPageFlipFocus
 AddToFunc SmartPrevPageFlipFocus
 + I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable) FuncFlipFocusWindow
-+ I TestRc (Match) EchoPageNumberIfFull blue
++ I TestRc (Match) EchoPageNumberIfFull cyan
 
 DestroyFunc SmartPrevDeskFlipFocus
 AddToFunc SmartPrevDeskFlipFocus
 + I Piperead "echo GotoDeskAndPage prev"
 # + I Any (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo Nop"
 # + I TestRc (!Match) Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo silent FuncFlipFocusWindow"
-+ I Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I Piperead "echo EchoPageNumberIfFull blue"
++ I Piperead "echo EchoPageNumberIfFull cyan"
 
 DestroyFunc SmartFlipFocus
 AddToFunc SmartFlipFocus
 + I ThisWindow (State 4) Nop
 + I TestRc (Match) KeepRc Piperead "echo ThisWindow State 4 False"
 + I TestRc (Match) KeepRc Piperead "echo GotoDeskAndPage $[infostore.TOOLBACKWDesk] $[infostore.TOOLBACKWX] $[infostore.TOOLBACKWY]"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break""
 + I Piperead "echo SmartLastDeskFlipFocus"
 
@@ -1219,28 +1184,20 @@ AddToFunc SmartLastDeskFlipFocus
 + I Piperead "echo GotoDeskAndPage last"
 # + I Any (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo Nop"
 # + I TestRc (!Match) Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo silent FuncFlipFocusWindow"
-+ I Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I Piperead "echo EchoPageNumberIfFull blue"
++ I Piperead "echo EchoPageNumberIfFull cyan"
 
 DestroyFunc SmartPrevFlipFocus
 AddToFunc SmartPrevFlipFocus
-+ I Prev (CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull red"
-+ I TestRc (Match) Piperead "echo Break"
-+ I TestRc (!Match) Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull blue"
-+ I TestRc (Match) Piperead "echo Break"
-+ I TestRc (!Match) Prev (!CurrentDesk,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) keepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull blue"
++ I Prev (CurrentDesk,CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
+# + I TestRc (!Match) Prev (CurrentDesk,!CurrentPage,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
+# + I TestRc (!Match) Prev (!CurrentDesk,AcceptsFocus,!Iconic,Iconifiable) Piperead "echo FuncFlipFocusWindow"
++ I Piperead "echo EchoPageNumberIfFull cyan"
 
 DestroyFunc SmartPrevFullScreenFlipFocus
 AddToFunc SmartPrevFullScreenFlipFocus
 + I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) keepRc Piperead "echo EchoPageNumberIfFull blue"
 + I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncFlipFocusWindow"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I Piperead "echo EchoPageNumberIfFull cyan"
 
 DestroyFunc SmartFullScreen
 AddToFunc SmartFullScreen
@@ -1259,9 +1216,10 @@ AddToFunc SmartToggleThumbnail
 DestroyFunc SmartResizeMaxInEBSS
 AddToFunc SmartResizeMaxInEBSS
 + I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable,Maximizable) KeepRc Piperead "echo ResizeMaxInEBSS"
-+ I TestRc (Match) Piperead "echo Break"
 + I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo ResizeMaxInEBSS"
 + I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent KeepRc Piperead "echo ResizeMaxInEBSS"
++ I ThisWindow (CurrentPage, Maximized, "$[fvwm_f11_fullscreen_apps]", !Overlapped) Piperead "bash $[fvwm_script]/pointerF11.sh && echo Nop"
++ I TestRc (Match) Piperead "echo ResizeMaxInEBSS"
 
 DestroyFunc SmartResizeHalfMoveLInAll
 AddToFunc SmartResizeHalfMoveLInAll
@@ -1328,7 +1286,11 @@ AddToFunc SmartResizeHalfMoveDIn
 
 DestroyFunc SmartAnimatedDelete
 AddToFunc SmartAnimatedDelete
-+ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable) KeepRc Piperead "echo AnimatedDelete"
+# + I Pointerwindow (CurrentPage, Maximized, "okular") Nop
+# + I TestRc (Match) KeepRc Piperead "sh $[fvwm_script]/okulardelete.sh"
+# + I TestRc (Match) Piperead "echo Break"
++ I Pointerwindow (!Shaded,!Iconic,Iconifiable,AcceptsFocus,Closable) Nop
++ I TestRc (Match) KeepRc Piperead "echo AnimatedDelete"
 + I TestRc (Match) Piperead "echo Break"
 + I TestRc (Error|NoMatch) Next (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,Focused) KeepRc Piperead "echo AnimatedDelete"
 + I TestRc (!Match) Prev (CurrentPage,!Shaded,!Iconic,Iconifiable,AcceptsFocus,!overlapped) Silent Piperead "echo AnimatedDelete"
@@ -1340,38 +1302,35 @@ AddToFunc SmartDeleteElse
 DestroyFunc SmartNextFullScreenRaiseFocus
 AddToFunc SmartNextFullScreenRaiseFocus
 + I Next (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
 + I TestRc (!Match) Next (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 
 DestroyFunc SmartPrevFullScreenRaiseFocus
 AddToFunc SmartPrevFullScreenRaiseFocus
 + I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
 + I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 
 DestroyFunc SmartNextRaiseFocus
 AddToFunc SmartNextRaiseFocus
 + I Next (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
 + I TestRc (!Match) Next (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 
 DestroyFunc SmartPrevRaiseFocus
 AddToFunc SmartPrevRaiseFocus
 + I Prev (CurrentDesk,AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
 + I TestRc (Match) Piperead "echo Break"
 + I TestRc (!Match) Prev (AcceptsFocus,!Iconic,Iconifiable,Maximized) Piperead "echo FuncRaiseFocusWarp"
-+ I TestRc (Match) KeepRc Piperead "echo EchoDeskPageNumberIfFull blue"
-+ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull blue"
++ I TestRc (Match) KeepRc Piperead "echo EchoPageNumberIfFull cyan"
+
 
 DestroyFunc MouseClickFocusHook
 AddToFunc MouseClickFocusHook

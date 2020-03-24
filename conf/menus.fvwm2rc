@@ -5,7 +5,7 @@
 DestroyMenu FvwmRootMenu
 AddToMenu   FvwmRootMenu "Root Menu" Title
 + "Programs%menu/programs.png%"  Popup Programs
-+ "Terminal%menu/terminal.png%"  FvwmGTerm
++ "Terminal%menu/terminal.png%"  FvwmTerm
 + "FVWM Console%menu/terminal.png%"  Module FvwmConsole
 + "" Nop
 + "Update wallpaper%menu/wallpaper.png%" Exec exec bash $[fvwm_script]/updateWallpaperForce.sh
@@ -19,7 +19,7 @@ AddToMenu   FvwmRootMenu "Root Menu" Title
 #  Programs Menu  #
 ###################
 
-PipeRead 'python3.7 /usr/local/bin/fvwm-menu-desktop -t Programs'
+PipeRead 'python3.8 /usr/local/bin/fvwm-menu-desktop -t Programs'
 
 ###############
 #  Help Menu  #

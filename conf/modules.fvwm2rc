@@ -154,19 +154,19 @@ DestroyModuleConfig MyButtons: *
 *MyButtons: (\
 		1x5,\
 		Frame 0,\
-		ActiveIcon gnome-terminal.svg:45x45, \
-		Icon gnome-terminal.svg:50x50,\
-		Action(Mouse 1) "FvwmGTerm", \
-		Action(Mouse 2) Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar -e \"top\"",\
-		Action(Mouse 3) Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar -e \"htop\"")
+		ActiveIcon konsole.svg:45x45, \
+		Icon konsole.svg:50x50,\
+		Action(Mouse 1) "FvwmTerm", \
+		Action(Mouse 2) Piperead "echo Exec exec \"$[fvwm_terminal]\" -e \"top\"",\
+		Action(Mouse 3) Piperead "echo Exec exec \"$[fvwm_terminal]\" -e \"htop\"")
 *MyButtons: (\
 		1x5,\
 		Frame 0,\
 		ActiveIcon dolphin.svg:45x45, \
 		Icon dolphin.svg:50x50, \
 		Action(Mouse 1) "FvwmFileBrowser", \
-		Action(Mouse 2) Exec exec $[fvwm_nautilus], \
-		Action(Mouse 3) Piperead "echo Exec exec \"$[fvwm_gnome-terminal]\" --hide-menubar -e \"ranger\"")
+		Action(Mouse 2) Exec exec $[fvwm_filebrowser], \
+		Action(Mouse 3) Piperead "echo Exec exec \"$[fvwm_terminal]\" -e \"ranger\"")
 *MyButtons: (\
 		1x5,\
 		Frame 0,\

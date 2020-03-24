@@ -5,7 +5,6 @@
  */
 
 configuration {
-
     // The display name of this browser
     display-ssh:                   "ssh ";
     // The display name of this browser
@@ -39,7 +38,7 @@ configuration {
     highlight:     underline bold #af9f29;
 
     transparent: rgba(0,0,0,0);
-    font: "Monaco 14";
+    font: "MonacoBSemi Nerd Font Mono 14";
 }
 #window {
     location: center;
@@ -66,7 +65,7 @@ configuration {
     background-color: @black;
 }
 #message {
-    font: "Monaco 14";
+    font: "MonacoBSemi Nerd Font Mono 14";
     color: @black;
 }
 
@@ -76,7 +75,7 @@ configuration {
     background-color: @tlightblack;
     border: 1px 1px 1px 1px;
     border-color: @border;
-    font: "Monaco 14";
+    font: "MonacoBSemi Nerd Font Mono 14";
 }
 #entry,prompt,case-indicator {
     text-font: inherit;
@@ -141,7 +140,7 @@ color: @orange;
     border: 0px 0px 0px 0px;
 }
 #button {
-    font: "Monaco 14";
+    font: "MonacoBSemi Nerd Font Mono 14";
     padding: 6px;
     border: 1px 0px 1px 1px;
     background-color: @tlightblack;

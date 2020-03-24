@@ -5,18 +5,39 @@
 DestroyFunc InitFunction
 AddToFunc   InitFunction
 + I Module FvwmCommandS
-+ I Module FvwmBanner
-+ I Exec exec bash -c "compton --config $[fvwm_home]/compton.conf"
+# + I Module FvwmBanner
+## + I Exec exec bash -c "picom -b --experimental-backends --dbus --config ~/.config/awesome/configuration/picom.conf"
++ I Exec exec bash -c "compton --config ~/.fvwm/compton.conf"
 + I Exec exec bash -c "$HOME/.msmtp/msmtp-notify -l $HOME/.msmtp/msmtp.log &"
-+ I Exec exec bash -c "xbanish"
++ I Exec exec bash -c "xbanish &"
 + I Exec exec fcitx
 + I Exec exec sogou-qimpanel
 + I Exec exec bash -c "/usr/bin/xhost +si:localuser:$USER"
 + I Exec exec brightside &
-+ I Exec exec bash $[HOME]/bin/nut.sh
+# # + I Exec exec bash $[HOME]/bin/nut.sh
++ I PipeRead 'echo Exec exec dropbox
 + I Exec exec pnmixer
-+ I FvwmGTermEmail
-+ I FvwmGoldendict
++ I Piperead "echo GotoPage 1 1"
++ I Piperead "echo Exec exec $[fvwm_emacs]"
++ I Piperead "echo Wait Emacs"
++ I Piperead "echo GotoPage 0 0"
++ I Piperead "echo FvwmGTermEmail"
++ I Piperead "echo GotoPage 2 0"
++ I Piperead "echo FvwmGoldendict"
++ I Piperead "echo GotoPage 2 1"
++ I Piperead "echo Exec exec $[fvwm_firefox]"
++ I Piperead "echo Wait firefox"
++ I Piperead "echo GotoPage 0 2"
++ I Piperead "echo FvwmRanger"
++ I Piperead "echo GotoPage 2 2"
++ I Piperead "echo FvwmZotero"
++ I Piperead "echo GotoPage 0 1"
++ I Piperead "echo FvwmTerm"
++ I Piperead "echo GotoPage 1 2"
++ I Piperead "echo FvwmTerm"
++ I Piperead "echo GotoPage 1 1"
++ I Next (CurrentPage,"Emacs") Piperead "echo FuncFlipFocusWindow"
++ I Piperead "echo CurrentCenter"
 + I Exec exec $[fvwm_path1]/cbatticon
 + I Exec exec $[fvwm_path1]/connman-gtk
 # + I Exec exec $[fvwm_path1]/nm-applet
@@ -26,6 +47,7 @@ AddToFunc   InitFunction
 + I Piperead "echo InfoStoreAdd TEMPDESKN $[desk.n]"
 + I Piperead "echo InfoStoreAdd TEMPPAGENX $[page.nx]"
 + I Piperead "echo InfoStoreAdd TEMPPAGENY $[page.ny]"
++ I Piperead "echo InfoStoreAdd TEMPPAGEWN 0"
 
 DestroyFunc StartFunction
 AddToFunc   StartFunction
@@ -34,7 +56,7 @@ AddToFunc   StartFunction
 # + I Piperead "echo Exec exec fvwm-root -r $[fvwm_tmp]/temp.png"
 + I Exec exec bash -c "if pgrep stalonetray >/dev/null 2>&1; then pgrep stalonetray |xargs -n 1 kill;fi"
 # + I Exec exec bash -c "if pgrep conky >/dev/null 2>&1; then pgrep conky |xargs -n 1 kill;fi"
-+ I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"
+# + I Exec exec bash -c "if pgrep devilspie >/dev/null 2>&1; then pgrep devilspie |xargs -n 1 kill;fi"
 + I Piperead "echo Module FvwmPager MyPager 0 $(($[fvwmpager_desktop_rows]-1))"
 + I Wait MyPager
 + I Module FvwmButtons MyButtons
@@ -48,9 +70,10 @@ AddToFunc   StartFunction
 + I Module FvwmIconMan FvwmIconMan-Windows-Top
 + I Module FvwmIconMan FvwmIconMan-Windows-Bottom
 + I Module FvwmAnimate
-+ I Piperead "echo Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh"
 + I PipeRead 'echo Exec exec transset-df -n GoldenDict 0.999'
++ I Piperead "echo Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh"
 
 DestroyFunc RestartFunction
 AddToFunc   RestartFunction
 + I All (Iconic) ReThumbnail
++ I Piperead "echo Exec exec bash $[HOME]/.fvwm/conky/conky-startup.sh"
