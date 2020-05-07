@@ -85,8 +85,15 @@ hifvwm is designed for clean, simple, elegant, productive window management.
 
 ## If you'd like to buy me (author) a drink
 
-![wechat](http://wx2.sinaimg.cn/large/61dccbaaly1fqwvz6sd4ej20yi1au797.jpg "谢谢")
+Wechat|Alipay
+-|-
+![wechat](http://wx2.sinaimg.cn/large/61dccbaaly1fqwvz6sd4ej20yi1au797.jpg "谢谢")|![zfb](http://wx3.sinaimg.cn/large/61dccbaaly1fizali9tafj20k00ucgos.jpg "谢谢")
 
-![zfb](http://wx3.sinaimg.cn/large/61dccbaaly1fizali9tafj20k00ucgos.jpg "谢谢")
+# Screenshots
+
+|![s1](https://raw.githubusercontent.com/dustincys/hifvwm/screenshots/screenshot-2020-04-27%5B00%3A16%5D.jpg)|![s2](https://raw.githubusercontent.com/dustincys/hifvwm/screenshots/Screenshot%20from%202020-04-27%2000-22-12.png)|![s3](https://raw.githubusercontent.com/dustincys/hifvwm/screenshots/screenshot-2020-04-27%5B00%3A19%5D.jpg)|
+|-|-|-|
+|![s4](https://raw.githubusercontent.com/dustincys/hifvwm/screenshots/screenshot-2020-04-27%5B00%3A20%5D.jpg)|![s5](https://raw.githubusercontent.com/dustincys/hifvwm/screenshots/screenshot-2020-04-27%5B00%3A23%5D.jpg)|![s6](https://raw.githubusercontent.com/dustincys/hifvwm/screenshots/screenshot-2020-04-27%5B00%3A24%5D.jpg)|
+
 
 Thank you!
